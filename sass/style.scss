@@ -1,0 +1,32 @@
+@import url("https://fonts.googleapis.com/css2?family=Fira+Sans:wght@400;700&display=swap");
+
+:root,
+[data-bg-theme="dark"] {
+  --body-font-family: "Fira Sans", sans-serif;
+
+  // https://coolors.co/071013-23b5d3-75abbc-a2aebb-dfe0e2
+  // --rich-black: #071013ff;
+  // --pacific-cyan: #23b5d3ff;
+  // --moonstone: #75abbcff;
+  // --cadet-gray: #a2aebbff;
+  // --platinum: #dfe0e2ff;
+
+  // https://coolors.co/331832-d81e5b-f0544f-c6d8d3-fdf0d5
+  --dark-purple: #331832ff;
+  --raspberry: #d81e5bff;
+  --vermilion: #f0544fff;
+  --ash-gray: #c6d8d3ff;
+  --papaya-whip: #fdf0d5ff;
+
+  --coolors-a: var(--dark-purple);
+  --coolors-b: var(--raspberry);
+  --coolors-c: var(--vermilion);
+  --coolors-d: var(--ash-gray);
+  --coolors-e: var(--papaya-whip);
+
+  --bs-body-bg: var(--coolors-a);
+  --bs-body-color: var(--coolors-e);
+
+  --bs-emphasis-color: var(--coolors-b);
+  --bs-btn-bg: var(--coolors-b);
+}
