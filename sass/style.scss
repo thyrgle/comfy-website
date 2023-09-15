@@ -30,3 +30,83 @@
   --bs-emphasis-color: var(--coolors-b);
   --bs-btn-bg: var(--coolors-b);
 }
+
+/* SCSS HEX */
+$dark-purple: #331832ff;
+$raspberry: #d81e5bff;
+$vermilion: #f0544fff;
+$ash-gray: #c6d8d3ff;
+$papaya-whip: #fdf0d5ff;
+
+/* SCSS Gradient */
+$gradient-top: linear-gradient(0deg, #331832ff, #d81e5bff, #f0544fff, #c6d8d3ff, #fdf0d5ff);
+$gradient-right: linear-gradient(90deg, #331832ff, #d81e5bff, #f0544fff, #c6d8d3ff, #fdf0d5ff);
+$gradient-bottom: linear-gradient(180deg, #331832ff, #d81e5bff, #f0544fff, #c6d8d3ff, #fdf0d5ff);
+$gradient-left: linear-gradient(270deg, #331832ff, #d81e5bff, #f0544fff, #c6d8d3ff, #fdf0d5ff);
+$gradient-top-right: linear-gradient(45deg, #331832ff, #d81e5bff, #f0544fff, #c6d8d3ff, #fdf0d5ff);
+$gradient-bottom-right: linear-gradient(135deg, #331832ff, #d81e5bff, #f0544fff, #c6d8d3ff, #fdf0d5ff);
+$gradient-top-left: linear-gradient(225deg, #331832ff, #d81e5bff, #f0544fff, #c6d8d3ff, #fdf0d5ff);
+$gradient-bottom-left: linear-gradient(315deg, #331832ff, #d81e5bff, #f0544fff, #c6d8d3ff, #fdf0d5ff);
+$gradient-radial: radial-gradient(#331832ff, #d81e5bff, #f0544fff, #c6d8d3ff, #fdf0d5ff);
+
+$primary: $raspberry;
+$secondary: $vermilion;
+
+$body-bg-dark: $dark-purple;
+$body-color-dark: $papaya-whip;
+$body-secondary-bg-dark: $ash-gray;
+
+// 1. Include functions first (so you can manipulate colors, SVGs, calc, etc)
+@import "./bootstrap-5.3.2/functions";
+
+// 2. Include any default variable overrides here
+
+// Default variable overrides
+// $body-bg: #000;
+// $body-color: #111;
+
+@import "./bootstrap-5.3.2/variables";
+@import "./bootstrap-5.3.2/variables-dark";
+@import "./bootstrap-5.3.2/maps";
+@import "./bootstrap-5.3.2/mixins";
+@import "./bootstrap-5.3.2/utilities";
+
+// Layout & components
+@import "./bootstrap-5.3.2/root";
+@import "./bootstrap-5.3.2/reboot";
+@import "./bootstrap-5.3.2/type";
+@import "./bootstrap-5.3.2/images";
+@import "./bootstrap-5.3.2/containers";
+@import "./bootstrap-5.3.2/grid";
+@import "./bootstrap-5.3.2/tables";
+@import "./bootstrap-5.3.2/forms";
+@import "./bootstrap-5.3.2/buttons";
+@import "./bootstrap-5.3.2/transitions";
+@import "./bootstrap-5.3.2/dropdown";
+@import "./bootstrap-5.3.2/button-group";
+@import "./bootstrap-5.3.2/nav";
+@import "./bootstrap-5.3.2/navbar";
+@import "./bootstrap-5.3.2/card";
+@import "./bootstrap-5.3.2/accordion";
+@import "./bootstrap-5.3.2/breadcrumb";
+@import "./bootstrap-5.3.2/pagination";
+@import "./bootstrap-5.3.2/badge";
+@import "./bootstrap-5.3.2/alert";
+@import "./bootstrap-5.3.2/progress";
+@import "./bootstrap-5.3.2/list-group";
+@import "./bootstrap-5.3.2/close";
+@import "./bootstrap-5.3.2/toasts";
+@import "./bootstrap-5.3.2/modal";
+@import "./bootstrap-5.3.2/tooltip";
+@import "./bootstrap-5.3.2/popover";
+@import "./bootstrap-5.3.2/carousel";
+@import "./bootstrap-5.3.2/spinners";
+@import "./bootstrap-5.3.2/offcanvas";
+@import "./bootstrap-5.3.2/placeholders";
+
+// Helpers
+@import "./bootstrap-5.3.2/helpers";
+
+// Utilities
+@import "./bootstrap-5.3.2/utilities/api";
+// scss-docs-end import-stack

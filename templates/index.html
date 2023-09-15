@@ -11,12 +11,12 @@
       href="https://fonts.googleapis.com/css2?family=Fira+Sans:wght@400;700&display=swap"
     />
 
-    <link
-      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
-      rel="stylesheet"
-      integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN"
-      crossorigin="anonymous"
-    />
+    <!-- <link -->
+    <!--   href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" -->
+    <!--   rel="stylesheet" -->
+    <!--   integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" -->
+    <!--   crossorigin="anonymous" -->
+    <!-- /> -->
 
     <link rel="stylesheet" href="./style.css" />
   </head>
@@ -30,11 +30,17 @@
           href="/"
           class="d-flex align-items-center mb-3 mb-md-0 me-md-auto link-body-emphasis text-decoration-none"
         >
-          <img src="./comfy.png" class="bi me-2" width="32" height="32"/>
-          <span class="fs-4">Comfy</span>
+          <img src="./comfy.png" class="bi me-2" width="32" height="32" />
+          <span class="fs-4"><strong>Comfy</strong></span>
         </a>
 
         <ul class="nav nav-pills">
+          <li class="nav-item">
+            <a href="#" class="nav-link">Getting Started</a>
+          </li>
+          <li class="nav-item">
+            <a href="#" class="nav-link">Features</a>
+          </li>
           <li class="nav-item"><a href="#" class="nav-link">Examples</a></li>
           <li class="nav-item">
             <a href="#" class="">
@@ -60,17 +66,50 @@
       <h1 class="display-5 fw-bold text-body-emphasis">Comfy</h1>
       <div class="col-lg-6 mx-auto">
         <p class="lead mb-4">
-          Quickly design and customize responsive mobile-first sites with
-          Bootstrap, the world’s most popular front-end open source toolkit,
-          featuring Sass variables and mixins, responsive grid system, extensive
-          prebuilt components, and powerful JavaScript plugins.
+          Comfy is an ergonomic 2D game engine built in Rust. It's designed to
+          be opinionated, productive, and easy to use. It uses
+          <a href="https://wgpu.rs/">wgpu</a>. Inspired by
+          <a href="https://macroquad.rs/">macroquad</a>,
+          <a href="https://macroquad.rs/">raylib</a>,
+          <a href="https://love2d.org/">Love2D</a> and many others, it is
+          designed to just work and fill most of the common use cases.
         </p>
         <div class="d-grid gap-2 d-sm-flex justify-content-sm-center">
           <button type="button" class="btn btn-primary btn-lg px-4 gap-3">
-            Primary button
+            Getting Started
           </button>
           <button type="button" class="btn btn-outline-secondary btn-lg px-4">
-            Secondary
+            Browse Examples
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <div class="row align-items-md-stretch">
+      <div class="col">
+        <div class="h-100 p-5 rounded-3">
+          <h2>Change the background</h2>
+          <p>
+            Swap the background-color utility and add a `.text-*` color utility
+            to mix up the jumbotron look. Then, mix and match with additional
+            component themes and more.
+          </p>
+          <button class="btn btn-outline-light" type="button">
+            Example button
+          </button>
+        </div>
+      </div>
+      <div class="col">
+        <div class="h-100 p-5 bg-body-primary">
+          <h2>Add borders</h2>
+          <p>
+            Or, keep it light and add a border for some added definition to the
+            boundaries of your content. Be sure to look under the hood at the
+            source HTML here as we've adjusted the alignment and sizing of both
+            column's content for equal-height.
+          </p>
+          <button class="btn btn-outline-secondary" type="button">
+            Example button
           </button>
         </div>
       </div>
