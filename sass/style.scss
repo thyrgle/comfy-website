@@ -1,3 +1,4 @@
+@use 'sass:color';
 @import url("https://fonts.googleapis.com/css2?family=Fira+Sans:wght@400;700&display=swap");
 
 :root,
@@ -67,6 +68,11 @@ $body-secondary-bg: $non-photo-blue;
 $body-tertiary-bg: lighten($non-photo-blue, 3%);
 
 $link-color: $teal;
+
+
+.comfy-logo-big {
+  filter: drop-shadow(0 5px 6px color.adjust(darken($non-photo-blue, 15%), $alpha: -0.2));
+}
 
 
 // 1. Include functions first (so you can manipulate colors, SVGs, calc, etc)
