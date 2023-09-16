@@ -46,10 +46,16 @@ $beige: #f1edd0;
 $night: #12130f;
 $non-photo-blue: #acecf7;
 
+$comfy: #ffc4dd; 
+
 $teal: #38808C;
 
-$primary: darken($nyanza, 10%);
-$secondary: darken($salmon-pink, 20%);
+// $primary: darken($nyanza, 10%);
+// $secondary: darken($salmon-pink, 20%);
+// $secondary: darken($comfy, 20%);
+
+$primary: $comfy;
+$secondary: darken($nyanza, 10%);
 
 $border-color: darken($non-photo-blue, 8%);
 
@@ -57,6 +63,8 @@ $body-bg: lighten($non-photo-blue, 9%);
 // $body-bg: #e0f4fc;
 $body-color: $night;
 $body-secondary-bg: $non-photo-blue;
+
+$body-tertiary-bg: lighten($non-photo-blue, 3%);
 
 $link-color: $teal;
 
