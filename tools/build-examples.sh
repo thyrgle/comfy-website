@@ -38,5 +38,6 @@ for example in $(ls comfy/examples | grep -e "\.rs$" | sed "s/\.rs//"); do
   sed "s/{{example}}/$example/" > "$dir/index.html" < index.html
   wasm-bindgen --out-dir "$dir" --target web "target/wasm32-unknown-unknown/release/examples/$example.wasm"
   echo "$template" | sed "s/{{example}}/$example/g" > "$parent_dir/content/examples/$example.md"
+  cargo run --release --example $example --features comfy-wgpu/record-pngs
 done
 
