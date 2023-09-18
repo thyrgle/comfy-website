@@ -17,11 +17,13 @@ git pull origin master
 mkdir -p target/generated/
 rm -rf target/generated/*
 
+date=$(date +"%Y-%m-%d")
+
 template="""
 +++
 title = \"{{example}}\"
 description = \"\"
-date = 2019-11-27
+date = $date
 
 [extra]
 screenshot = \"/{{example}}.png\"
@@ -38,6 +40,8 @@ for example in $(ls comfy/examples | grep -e "\.rs$" | sed "s/\.rs//"); do
   sed "s/{{example}}/$example/" > "$dir/index.html" < index.html
   wasm-bindgen --out-dir "$dir" --target web "target/wasm32-unknown-unknown/release/examples/$example.wasm"
   echo "$template" | sed "s/{{example}}/$example/g" > "$parent_dir/content/examples/$example.md"
-  cargo run --release --example $example --features comfy-wgpu/record-pngs
 done
 
+for example in $(ls comfy/examples | grep -e "\.rs$" | sed "s/\.rs//"); do
+  cargo run --release --example $example --features comfy-wgpu/record-pngs
+done

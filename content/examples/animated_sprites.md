@@ -2,7 +2,7 @@
 +++
 title = "animated_sprites"
 description = ""
-date = 2019-11-27
+date = 2023-09-18
 
 [extra]
 screenshot = "/animated_sprites.png"
