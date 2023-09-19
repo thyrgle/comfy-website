@@ -47,11 +47,13 @@
         <li class="ui card">
           <a class="image">
             <img src="{{ post.extra.screenshot }}" />
+            <video src="{{ post.extra.video }}" autoplay loop width="128" height="64"/>
           </a>
           <div class="content">
             <a href="{{post.extra.gh_source}}">
+              <iframe src="{{ post.extra.wasm_source }}"></iframe>
               <i class="right floated">
-                <img src="/GitHub-Mark-32px.png" width="16px" />
+                <img src="/github-mark.svg" width="16px" />
               </i>
             </a>
             <div class="header">{{ post.title }}</div>

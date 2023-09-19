@@ -26,9 +26,10 @@ description = \"\"
 date = $date
 
 [extra]
-screenshot = \"/{{example}}.png\"
-gh_source = \"//github.com/not-fl3/macroquad/blob/master/examples/{{example}}.rs\"
-wasm_source = \"/gen_examples/{{example}}.html\"
+screenshot = \"/screenshots/{{example}}.png\"
+video = \"/videos/{{example}}.webm\"
+gh_source = \"//github.com/darthdeus/comfy/blob/master/examples/{{example}}.rs\"
+wasm_source = \"/wasm/{{example}}/index.html\"
 +++
 """
 
@@ -37,11 +38,16 @@ for example in $(ls comfy/examples | grep -e "\.rs$" | sed "s/\.rs//"); do
   # cp -r examples/$1/resources target/generated/ || true
   dir="target/generated/$example"
   mkdir -p "$dir"
-  sed "s/{{example}}/$example/" > "$dir/index.html" < index.html
+  cat index.html | sed "s/{{example}}/$example/" > "$dir/index.html"
   wasm-bindgen --out-dir "$dir" --target web "target/wasm32-unknown-unknown/release/examples/$example.wasm"
   echo "$template" | sed "s/{{example}}/$example/g" > "$parent_dir/content/examples/$example.md"
 done
 
 for example in $(ls comfy/examples | grep -e "\.rs$" | sed "s/\.rs//"); do
-  cargo run --release --example $example --features comfy-wgpu/record-pngs
+  # cargo run --release --example $example --features comfy-wgpu/record-pngs
+  cp "target/screenshots/$example.png" "$parent_dir/static/screenshots/$example.png"
+  cp "target/videos/$example.webm" "$parent_dir/static/videos/$example.webm"
 done
+
+rm -rf "$parent_dir/static/wasm"
+cp -R "target/generated/" "$parent_dir/static/wasm/"
