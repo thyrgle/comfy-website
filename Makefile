@@ -11,3 +11,6 @@ serve:
 
 build-examples:
 	./tools/build-examples.sh
+
+install-wasm-bindgen:
+	cargo install -f wasm-bindgen-cli --version 0.2.87
