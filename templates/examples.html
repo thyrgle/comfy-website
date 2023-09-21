@@ -1,5 +1,20 @@
 {% extends "base.html" %} {% block content %}
 
+<!-- Modal -->
+<div class="modal fade" id="comfyModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-xl modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="exampleModalLabel">Title ????</h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body text-center px-auto">
+          <iframe src="" height="520px" width="860"></iframe>
+      </div>
+    </div>
+  </div>
+</div>
+
 <section>
   <h1 class="title">{{ section.title }}</h1>
   <div class="container text-center">
@@ -9,7 +24,7 @@
           <div class="card border-light">
             <div class="header card-header text-center border-light">{{ post.title }}</div>
             <div class="content card-body">
-              <a class="image card-img-top">
+              <a class="card-img-top" data-bs-toggle="modal" data-bs-target="#comfyModal" data-bs-title="{{ post.title }}" data-bs-wasm-source="{{post.extra.wasm_source}}">
                 <!-- <img src="{{ post.extra.screenshot }}" /> -->
                 <video src="{{ post.extra.video }}" autoplay loop width="256px"/>
               </a>
@@ -27,4 +42,26 @@
     </div>
   </div>
 </section>
+
+
+<script>
+  document.addEventListener("DOMContentLoaded", function() {
+    // Get the modal element
+    const modal = document.getElementById('comfyModal');
+    
+    modal.addEventListener('show.bs.modal', function(event) {
+        // Get the clicked element (the one that triggered the modal)
+        const triggerElement = event.relatedTarget;
+
+        // Extract data attributes from the clicked element
+        const title = triggerElement.getAttribute('data-bs-title');
+        const wasmSource = triggerElement.getAttribute('data-bs-wasm-source');
+
+        // Update the modal's content
+        modal.querySelector('.modal-title').textContent = title;
+        modal.querySelector('.modal-body iframe').setAttribute('src', wasmSource);
+    });
+});
+</script>
+
 {% endblock content %}
