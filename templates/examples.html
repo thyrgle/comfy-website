@@ -24,12 +24,10 @@
           <div class="card border-light">
             <div class="header card-header text-center border-light">{{ post.title }}</div>
             <div class="content card-body">
-              <a class="card-img-top" data-bs-toggle="modal" data-bs-target="#comfyModal" data-bs-title="{{ post.title }}" data-bs-wasm-source="{{post.extra.wasm_source}}">
-                <!-- <img src="{{ post.extra.screenshot }}" /> -->
+              <a class="card-img-top" data-bs-toggle="modal" data-bs-target="#comfyModal" data-bs-title="{{ post.title }}" data-bs-wasm-source="{{post.extra.wasm_source}}" style="cursor: pointer;">
                 <video src="{{ post.extra.video }}" autoplay loop width="256px"/>
               </a>
               <a href="{{post.extra.gh_source}}">
-                <!-- <iframe src="{{ post.extra.wasm_source }}"></iframe> -->
                 <i class="">
                   <img src="/github-mark.svg" width="22px" />
                 </i>
