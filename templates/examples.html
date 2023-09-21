@@ -1,64 +1,27 @@
 {% extends "base.html" %} {% block content %}
 
-<style type="text/css">
-  .ui.cards > .card > .image > img,
-  .ui.card > .image > img {
-    display: block;
-    width: 10%;
-    height: 10%;
-    border-radius: inherit;
-  }
-
-  .ui.card > .image > img,
-  .ui.cards > .card > .image > img {
-    object-fit: cover;
-    width: 10%;
-    height: 10%;
-    border-radius: 0;
-  }
-
-  .text h1.ui.header {
-    font-size: 4em;
-    font-weight: normal;
-  }
-
-  main {
-    margin: 3em 0em;
-  }
-
-  ul {
-    padding: 0px;
-  }
-</style>
-
 <section>
   <h1 class="title">{{ section.title }}</h1>
-
-  <!-- <ul>
-    {% for page in section.pages %}
-    <li><a href="{{ page.permalink | safe }}">{{ page.title }}</a></li>
-    {% endfor %}
-  </ul> -->
-
-  <div class="ui vertical stripe">
-    <div class="ui container">
-      <ul class="ui stackable cards nolist four">
+  <div class="container text-center">
+    <div class="card-group grid gap-2">
         {% for post in section.pages %}
-        <li class="ui card">
-          <a class="image">
-            <img src="{{ post.extra.screenshot }}" />
-            <video src="{{ post.extra.video }}" autoplay loop width="128" height="64"/>
-          </a>
-          <div class="content">
-            <a href="{{post.extra.gh_source}}">
-              <iframe src="{{ post.extra.wasm_source }}"></iframe>
-              <i class="right floated">
-                <img src="/github-mark.svg" width="16px" />
-              </i>
-            </a>
-            <div class="header">{{ post.title }}</div>
+        <div class="col">
+          <div class="card border-light">
+            <div class="header card-header text-center border-light">{{ post.title }}</div>
+            <div class="content card-body">
+              <a class="image card-img-top">
+                <!-- <img src="{{ post.extra.screenshot }}" /> -->
+                <video src="{{ post.extra.video }}" autoplay loop width="256px"/>
+              </a>
+              <a href="{{post.extra.gh_source}}">
+                <!-- <iframe src="{{ post.extra.wasm_source }}"></iframe> -->
+                <i class="">
+                  <img src="/github-mark.svg" width="22px" />
+                </i>
+              </a>
+            </div>
           </div>
-        </li>
+        </div>
         {% endfor %}
       </ul>
     </div>
