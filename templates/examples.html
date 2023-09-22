@@ -9,7 +9,7 @@
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body text-center px-auto">
-          <iframe src="" height="520px" width="860"></iframe>
+        <iframe src="" height="520px" width="860"></iframe>
       </div>
     </div>
   </div>
@@ -19,23 +19,24 @@
   <h1 class="title">{{ section.title }}</h1>
   <div class="container text-center">
     <div class="card-group grid gap-2">
-        {% for post in section.pages %}
-        <div class="col">
-          <div class="card border-light">
-            <div class="header card-header text-center border-light">{{ post.title }}</div>
-            <div class="content card-body">
-              <a class="card-img-top" data-bs-toggle="modal" data-bs-target="#comfyModal" data-bs-title="{{ post.title }}" data-bs-wasm-source="{{post.extra.wasm_source}}" style="cursor: pointer;">
-                <video src="{{ post.extra.video }}" autoplay loop width="256px"/>
-              </a>
-              <a href="{{post.extra.gh_source}}">
-                <i class="">
-                  <img src="/github-mark.svg" width="22px" />
-                </i>
-              </a>
-            </div>
+      {% for post in section.pages %}
+      <div class="col">
+        <div class="card border-light">
+          <div class="header card-header text-center border-light">{{ post.title }}</div>
+          <div class="content card-body">
+            <a class="card-img-top" data-bs-toggle="modal" data-bs-target="#comfyModal" data-bs-title="{{ post.title }}"
+              data-bs-wasm-source="{{post.extra.wasm_source}}" style="cursor: pointer;">
+              <video src="{{ post.extra.video }}" autoplay loop width="256px" style="border-radius: 5px" />
+            </a>
+            <a href="{{post.extra.gh_source}}">
+              <i class="">
+                <img src="/github-mark.svg" width="22px" />
+              </i>
+            </a>
           </div>
         </div>
-        {% endfor %}
+      </div>
+      {% endfor %}
       </ul>
     </div>
   </div>
@@ -43,23 +44,23 @@
 
 
 <script>
-  document.addEventListener("DOMContentLoaded", function() {
+  document.addEventListener("DOMContentLoaded", function () {
     // Get the modal element
     const modal = document.getElementById('comfyModal');
-    
-    modal.addEventListener('show.bs.modal', function(event) {
-        // Get the clicked element (the one that triggered the modal)
-        const triggerElement = event.relatedTarget;
 
-        // Extract data attributes from the clicked element
-        const title = triggerElement.getAttribute('data-bs-title');
-        const wasmSource = triggerElement.getAttribute('data-bs-wasm-source');
+    modal.addEventListener('show.bs.modal', function (event) {
+      // Get the clicked element (the one that triggered the modal)
+      const triggerElement = event.relatedTarget;
 
-        // Update the modal's content
-        modal.querySelector('.modal-title').textContent = title;
-        modal.querySelector('.modal-body iframe').setAttribute('src', wasmSource);
+      // Extract data attributes from the clicked element
+      const title = triggerElement.getAttribute('data-bs-title');
+      const wasmSource = triggerElement.getAttribute('data-bs-wasm-source');
+
+      // Update the modal's content
+      modal.querySelector('.modal-title').textContent = title;
+      modal.querySelector('.modal-body iframe').setAttribute('src', wasmSource);
     });
-});
+  });
 </script>
 
 {% endblock content %}

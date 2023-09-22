@@ -75,6 +75,19 @@ $link-color: $teal;
 }
 
 
+[data-bs-theme="light"] {
+  .dark-github {
+    display: none;
+  }
+}
+
+[data-bs-theme="dark"] {
+  .light-github {
+    display: none;
+  }
+}
+
+
 // 1. Include functions first (so you can manipulate colors, SVGs, calc, etc)
 @import "./bootstrap-5.3.2/functions";
 
