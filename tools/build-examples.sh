@@ -23,6 +23,10 @@ rm -rf target/videos/*
 rm -rf target/screenshots/*
 rm -rf target/wasm/*
 
+mkdir -p "$parent_dir/static/videos/"
+mkdir -p "$parent_dir/static/screenshots/"
+mkdir -p "$parent_dir/static/wasm/"
+
 date=$(date +"%Y-%m-%d")
 
 template="""
@@ -57,3 +61,5 @@ done
 
 rm -rf "$parent_dir/static/wasm"
 cp -R "target/generated/" "$parent_dir/static/wasm/"
+
+zola build
