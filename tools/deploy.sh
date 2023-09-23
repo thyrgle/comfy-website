@@ -1,7 +1,7 @@
 #!/bin/bash
 set -euxo pipefail
 
-# git worktree add ../gh-pages-dir gh-pages
+git worktree add ../gh-pages-dir gh-pages
 zola build
 cp -r public/* ../gh-pages-dir/
 cp CNAME ../gh-pages-dir/CNAME
