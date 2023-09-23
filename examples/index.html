@@ -1,0 +1,433 @@
+<!doctype html>
+<html lang="en" data-bs-theme="dark">
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <title>Comfy Engine</title>
+
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fira+Sans:wght@400;700&display=swap" />
+
+  <!-- <link -->
+  <!--   href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" -->
+  <!--   rel="stylesheet" -->
+  <!--   integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" -->
+  <!--   crossorigin="anonymous" -->
+  <!-- /> -->
+
+  <link rel="stylesheet" href="./style.css" />
+</head>
+
+<body>
+  <div class="container">
+    <header class="d-flex flex-wrap justify-content-center py-3 mb-4 border-bottom">
+      <a href="/" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto link-body-emphasis text-decoration-none">
+        <img src="./comfy.png" class="bi me-2" width="32" height="32" />
+        <span class="fs-4"><strong>Comfy</strong></span>
+      </a>
+
+      <ul class="nav nav-pills">
+        <li class="nav-item">
+          <a href="#" class="nav-link">Getting Started</a>
+        </li>
+        <li class="nav-item">
+          <a href="#" class="nav-link">Features</a>
+        </li>
+        <li class="nav-item"><a href="./examples" class="nav-link">Examples</a></li>
+        <li class="nav-item">
+          <a href="#" class="">
+            <img class="light-github" width="40" height="40" src="./github-mark.svg" alt="Github repo" />
+            <img class="dark-github" width="40" height="40" src="./github-mark-white.svg" alt="Github repo" />
+          </a>
+        </li>
+
+        <li class="ms-3 my-2">
+          <div class="form-check form-switch">
+            <input class="form-check-input" type="checkbox" checked role="switch" id="comfySwitch" style="cursor: pointer">
+            <label class="form-check-label" for="comfySwitch">Dark Theme</label>
+          </div>
+        </li>
+      </ul>
+
+    </header>
+
+
+
+    <section class="section">
+      <div class="container">
+
+<!-- Modal -->
+<div class="modal fade" id="comfyModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-xl modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="exampleModalLabel">Title ????</h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body text-center px-auto">
+        <iframe src="" height="520px" width="860"></iframe>
+      </div>
+    </div>
+  </div>
+</div>
+
+<section>
+  <h1 class="title">Comfy Examples</h1>
+  <div class="container text-center">
+    <div class="card-group grid gap-2">
+      
+      <div class="col">
+        <div class="card border-light">
+          <div class="header card-header text-center border-light">animated_shapes</div>
+          <div class="content card-body">
+            <a class="card-img-top" data-bs-toggle="modal" data-bs-target="#comfyModal" data-bs-title="animated_shapes"
+              data-bs-wasm-source="&#x2F;wasm&#x2F;animated_shapes&#x2F;index.html" style="cursor: pointer;">
+              <video src="&#x2F;videos&#x2F;animated_shapes.webm" autoplay loop width="256px" style="border-radius: 5px" />
+            </a>
+            <a href="&#x2F;&#x2F;github.com&#x2F;darthdeus&#x2F;comfy&#x2F;blob&#x2F;master&#x2F;comfy&#x2F;examples&#x2F;animated_shapes.rs">
+              <i class="">
+                <img src="/github-mark.svg" width="22px" />
+              </i>
+            </a>
+          </div>
+        </div>
+      </div>
+      
+      <div class="col">
+        <div class="card border-light">
+          <div class="header card-header text-center border-light">animated_sprites</div>
+          <div class="content card-body">
+            <a class="card-img-top" data-bs-toggle="modal" data-bs-target="#comfyModal" data-bs-title="animated_sprites"
+              data-bs-wasm-source="&#x2F;wasm&#x2F;animated_sprites&#x2F;index.html" style="cursor: pointer;">
+              <video src="&#x2F;videos&#x2F;animated_sprites.webm" autoplay loop width="256px" style="border-radius: 5px" />
+            </a>
+            <a href="&#x2F;&#x2F;github.com&#x2F;darthdeus&#x2F;comfy&#x2F;blob&#x2F;master&#x2F;comfy&#x2F;examples&#x2F;animated_sprites.rs">
+              <i class="">
+                <img src="/github-mark.svg" width="22px" />
+              </i>
+            </a>
+          </div>
+        </div>
+      </div>
+      
+      <div class="col">
+        <div class="card border-light">
+          <div class="header card-header text-center border-light">animated_text</div>
+          <div class="content card-body">
+            <a class="card-img-top" data-bs-toggle="modal" data-bs-target="#comfyModal" data-bs-title="animated_text"
+              data-bs-wasm-source="&#x2F;wasm&#x2F;animated_text&#x2F;index.html" style="cursor: pointer;">
+              <video src="&#x2F;videos&#x2F;animated_text.webm" autoplay loop width="256px" style="border-radius: 5px" />
+            </a>
+            <a href="&#x2F;&#x2F;github.com&#x2F;darthdeus&#x2F;comfy&#x2F;blob&#x2F;master&#x2F;comfy&#x2F;examples&#x2F;animated_text.rs">
+              <i class="">
+                <img src="/github-mark.svg" width="22px" />
+              </i>
+            </a>
+          </div>
+        </div>
+      </div>
+      
+      <div class="col">
+        <div class="card border-light">
+          <div class="header card-header text-center border-light">custom_fonts</div>
+          <div class="content card-body">
+            <a class="card-img-top" data-bs-toggle="modal" data-bs-target="#comfyModal" data-bs-title="custom_fonts"
+              data-bs-wasm-source="&#x2F;wasm&#x2F;custom_fonts&#x2F;index.html" style="cursor: pointer;">
+              <video src="&#x2F;videos&#x2F;custom_fonts.webm" autoplay loop width="256px" style="border-radius: 5px" />
+            </a>
+            <a href="&#x2F;&#x2F;github.com&#x2F;darthdeus&#x2F;comfy&#x2F;blob&#x2F;master&#x2F;comfy&#x2F;examples&#x2F;custom_fonts.rs">
+              <i class="">
+                <img src="/github-mark.svg" width="22px" />
+              </i>
+            </a>
+          </div>
+        </div>
+      </div>
+      
+      <div class="col">
+        <div class="card border-light">
+          <div class="header card-header text-center border-light">ecs_sprite</div>
+          <div class="content card-body">
+            <a class="card-img-top" data-bs-toggle="modal" data-bs-target="#comfyModal" data-bs-title="ecs_sprite"
+              data-bs-wasm-source="&#x2F;wasm&#x2F;ecs_sprite&#x2F;index.html" style="cursor: pointer;">
+              <video src="&#x2F;videos&#x2F;ecs_sprite.webm" autoplay loop width="256px" style="border-radius: 5px" />
+            </a>
+            <a href="&#x2F;&#x2F;github.com&#x2F;darthdeus&#x2F;comfy&#x2F;blob&#x2F;master&#x2F;comfy&#x2F;examples&#x2F;ecs_sprite.rs">
+              <i class="">
+                <img src="/github-mark.svg" width="22px" />
+              </i>
+            </a>
+          </div>
+        </div>
+      </div>
+      
+      <div class="col">
+        <div class="card border-light">
+          <div class="header card-header text-center border-light">ecs_topdown_game</div>
+          <div class="content card-body">
+            <a class="card-img-top" data-bs-toggle="modal" data-bs-target="#comfyModal" data-bs-title="ecs_topdown_game"
+              data-bs-wasm-source="&#x2F;wasm&#x2F;ecs_topdown_game&#x2F;index.html" style="cursor: pointer;">
+              <video src="&#x2F;videos&#x2F;ecs_topdown_game.webm" autoplay loop width="256px" style="border-radius: 5px" />
+            </a>
+            <a href="&#x2F;&#x2F;github.com&#x2F;darthdeus&#x2F;comfy&#x2F;blob&#x2F;master&#x2F;comfy&#x2F;examples&#x2F;ecs_topdown_game.rs">
+              <i class="">
+                <img src="/github-mark.svg" width="22px" />
+              </i>
+            </a>
+          </div>
+        </div>
+      </div>
+      
+      <div class="col">
+        <div class="card border-light">
+          <div class="header card-header text-center border-light">full_game_loop</div>
+          <div class="content card-body">
+            <a class="card-img-top" data-bs-toggle="modal" data-bs-target="#comfyModal" data-bs-title="full_game_loop"
+              data-bs-wasm-source="&#x2F;wasm&#x2F;full_game_loop&#x2F;index.html" style="cursor: pointer;">
+              <video src="&#x2F;videos&#x2F;full_game_loop.webm" autoplay loop width="256px" style="border-radius: 5px" />
+            </a>
+            <a href="&#x2F;&#x2F;github.com&#x2F;darthdeus&#x2F;comfy&#x2F;blob&#x2F;master&#x2F;comfy&#x2F;examples&#x2F;full_game_loop.rs">
+              <i class="">
+                <img src="/github-mark.svg" width="22px" />
+              </i>
+            </a>
+          </div>
+        </div>
+      </div>
+      
+      <div class="col">
+        <div class="card border-light">
+          <div class="header card-header text-center border-light">lighting</div>
+          <div class="content card-body">
+            <a class="card-img-top" data-bs-toggle="modal" data-bs-target="#comfyModal" data-bs-title="lighting"
+              data-bs-wasm-source="&#x2F;wasm&#x2F;lighting&#x2F;index.html" style="cursor: pointer;">
+              <video src="&#x2F;videos&#x2F;lighting.webm" autoplay loop width="256px" style="border-radius: 5px" />
+            </a>
+            <a href="&#x2F;&#x2F;github.com&#x2F;darthdeus&#x2F;comfy&#x2F;blob&#x2F;master&#x2F;comfy&#x2F;examples&#x2F;lighting.rs">
+              <i class="">
+                <img src="/github-mark.svg" width="22px" />
+              </i>
+            </a>
+          </div>
+        </div>
+      </div>
+      
+      <div class="col">
+        <div class="card border-light">
+          <div class="header card-header text-center border-light">music</div>
+          <div class="content card-body">
+            <a class="card-img-top" data-bs-toggle="modal" data-bs-target="#comfyModal" data-bs-title="music"
+              data-bs-wasm-source="&#x2F;wasm&#x2F;music&#x2F;index.html" style="cursor: pointer;">
+              <video src="&#x2F;videos&#x2F;music.webm" autoplay loop width="256px" style="border-radius: 5px" />
+            </a>
+            <a href="&#x2F;&#x2F;github.com&#x2F;darthdeus&#x2F;comfy&#x2F;blob&#x2F;master&#x2F;comfy&#x2F;examples&#x2F;music.rs">
+              <i class="">
+                <img src="/github-mark.svg" width="22px" />
+              </i>
+            </a>
+          </div>
+        </div>
+      </div>
+      
+      <div class="col">
+        <div class="card border-light">
+          <div class="header card-header text-center border-light">particle_systems</div>
+          <div class="content card-body">
+            <a class="card-img-top" data-bs-toggle="modal" data-bs-target="#comfyModal" data-bs-title="particle_systems"
+              data-bs-wasm-source="&#x2F;wasm&#x2F;particle_systems&#x2F;index.html" style="cursor: pointer;">
+              <video src="&#x2F;videos&#x2F;particle_systems.webm" autoplay loop width="256px" style="border-radius: 5px" />
+            </a>
+            <a href="&#x2F;&#x2F;github.com&#x2F;darthdeus&#x2F;comfy&#x2F;blob&#x2F;master&#x2F;comfy&#x2F;examples&#x2F;particle_systems.rs">
+              <i class="">
+                <img src="/github-mark.svg" width="22px" />
+              </i>
+            </a>
+          </div>
+        </div>
+      </div>
+      
+      <div class="col">
+        <div class="card border-light">
+          <div class="header card-header text-center border-light">physics</div>
+          <div class="content card-body">
+            <a class="card-img-top" data-bs-toggle="modal" data-bs-target="#comfyModal" data-bs-title="physics"
+              data-bs-wasm-source="&#x2F;wasm&#x2F;physics&#x2F;index.html" style="cursor: pointer;">
+              <video src="&#x2F;videos&#x2F;physics.webm" autoplay loop width="256px" style="border-radius: 5px" />
+            </a>
+            <a href="&#x2F;&#x2F;github.com&#x2F;darthdeus&#x2F;comfy&#x2F;blob&#x2F;master&#x2F;comfy&#x2F;examples&#x2F;physics.rs">
+              <i class="">
+                <img src="/github-mark.svg" width="22px" />
+              </i>
+            </a>
+          </div>
+        </div>
+      </div>
+      
+      <div class="col">
+        <div class="card border-light">
+          <div class="header card-header text-center border-light">post_processing</div>
+          <div class="content card-body">
+            <a class="card-img-top" data-bs-toggle="modal" data-bs-target="#comfyModal" data-bs-title="post_processing"
+              data-bs-wasm-source="&#x2F;wasm&#x2F;post_processing&#x2F;index.html" style="cursor: pointer;">
+              <video src="&#x2F;videos&#x2F;post_processing.webm" autoplay loop width="256px" style="border-radius: 5px" />
+            </a>
+            <a href="&#x2F;&#x2F;github.com&#x2F;darthdeus&#x2F;comfy&#x2F;blob&#x2F;master&#x2F;comfy&#x2F;examples&#x2F;post_processing.rs">
+              <i class="">
+                <img src="/github-mark.svg" width="22px" />
+              </i>
+            </a>
+          </div>
+        </div>
+      </div>
+      
+      <div class="col">
+        <div class="card border-light">
+          <div class="header card-header text-center border-light">shapes</div>
+          <div class="content card-body">
+            <a class="card-img-top" data-bs-toggle="modal" data-bs-target="#comfyModal" data-bs-title="shapes"
+              data-bs-wasm-source="&#x2F;wasm&#x2F;shapes&#x2F;index.html" style="cursor: pointer;">
+              <video src="&#x2F;videos&#x2F;shapes.webm" autoplay loop width="256px" style="border-radius: 5px" />
+            </a>
+            <a href="&#x2F;&#x2F;github.com&#x2F;darthdeus&#x2F;comfy&#x2F;blob&#x2F;master&#x2F;comfy&#x2F;examples&#x2F;shapes.rs">
+              <i class="">
+                <img src="/github-mark.svg" width="22px" />
+              </i>
+            </a>
+          </div>
+        </div>
+      </div>
+      
+      <div class="col">
+        <div class="card border-light">
+          <div class="header card-header text-center border-light">single_particle</div>
+          <div class="content card-body">
+            <a class="card-img-top" data-bs-toggle="modal" data-bs-target="#comfyModal" data-bs-title="single_particle"
+              data-bs-wasm-source="&#x2F;wasm&#x2F;single_particle&#x2F;index.html" style="cursor: pointer;">
+              <video src="&#x2F;videos&#x2F;single_particle.webm" autoplay loop width="256px" style="border-radius: 5px" />
+            </a>
+            <a href="&#x2F;&#x2F;github.com&#x2F;darthdeus&#x2F;comfy&#x2F;blob&#x2F;master&#x2F;comfy&#x2F;examples&#x2F;single_particle.rs">
+              <i class="">
+                <img src="/github-mark.svg" width="22px" />
+              </i>
+            </a>
+          </div>
+        </div>
+      </div>
+      
+      <div class="col">
+        <div class="card border-light">
+          <div class="header card-header text-center border-light">sound</div>
+          <div class="content card-body">
+            <a class="card-img-top" data-bs-toggle="modal" data-bs-target="#comfyModal" data-bs-title="sound"
+              data-bs-wasm-source="&#x2F;wasm&#x2F;sound&#x2F;index.html" style="cursor: pointer;">
+              <video src="&#x2F;videos&#x2F;sound.webm" autoplay loop width="256px" style="border-radius: 5px" />
+            </a>
+            <a href="&#x2F;&#x2F;github.com&#x2F;darthdeus&#x2F;comfy&#x2F;blob&#x2F;master&#x2F;comfy&#x2F;examples&#x2F;sound.rs">
+              <i class="">
+                <img src="/github-mark.svg" width="22px" />
+              </i>
+            </a>
+          </div>
+        </div>
+      </div>
+      
+      <div class="col">
+        <div class="card border-light">
+          <div class="header card-header text-center border-light">sprite</div>
+          <div class="content card-body">
+            <a class="card-img-top" data-bs-toggle="modal" data-bs-target="#comfyModal" data-bs-title="sprite"
+              data-bs-wasm-source="&#x2F;wasm&#x2F;sprite&#x2F;index.html" style="cursor: pointer;">
+              <video src="&#x2F;videos&#x2F;sprite.webm" autoplay loop width="256px" style="border-radius: 5px" />
+            </a>
+            <a href="&#x2F;&#x2F;github.com&#x2F;darthdeus&#x2F;comfy&#x2F;blob&#x2F;master&#x2F;comfy&#x2F;examples&#x2F;sprite.rs">
+              <i class="">
+                <img src="/github-mark.svg" width="22px" />
+              </i>
+            </a>
+          </div>
+        </div>
+      </div>
+      
+      <div class="col">
+        <div class="card border-light">
+          <div class="header card-header text-center border-light">text</div>
+          <div class="content card-body">
+            <a class="card-img-top" data-bs-toggle="modal" data-bs-target="#comfyModal" data-bs-title="text"
+              data-bs-wasm-source="&#x2F;wasm&#x2F;text&#x2F;index.html" style="cursor: pointer;">
+              <video src="&#x2F;videos&#x2F;text.webm" autoplay loop width="256px" style="border-radius: 5px" />
+            </a>
+            <a href="&#x2F;&#x2F;github.com&#x2F;darthdeus&#x2F;comfy&#x2F;blob&#x2F;master&#x2F;comfy&#x2F;examples&#x2F;text.rs">
+              <i class="">
+                <img src="/github-mark.svg" width="22px" />
+              </i>
+            </a>
+          </div>
+        </div>
+      </div>
+      
+      <div class="col">
+        <div class="card border-light">
+          <div class="header card-header text-center border-light">timed_draw</div>
+          <div class="content card-body">
+            <a class="card-img-top" data-bs-toggle="modal" data-bs-target="#comfyModal" data-bs-title="timed_draw"
+              data-bs-wasm-source="&#x2F;wasm&#x2F;timed_draw&#x2F;index.html" style="cursor: pointer;">
+              <video src="&#x2F;videos&#x2F;timed_draw.webm" autoplay loop width="256px" style="border-radius: 5px" />
+            </a>
+            <a href="&#x2F;&#x2F;github.com&#x2F;darthdeus&#x2F;comfy&#x2F;blob&#x2F;master&#x2F;comfy&#x2F;examples&#x2F;timed_draw.rs">
+              <i class="">
+                <img src="/github-mark.svg" width="22px" />
+              </i>
+            </a>
+          </div>
+        </div>
+      </div>
+      
+      </ul>
+    </div>
+  </div>
+</section>
+
+
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    // Get the modal element
+    const modal = document.getElementById('comfyModal');
+
+    modal.addEventListener('show.bs.modal', function (event) {
+      // Get the clicked element (the one that triggered the modal)
+      const triggerElement = event.relatedTarget;
+
+      // Extract data attributes from the clicked element
+      const title = triggerElement.getAttribute('data-bs-title');
+      const wasmSource = triggerElement.getAttribute('data-bs-wasm-source');
+
+      // Update the modal's content
+      modal.querySelector('.modal-title').textContent = title;
+      modal.querySelector('.modal-body iframe').setAttribute('src', wasmSource);
+    });
+  });
+</script>
+
+</div>
+    </section>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous">
+      </script>
+    <script>
+      document.addEventListener('DOMContentLoaded', function () {
+        const themeSwitch = document.getElementById('comfySwitch');
+
+        themeSwitch.addEventListener('change', function () {
+          if (themeSwitch.checked) {
+            document.documentElement.setAttribute('data-bs-theme', 'dark');
+          } else {
+            document.documentElement.setAttribute('data-bs-theme', 'light');
+          }
+        });
+      });
+    </script>
+</body>
+
+</html>
