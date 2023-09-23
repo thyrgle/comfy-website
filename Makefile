@@ -14,3 +14,6 @@ build-examples:
 
 install-wasm-bindgen:
 	cargo install -f wasm-bindgen-cli --version 0.2.87
+
+deploy:
+	./tools/deploy.sh

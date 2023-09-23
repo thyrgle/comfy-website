@@ -61,5 +61,3 @@ done
 
 rm -rf "$parent_dir/static/wasm"
 cp -R "target/generated/" "$parent_dir/static/wasm/"
-
-zola build
