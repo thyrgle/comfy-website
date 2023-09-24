@@ -207,6 +207,7 @@
 
     
         
+        
     
 
     
@@ -215,7 +216,7 @@
 
     <li class="nav-item">
         <div class="tree-menu__label">
-            <a class="nav-link " aria-current="page" tree-menu__link" href="&#x2F;book&#x2F;roadmap&#x2F;">Roadmap</a>
+            <a class="nav-link disabled" aria-current="page" tree-menu__link" href="&#x2F;book&#x2F;roadmap&#x2F;">Roadmap</a>
             
         </div>
         
@@ -232,7 +233,6 @@
 
     
         
-        
     
 
     
@@ -241,7 +241,7 @@
 
     <li class="nav-item">
         <div class="tree-menu__label">
-            <a class="nav-link disabled" aria-current="page" tree-menu__link" href="&#x2F;book&#x2F;contributing&#x2F;">Contributing</a>
+            <a class="nav-link " aria-current="page" tree-menu__link" href="&#x2F;book&#x2F;contributing&#x2F;">Contributing</a>
             
         </div>
         
@@ -272,39 +272,64 @@
 
               <h1>
                   
-                      Contributing
+                      Roadmap
                   
                   
               </h1>
-              <div class="media-content"><p>Comfy is still very early in its lifecycle. While it has been used to make
-games, only a few people have used it or even seen the source code so far.
-The best way to contribute is to use comfy and report any issues you find.</p>
-<p>The codebase is not clean by any means. It is not the goal of comfy to be the
-most beautiful codebase out there. Many things may be suboptimal, and for some
-of them it makes a lot of sense to have an open discussion about it. But pull
-requests which just reformat the code or move things around or do some kind of
-re-organization will likely be rejected unless there was a prior discussion.</p>
-<p>If you find anything that does not work as expected please do open an issue.
-Comfy is meant to be a productive and ergonomic companion for those who want to
-make games.</p>
-<p>If something is not ergonomic or you have an idea for how it could be more ergonomic
-without sacrificing too much, please open an issue.</p>
-<p>If you really just want to make a pull request to contribute <em>something</em>
-without a prior discussion, the best place are the examples. Both simple and
-advanced examples, as well as small example games, are welcome.</p>
-<p>Comfy is not currently aiming for heavy documentation coverage due to the rapid
-pace of development. Examples are preferred to documentation as they're easier
-to fix when APIs change. Most things should be self-explanatory.</p>
-<p>If you'd like to chat about anything comfy related, <a href="https://discord.gg/M8hySjuG48">join our discord
-server</a>.</p>
-<p><strong>It should again be noted that comfy's codebase is <em>not</em> the cleanest code
-you've ever seen. There is a lot of low hanging fruit and areas for
-improvement, and while we're very happy and enthusiastic about improving it, we
-also want to remain pragmatic about changes.</strong> Changes which are motivated by
-real world usages in game are very likely to be incorporated, but changes which
-are purely cosmetic, or appeal to abstract values without any pragmatic
-grounding might get rejected. An example of this would be performance improvements
-that sacrifice ergonomics, and that don't show up on a profiler.</p>
+              <div class="media-content"><p>The following goals are not in any particular order, but should come reasonably
+soon. Comfy is not an aetheral project that will only materialize in 2 years.
+Only features that require maximum few weeks of work are listed here.</p>
+<ul>
+<li>Improved lighting. Right now we do have 2d lights, but they're basic,
+ugly in some scenarios, and not very flexible.</li>
+<li>Configurable bloom. Currently bloom is hard-coded to simplify a few things
+and always enabled. We don't want to delay the release to fix this since it
+does make games look better by default, but it is one of the first few things
+that will get fixed after v0.1 release.</li>
+<li>Configurable post processing.</li>
+<li>Custom shaders/materials.</li>
+<li>Render targets.</li>
+<li>Gamepad &amp; touchpad support.</li>
+<li>Antialiasing.</li>
+<li>2D shadowcasters with soft shadows.</li>
+<li>Asset packing without <code>include_dir</code>. Right now comfy relies on either its
+builtin use of <a href="https://github.com/darthdeus/include_dir">include_dir</a> (a
+small fork with a few extra features), or the user handling asset loading
+manually. There are many other ways of packing assets, and it would be cool
+to support those, but we don't currently because for reasonably (&lt;1GB) sized
+assets <code>include_dir</code> works well enough.</li>
+<li>Text rendering without egui. Right now all text (drawn with <code>draw_text</code> and
+friends) is rendered using <code>egui</code>'s painter on a separate layer. This gives
+us a lot of features in terms of text rendering, but also comes with some
+limitations. The goal is to implement text rendering on top of just wgpu.
+We've tried a few different approaches (e.g. <code>glyphon</code>) but ultimately found
+none to be easy enough to just replace what we have in <code>egui</code>, and since no
+games were yet blocked on more flexible rendering this remains a relatively
+low priority problem.</li>
+<li>Overall engine/renderer code cleanup. The code in comfy is not beautiful as
+it developed organically while building multiple games. There are some
+features that could be better exposed, and some remains of what our games
+needed. The provided examples should serve as a foundation to make sure comfy
+is flexible enough, but it is an ongoing effort to improve the codebase. That
+being said, almost everything you find in comfy should work to a reasonable
+extent.</li>
+<li>Reduce re-borrows &amp; <code>RefCell</code>s. Right now we use <em>a lot</em> of <code>RefCell</code>
+for almost everything. While this helps in a few places there are many
+places where it is not necessary, and where we also excessively borrow
+and re-borrow multiple times per frame. Currently we haven't noticed any of
+this impacting performance, but it is something that should be cleaned up.
+There's also a few things which use a <code>Mutex</code> unnecessarily.</li>
+</ul>
+<p>While comfy is ready to use, the codebase is far from clean. The engine
+evolves rapidly as we work on our games, and there are many parts that can
+and will be improved. Comfy is being released before it is 100% perfect,
+because even in its current state it can be very well used to make 2D games.</p>
+<p>There may be a few oddities you may run into, and some internals are
+planned to be re-done, but anything covered by the examples should 100%
+work. We have been using comfy internally for over 6 months, and a large
+part of its codebase has been ported from our previous OpenGL based
+engine. This doesn't mean the engine is mature, but we have had real
+players play our games made with comfy.</p>
 </div>
               <div class="docs-footer">
                   <nav class="docs-footer__nav">
@@ -312,7 +337,7 @@ that sacrifice ergonomics, and that don't show up on a profiler.</p>
                       
                   </nav>
                   <div class="docs-footer__edit-wrapper">
-                      <a class="docs-footer__edit" href="https://github.com/darthdeus/comfy-website/edit/master/content/book&#x2F;contributing&#x2F;_index.md">
+                      <a class="docs-footer__edit" href="https://github.com/darthdeus/comfy-website/edit/master/content/book&#x2F;roadmap&#x2F;_index.md">
                           <i class="icon icon--pencil"></i>
                           Improve this page
                       </a>

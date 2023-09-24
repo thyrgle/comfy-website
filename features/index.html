@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en" data-bs-theme="dark">
+<html lang="en">
 
 <head>
   <meta charset="utf-8" />
@@ -8,6 +8,13 @@
   <meta name="description" content="Comfy is an ergonomic 2D game engine built in Rust. It's designed to be opinionated, productive, and easy to use.">
 
   <title>Comfy Engine</title>
+
+  <script>
+      (function() {
+          const savedTheme = localStorage.getItem('data-bs-theme') || 'dark';  // default to 'dark' if not set
+          document.documentElement.setAttribute('data-bs-theme', savedTheme);
+      })();
+  </script>
 
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fira+Sans:wght@400;700&display=swap" />
 
@@ -46,7 +53,7 @@
 
         <li class="ms-3 my-2">
           <div class="form-check form-switch">
-            <input class="form-check-input" type="checkbox" checked role="switch" id="comfySwitch" style="cursor: pointer">
+            <input class="form-check-input" type="checkbox" role="switch" id="comfySwitch" style="cursor: pointer">
             <label class="form-check-label" for="comfySwitch">Dark Theme</label>
           </div>
         </li>
@@ -57,30 +64,72 @@
     <section class="section">
       <div class="container">
 
-<section>
-  <h1 class="title">Features</h1>
-  <div class="row">
-    <div class="col-md-3">
-      <ul class="nav flex-column">
-        <li class="nav-item">
-          <a class="nav-link active" aria-current="page" href="#">Active</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="#">Link</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="#">Link</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link disabled" aria-disabled="true">Disabled</a>
-        </li>
-      </ul>
-    </div>
-    <div class="col-md-9">.. </div>
-  </div>
-</section>
-
-&lt;p&gt;Features are here&lt;&#x2F;p&gt;
+  <h1>Features</h1>
+  
+  <ul>
+<li>Simple and productive API.</li>
+<li>Immediate mode rendering for sprites, text and shapes with automatic
+batching. If you want to draw a circle, you call a function <code>draw_circle</code>.</li>
+<li>2D lighting with HDR, tonemapping and bloom.</li>
+<li>Built-in support for z-index, meaning you don't have to worry about the order
+of your draw calls.</li>
+<li><a href="https://egui.rs/">egui</a> support built in.</li>
+<li>Parallel asset loading with support for most image and audio formats.</li>
+<li>No complex ECS or abstractions to learn. Just build your game and let comfy
+get out of your way.</li>
+<li>Simple audio using <a href="https://docs.rs/kira/latest/kira/">kira</a>. If you want to
+play a sound, you call a function <code>play_sound</code>.</li>
+<li>Simple 2D camera.</li>
+<li>Particles, both simple API for individual particles &amp; systems with lots of
+options.</li>
+<li>Trails with a custom mesh &amp; scrolling texture.</li>
+<li>Text rendering (currently using egui).</li>
+<li>Lots of utilities for common tasks.</li>
+</ul>
+<h1 id="design-goals-philosophy">Design goals &amp; philosophy</h1>
+<ul>
+<li>Heavy focus on ergonomics and productivity.</li>
+<li>No magic. The code does what it looks like it does.</li>
+<li>Targeted at simple games, currently only 2D.</li>
+<li>Opinionated and useful defaults.</li>
+<li><strong>Simple</strong> immediate mode APIs for almost everything.</li>
+<li>Exposed internals for when you need more. Almost all struct fields are
+public, comfy doesn't keep things away from its user.</li>
+<li>Reasonable compile times. Comfy is slower to compile than macroquad, but we
+want to avoid things getting out of hand. End users are not going to be
+required to use any proc macros to use comfy.</li>
+<li>Global variables are nice. Comfy uses a lot of them.</li>
+<li>Typing less is nice. Comfy has a single context object that gets passed around everywhere.</li>
+<li>Constraints are nice. Comfy wants to be used for a lot of games, but not all
+of them.</li>
+<li><code>RefCell</code>'s are nice. Comfy uses them a lot to work around partial borrows.
+We tried doing things without them multiple times, it was more painful.</li>
+</ul>
+<h1 id="non-goals">Non-goals</h1>
+<ul>
+<li>AAA 3D support. While it's entirely possible to extend the renderer to handle
+3D, this was intentionally not done yet. There is a lot of complexity that
+comes with 3d models, materials, skeletal animations, etc. Comfy may grow to
+support simple 3d games in the future, but it is extremely unlikely it'll
+ever attempt to be competitive with big 3D engines. We want to make sure that
+the stuff we have works well and is usable before adding lots more complex
+features.</li>
+<li>ECS based engine. While comfy does embed <a href="https://docs.rs/hecs">hecs</a> and
+provides some helpers for using it, it is by no means required or even
+optimal for most cases.</li>
+<li>Modularity. Comfy is not a modular engine. It's an opinionated toolkit
+with defaults that make sense for most games. There is no intention of
+having a plugin system or the ability to replace wgpu with something
+else.</li>
+<li>Maximum performance. Comfy is not designed to be the fastest engine out
+there. There are many tradeoffs made for the sake of ergonomics and ease of
+use, some of which affect performance. If you're looking for the fastest way
+to draw a million quads, comfy is not for you. If however you have a
+legitimate use case where the performance is not good enough, please open an
+issue. There is a lot of low hanging fruit with respect to performance, but
+as the development is driven by real world usage, unless something shows up
+in a profiler in a game, it's unlikely to be optimized further.</li>
+</ul>
 
 
 </div>
@@ -88,20 +137,26 @@
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
       integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous">
-      </script>
+    </script>
+
     <script>
       document.addEventListener('DOMContentLoaded', function () {
-        const themeSwitch = document.getElementById('comfySwitch');
+      const themeSwitch = document.getElementById('comfySwitch');
+      const currentTheme = document.documentElement.getAttribute('data-bs-theme') || 'dark'; // default to 'dark' if not set
 
-        themeSwitch.addEventListener('change', function () {
-          if (themeSwitch.checked) {
-            document.documentElement.setAttribute('data-bs-theme', 'dark');
-          } else {
-            document.documentElement.setAttribute('data-bs-theme', 'light');
+      // Set the checkbox state based on the current theme
+      themeSwitch.checked = currentTheme === 'dark';
+
+      themeSwitch.addEventListener('change', function () {
+          if (themeSwitch.checked && currentTheme !== 'dark') {
+              document.documentElement.setAttribute('data-bs-theme', 'dark');
+              localStorage.setItem('data-bs-theme', 'dark');
+          } else if (!themeSwitch.checked && currentTheme !== 'light') {
+              document.documentElement.setAttribute('data-bs-theme', 'light');
+              localStorage.setItem('data-bs-theme', 'light');
           }
         });
       });
     </script>
 </body>
-
 </html>

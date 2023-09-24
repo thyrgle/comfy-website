@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en" data-bs-theme="dark">
+<html lang="en">
 
 <head>
   <meta charset="utf-8" />
@@ -8,6 +8,13 @@
   <meta name="description" content="Comfy is an ergonomic 2D game engine built in Rust. It's designed to be opinionated, productive, and easy to use.">
 
   <title>Comfy Engine</title>
+
+  <script>
+      (function() {
+          const savedTheme = localStorage.getItem('data-bs-theme') || 'dark';  // default to 'dark' if not set
+          document.documentElement.setAttribute('data-bs-theme', savedTheme);
+      })();
+  </script>
 
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fira+Sans:wght@400;700&display=swap" />
 
@@ -46,7 +53,7 @@
 
         <li class="ms-3 my-2">
           <div class="form-check form-switch">
-            <input class="form-check-input" type="checkbox" checked role="switch" id="comfySwitch" style="cursor: pointer">
+            <input class="form-check-input" type="checkbox" role="switch" id="comfySwitch" style="cursor: pointer">
             <label class="form-check-label" for="comfySwitch">Dark Theme</label>
           </div>
         </li>
@@ -109,7 +116,57 @@
 
     <li class="nav-item">
         <div class="tree-menu__label">
-            <a class="nav-link " aria-current="page" tree-menu__link" href="&#x2F;book&#x2F;contributing&#x2F;">Contributing</a>
+            <a class="nav-link " aria-current="page" tree-menu__link" href="&#x2F;book&#x2F;camera&#x2F;">Camera</a>
+            
+        </div>
+        
+    </li>
+
+        
+            
+    
+    
+    
+    
+    
+    
+
+    
+        
+    
+
+    
+
+    
+
+    <li class="nav-item">
+        <div class="tree-menu__label">
+            <a class="nav-link " aria-current="page" tree-menu__link" href="&#x2F;book&#x2F;context&#x2F;">Context</a>
+            
+        </div>
+        
+    </li>
+
+        
+            
+    
+    
+    
+    
+    
+    
+
+    
+        
+    
+
+    
+
+    
+
+    <li class="nav-item">
+        <div class="tree-menu__label">
+            <a class="nav-link " aria-current="page" tree-menu__link" href="&#x2F;book&#x2F;ecs&#x2F;">ECS</a>
             
         </div>
         
@@ -135,6 +192,56 @@
     <li class="nav-item">
         <div class="tree-menu__label">
             <a class="nav-link " aria-current="page" tree-menu__link" href="&#x2F;book&#x2F;other_engines&#x2F;">Why comfy and not X?</a>
+            
+        </div>
+        
+    </li>
+
+        
+            
+    
+    
+    
+    
+    
+    
+
+    
+        
+    
+
+    
+
+    
+
+    <li class="nav-item">
+        <div class="tree-menu__label">
+            <a class="nav-link " aria-current="page" tree-menu__link" href="&#x2F;book&#x2F;roadmap&#x2F;">Roadmap</a>
+            
+        </div>
+        
+    </li>
+
+        
+            
+    
+    
+    
+    
+    
+    
+
+    
+        
+    
+
+    
+
+    
+
+    <li class="nav-item">
+        <div class="tree-menu__label">
+            <a class="nav-link " aria-current="page" tree-menu__link" href="&#x2F;book&#x2F;contributing&#x2F;">Contributing</a>
             
         </div>
         
@@ -169,7 +276,139 @@
                   
                   
               </h1>
-              <div class="media-content"><p>This section is an introduction to Comfy, a fun and simple 2D game engine for Rust.</p>
+              <div class="media-content"><p>This section is an introduction to Comfy, a fun and simple 2D game engine for
+Rust. If you've used <a href="https://macroquad.rs/">macroquad</a>,
+<a href="https://www.raylib.com/">Raylib</a>, or <a href="https://love2d.org/">Love2D</a> you should
+feel right at home. If you haven't, don't worry, Comfy is designed to a nice
+environment for making games.</p>
+<p>If you just want to see some code, check out the <a href="/examples">examples</a>, which
+while not exhaustive should cover most of the basics. Notably, the
+<a href="https://github.com/darthdeus/comfy/blob/master/comfy/examples/full_game_loop.rs"><code>full_game_loop</code></a>
+example strips away all of comfy's macros and shows a simple setup for a game
+loop. A good starting point for a &quot;more realistic&quot; game would be the <a href="https://github.com/darthdeus/comfy/blob/master/comfy/examples/physics.rs"><code>physics example</code></a>,
+which although very simple shows some of the core ideas and principles behind
+how we use comfy. That being said, <strong>don't feel limited by what is presented in the examples.
+Comfy is by no means prescriptive in how it should be used.</strong></p>
+<p>Comfy uses <a href="https://docs.rs/hecs/latest/hecs/">hecs</a> for its ECS and bakes its
+support into the engine with a few useful types (e.g. <code>Sprite</code>,
+<code>AnimatedSprite</code>, ...), but all of the ECS functionality is built on top of
+public immediate mode APIs you can use directly if you prefer, and which are
+also used in many of the examples. You should not feel limited by the existing ECS types,
+they mainly exist as an evolution of what we use for our own games, but comfy should be flexible
+enough so you can build games in whatever way you prefer.</p>
+<p>To get started, all you need is an <code>update</code> function.</p>
+<pre data-lang="rust" style="background-color:#2b303b;color:#c0c5ce;" class="language-rust "><code class="language-rust" data-lang="rust"><span style="color:#b48ead;">use </span><span>comfy::*;
+</span><span>
+</span><span>simple_game!(&quot;</span><span style="color:#a3be8c;">Nice red circle</span><span>&quot;, update);
+</span><span>
+</span><span style="color:#b48ead;">fn </span><span style="color:#8fa1b3;">update</span><span>(</span><span style="color:#bf616a;">_c</span><span>: &amp;</span><span style="color:#b48ead;">mut</span><span> EngineContext) {
+</span><span>    </span><span style="color:#96b5b4;">draw_circle</span><span>(</span><span style="color:#96b5b4;">vec2</span><span>(</span><span style="color:#d08770;">0.0</span><span>, </span><span style="color:#d08770;">0.0</span><span>), </span><span style="color:#d08770;">0.5</span><span>, </span><span style="color:#d08770;">RED</span><span>, </span><span style="color:#d08770;">0</span><span>);
+</span><span>}
+</span></code></pre>
+<p>The parameters of circle are simply just <code>position</code>, <code>radius</code>, <code>color</code>, and
+<code>z_index</code>. Unlike macroquad and a few other engines, all of comfy's drawing
+functions accept a <code>z_index</code>, and all draw calls will get internally batched
+and z-sorted. This means you don't have to worry about the order in which you
+draw, just make sure you provide the right <code>z_index</code>.</p>
+<p>Comfy uses <a href="https://docs.rs/glam/latest/glam/"><code>glam</code></a> for all of its math, and
+also re-exports many of its utility functions, including functions like <code>vec2</code>,
+<code>ivec2</code>, <code>splat</code>, etc.</p>
+<p>Going back to the above example, the <code>simple_game!(...)</code> macro is a convenient
+shortcut for game that just want a game loop with <code>setup/update</code> (more on
+<code>setup</code> later). Comfy doesn't do any heavy code generation magic and does not
+use procedural macros.</p>
+<p>The <code>update</code> function accepts a <code>c: &amp;mut EngineContext</code>, which is a core
+pattern of comfy that you'll see in all the examples, and that we use in all of
+our games. The <code>EngineContext</code> is a struct that contains references to almost
+all of the internal state of the engine, and many utility functions (e.g.
+loading assets, configuring post processing, etc.).</p>
+<p>The way comfy games are written is that almost every function will accept some
+kind of context object as <code>c</code>, be it <code>EngineContext</code>, or a user-created context
+that wraps it as shown in the <a href="https://github.com/darthdeus/comfy/blob/master/comfy/examples/physics.rs">physics
+example</a>.</p>
+<p>If you don't like this approach, you can build whatever structure you prefer
+for your own game code, but over the past year of using comfy quite heavily
+we've found that having a single context object greatly simplifies writing game
+code, as the developer does not have to worry about &quot;how do I get this other
+thing&quot; I need.</p>
+<p>You may also notice that <code>draw_circle(...)</code> does not actually use <code>c</code>.
+Internally, comfy uses a few global variables for storing state, which includes
+drawing queues, input data, and a few other things. These are collected and
+processed in various stages, for example when you call <code>draw_circle</code> the GPU
+remains untouched, and the parameters you provided are stored in a queue. The
+engine then later processes the draw queue, batches all the calls, handles
+<code>z_sorting</code>, etc. Comfy does these things because it greatly simplifies
+gameplay code, and also because while it may not be the most performant
+approach, it's still very very fast, and for most games won't even show up in a
+profiler.</p>
+<h2 id="simple-game-with-setup">simple game with <code>setup</code><a class="zola-anchor" href="#simple-game-with-setup" aria-label="Anchor link for: simple-game-with-setup">🔗</a></h2>
+<p>Continuing from the previous example, let's say we want to draw a sprite
+instead of a boring circle. This creates a new problem, <em>how do we load
+assets</em>?</p>
+<p>Comfy does not use any kind of complicated asset management solution. We do
+have a parallel asset loader, but let's begin simple with just one sprite.</p>
+<pre data-lang="rust" style="background-color:#2b303b;color:#c0c5ce;" class="language-rust "><code class="language-rust" data-lang="rust"><span style="color:#b48ead;">use </span><span>comfy::*;
+</span><span>
+</span><span>simple_game!(&quot;</span><span style="color:#a3be8c;">Sprite Example</span><span>&quot;, setup, update);
+</span><span>
+</span><span style="color:#b48ead;">fn </span><span style="color:#8fa1b3;">setup</span><span>(</span><span style="color:#bf616a;">c</span><span>: &amp;</span><span style="color:#b48ead;">mut</span><span> EngineContext) {
+</span><span>    c.</span><span style="color:#96b5b4;">load_texture_from_bytes</span><span>(
+</span><span>        </span><span style="color:#65737e;">// Name of our sprite
+</span><span>        &quot;</span><span style="color:#a3be8c;">comfy</span><span>&quot;,
+</span><span>        </span><span style="color:#65737e;">// &amp;[u8] with the image data.
+</span><span>        include_bytes!(&quot;</span><span style="color:#a3be8c;">assets/comfy.png</span><span>&quot;)
+</span><span>    );
+</span><span>}
+</span><span>
+</span><span style="color:#b48ead;">fn </span><span style="color:#8fa1b3;">update</span><span>(</span><span style="color:#bf616a;">_c</span><span>: &amp;</span><span style="color:#b48ead;">mut</span><span> EngineContext) {
+</span><span>    </span><span style="color:#96b5b4;">draw_sprite</span><span>(
+</span><span>        </span><span style="color:#65737e;">// Sprites are referenced with their string name.
+</span><span>        </span><span style="color:#65737e;">// Comfy doesn&#39;t use asset handles.
+</span><span>        </span><span style="color:#96b5b4;">texture_id</span><span>(&quot;</span><span style="color:#a3be8c;">comfy</span><span>&quot;),
+</span><span>        </span><span style="color:#65737e;">// position
+</span><span>        Vec2::</span><span style="color:#d08770;">ZERO</span><span>,
+</span><span>        </span><span style="color:#65737e;">// color tint
+</span><span>        </span><span style="color:#d08770;">WHITE</span><span>,
+</span><span>        </span><span style="color:#65737e;">// z_index
+</span><span>        </span><span style="color:#d08770;">0</span><span>,
+</span><span>        </span><span style="color:#65737e;">// size
+</span><span>        </span><span style="color:#96b5b4;">splat</span><span>(</span><span style="color:#d08770;">5.0</span><span>),
+</span><span>    );
+</span><span>}
+</span></code></pre>
+<p>The <code>simple_game!(...)</code> macro we've used in the first example can also be used
+in the case where we want a <code>setup</code> function that gets called once when the
+game is initialized.</p>
+<p>In this case we load a texture from a byte slice, and then draw it. The
+<code>texture_id(...)</code> function is a simple hashing function which turns string
+names into an asset id. Every texture is assigned a unique name to make
+referencing it easier. Many engines use asset handles, but we've them to be
+annoying to work with when all you want is to say &quot;draw this sprite&quot;.</p>
+<p>If you ever run into a scenario where the cost of calling <code>texture_id(...)</code> is
+too high, you can simply cache the result. That being said, we've never
+observed any of this to be a problem in our games.</p>
+<p>When you look around the examples in comfy, notably the <a href="https://github.com/darthdeus/comfy/blob/master/comfy/examples/sprite.rs">sprite
+exampe</a>
+you'll notice that we're actually calling <code>include_bytes!(...)</code> like this.</p>
+<pre data-lang="rust" style="background-color:#2b303b;color:#c0c5ce;" class="language-rust "><code class="language-rust" data-lang="rust"><span>include_bytes!(concat!(env!(&quot;</span><span style="color:#a3be8c;">CARGO_MANIFEST_DIR</span><span>&quot;), &quot;</span><span style="color:#a3be8c;">/../assets/comfy.png</span><span>&quot;))
+</span></code></pre>
+<p>Depending on your folder structure and how you run your game you it's likely
+going to be enough to just use the simpler variant, but it may be useful to
+know about <code>CARGO_MANIFEST_DIR</code>.</p>
+<h2 id="what-s-next">What's next?<a class="zola-anchor" href="#what-s-next" aria-label="Anchor link for: what-s-next">🔗</a></h2>
+<p>If you feel like you've already seen enough and just want to make a game, go
+ahead! Comfy does contain other features, but most of them should be easily
+discoverable, e.g. to see if a key is pressed you would call <code>is_key_pressed</code>,
+to play a sound you'd call <code>play_sound</code>, etc.</p>
+<p>The github repository contains many examples under
+<a href="https://github.com/darthdeus/comfy/tree/master/comfy/examples"><code>comfy/examples</code></a>
+that show off most of the functionality.</p>
+<p>Comfy does have a few more advanced features that don't yet have examples, and
+we do plan on adding bigger more complete games as a showcase of how we use
+comfy, but even with the examples we have you should be able to make a
+reasonably sized 2D game.</p>
+<p>If you feel like this wasn't enough, continue reading the next chapter about
+how comfy's camera works!</p>
 </div>
               <div class="docs-footer">
                   <nav class="docs-footer__nav">
@@ -196,20 +435,26 @@
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
       integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous">
-      </script>
+    </script>
+
     <script>
       document.addEventListener('DOMContentLoaded', function () {
-        const themeSwitch = document.getElementById('comfySwitch');
+      const themeSwitch = document.getElementById('comfySwitch');
+      const currentTheme = document.documentElement.getAttribute('data-bs-theme') || 'dark'; // default to 'dark' if not set
 
-        themeSwitch.addEventListener('change', function () {
-          if (themeSwitch.checked) {
-            document.documentElement.setAttribute('data-bs-theme', 'dark');
-          } else {
-            document.documentElement.setAttribute('data-bs-theme', 'light');
+      // Set the checkbox state based on the current theme
+      themeSwitch.checked = currentTheme === 'dark';
+
+      themeSwitch.addEventListener('change', function () {
+          if (themeSwitch.checked && currentTheme !== 'dark') {
+              document.documentElement.setAttribute('data-bs-theme', 'dark');
+              localStorage.setItem('data-bs-theme', 'dark');
+          } else if (!themeSwitch.checked && currentTheme !== 'light') {
+              document.documentElement.setAttribute('data-bs-theme', 'light');
+              localStorage.setItem('data-bs-theme', 'light');
           }
         });
       });
     </script>
 </body>
-
 </html>

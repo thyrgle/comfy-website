@@ -107,6 +107,7 @@
 
     
         
+        
     
 
     
@@ -115,7 +116,7 @@
 
     <li class="nav-item">
         <div class="tree-menu__label">
-            <a class="nav-link " aria-current="page" tree-menu__link" href="&#x2F;book&#x2F;camera&#x2F;">Camera</a>
+            <a class="nav-link disabled" aria-current="page" tree-menu__link" href="&#x2F;book&#x2F;camera&#x2F;">Camera</a>
             
         </div>
         
@@ -232,7 +233,6 @@
 
     
         
-        
     
 
     
@@ -241,7 +241,7 @@
 
     <li class="nav-item">
         <div class="tree-menu__label">
-            <a class="nav-link disabled" aria-current="page" tree-menu__link" href="&#x2F;book&#x2F;contributing&#x2F;">Contributing</a>
+            <a class="nav-link " aria-current="page" tree-menu__link" href="&#x2F;book&#x2F;contributing&#x2F;">Contributing</a>
             
         </div>
         
@@ -272,39 +272,53 @@
 
               <h1>
                   
-                      Contributing
+                      Camera
                   
                   
               </h1>
-              <div class="media-content"><p>Comfy is still very early in its lifecycle. While it has been used to make
-games, only a few people have used it or even seen the source code so far.
-The best way to contribute is to use comfy and report any issues you find.</p>
-<p>The codebase is not clean by any means. It is not the goal of comfy to be the
-most beautiful codebase out there. Many things may be suboptimal, and for some
-of them it makes a lot of sense to have an open discussion about it. But pull
-requests which just reformat the code or move things around or do some kind of
-re-organization will likely be rejected unless there was a prior discussion.</p>
-<p>If you find anything that does not work as expected please do open an issue.
-Comfy is meant to be a productive and ergonomic companion for those who want to
-make games.</p>
-<p>If something is not ergonomic or you have an idea for how it could be more ergonomic
-without sacrificing too much, please open an issue.</p>
-<p>If you really just want to make a pull request to contribute <em>something</em>
-without a prior discussion, the best place are the examples. Both simple and
-advanced examples, as well as small example games, are welcome.</p>
-<p>Comfy is not currently aiming for heavy documentation coverage due to the rapid
-pace of development. Examples are preferred to documentation as they're easier
-to fix when APIs change. Most things should be self-explanatory.</p>
-<p>If you'd like to chat about anything comfy related, <a href="https://discord.gg/M8hySjuG48">join our discord
-server</a>.</p>
-<p><strong>It should again be noted that comfy's codebase is <em>not</em> the cleanest code
-you've ever seen. There is a lot of low hanging fruit and areas for
-improvement, and while we're very happy and enthusiastic about improving it, we
-also want to remain pragmatic about changes.</strong> Changes which are motivated by
-real world usages in game are very likely to be incorporated, but changes which
-are purely cosmetic, or appeal to abstract values without any pragmatic
-grounding might get rejected. An example of this would be performance improvements
-that sacrifice ergonomics, and that don't show up on a profiler.</p>
+              <div class="media-content"><p>Almost every game needs a camera. Comfy recognizes this and provides a
+reasonable default main camera implementation.</p>
+<p><strong>TL;DR: <code>[0, 0]</code> is in the center of the screen, <code>y</code> goes up, world units
+independent of pixels, default zoom level is <code>30</code>.</strong></p>
+<p>This means that if your game draws a rectangular tile with size <code>1</code>, you should
+fit roughly <code>30</code> tiles on the screen horizontally. While this is opinionated,
+we found it to be a very useful default across our games.</p>
+<p>If you're making a pixel art game with <code>16x16</code> sprites, you would use
+<code>draw_sprite</code> and specify size of <code>1</code>. This means your base sprite size is &quot;one
+world unit&quot;. A small side-benefit is that if your art style changes and you now
+have <code>32x32</code> pixel sprites, all of your code still works. A sprite with <code>size = 1</code> will render with the same world size independent of your texture's
+dimensions.</p>
+<p>This becomes especially useful for games with multiple resolutions, e.g.
+non-pixel art games that utilize a lot of asset packs with inconsistent
+resolution, where one does not have to worry about resizing things just to try
+out new textures/sprites.</p>
+<p>The camera is controlled by a <code>MainCamera</code>, and as a pragmatic limitation comfy
+has <em>one</em> global main camera which can be accessed via the <code>main_camera()</code>
+function (or <code>main_camera_mut()</code>), which can be used to change where the camera
+points to, or a zoom level, simply as follows:</p>
+<pre data-lang="rust" style="background-color:#2b303b;color:#c0c5ce;" class="language-rust "><code class="language-rust" data-lang="rust"><span style="color:#b48ead;">let mut</span><span> camera = </span><span style="color:#96b5b4;">main_camera_mut</span><span>();
+</span><span>
+</span><span>camera.position = </span><span style="color:#96b5b4;">vec2</span><span>(</span><span style="color:#d08770;">5.0</span><span>, </span><span style="color:#d08770;">0.0</span><span>);
+</span><span>camera.zoom = </span><span style="color:#d08770;">50.0</span><span>;
+</span></code></pre>
+<p>Allowing for a multi-camera setup is something that is on comfy's roadmap, but again
+it's not something we needed for our own games, and as such it hasn't been a priority.</p>
+<p>If you want to move the camera to a new location and then move it back, you can
+use <code>.push_center</code> and <code>.pop_center</code> which will store the current values on a
+stack and later restore them. Since this uses a stack you can push as many
+values you want.</p>
+<h2 id="converting-between-world-and-screen-coordinates">Converting between world and screen coordinates<a class="zola-anchor" href="#converting-between-world-and-screen-coordinates" aria-label="Anchor link for: converting-between-world-and-screen-coordinates">🔗</a></h2>
+<p>Comfy also provides simple utility functions for converting between world and
+screen space, namely <code>world_to_screen</code> and <code>screen_to_world</code>. These functions
+are useful for things like mouse picking, or drawing UI elements without <code>egui</code>.</p>
+<p>As our camera is global, these functions are also global and can be called simply as</p>
+<pre data-lang="rust" style="background-color:#2b303b;color:#c0c5ce;" class="language-rust "><code class="language-rust" data-lang="rust"><span style="color:#b48ead;">let</span><span> mouse_world = </span><span style="color:#96b5b4;">screen_to_world</span><span>(</span><span style="color:#96b5b4;">mouse_position</span><span>());
+</span><span style="color:#b48ead;">let</span><span> player_screen = </span><span style="color:#96b5b4;">world_to_screen</span><span>(...);
+</span></code></pre>
+<p>Note that here we use another global function, <code>mouse_position</code>, which returns
+the screen-space mouse position. We also have a helper <code>mouse_world()</code> which
+already returns the world-space mouse position as would be converted by the
+above code.</p>
 </div>
               <div class="docs-footer">
                   <nav class="docs-footer__nav">
@@ -312,7 +326,7 @@ that sacrifice ergonomics, and that don't show up on a profiler.</p>
                       
                   </nav>
                   <div class="docs-footer__edit-wrapper">
-                      <a class="docs-footer__edit" href="https://github.com/darthdeus/comfy-website/edit/master/content/book&#x2F;contributing&#x2F;_index.md">
+                      <a class="docs-footer__edit" href="https://github.com/darthdeus/comfy-website/edit/master/content/book&#x2F;camera&#x2F;_index.md">
                           <i class="icon icon--pencil"></i>
                           Improve this page
                       </a>

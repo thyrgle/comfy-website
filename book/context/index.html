@@ -1,0 +1,448 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
+  <meta name="description" content="Comfy is an ergonomic 2D game engine built in Rust. It's designed to be opinionated, productive, and easy to use.">
+
+  <title>Comfy Engine</title>
+
+  <script>
+      (function() {
+          const savedTheme = localStorage.getItem('data-bs-theme') || 'dark';  // default to 'dark' if not set
+          document.documentElement.setAttribute('data-bs-theme', savedTheme);
+      })();
+  </script>
+
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fira+Sans:wght@400;700&display=swap" />
+
+  <!-- <link -->
+  <!--   href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" -->
+  <!--   rel="stylesheet" -->
+  <!--   integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" -->
+  <!--   crossorigin="anonymous" -->
+  <!-- /> -->
+
+  <link rel="stylesheet" href="/style.css" />
+</head>
+
+<body>
+  <div class="container">
+    <header class="d-flex flex-wrap justify-content-center py-3 mb-4 border-bottom">
+      <a href="/" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto link-body-emphasis text-decoration-none">
+        <img src="/comfy.png" alt="logo of the comfy engine" class="bi me-2" width="32" height="32" />
+        <span class="fs-4"><strong>Comfy</strong></span>
+      </a>
+
+      <ul class="nav nav-pills">
+        <li class="nav-item">
+          <a href="/book" class="nav-link">Book</a>
+        </li>
+        <li class="nav-item">
+          <a href="/features" class="nav-link">Features</a>
+        </li>
+        <li class="nav-item"><a href="/examples" class="nav-link">Examples</a></li>
+        <li class="nav-item">
+          <a href="#" class="">
+            <img class="light-github" width="40" height="40" src="/github-mark.svg" alt="Github repo" />
+            <img class="dark-github" width="40" height="40" src="/github-mark-white.svg" alt="Github repo" />
+          </a>
+        </li>
+
+        <li class="ms-3 my-2">
+          <div class="form-check form-switch">
+            <input class="form-check-input" type="checkbox" role="switch" id="comfySwitch" style="cursor: pointer">
+            <label class="form-check-label" for="comfySwitch">Dark Theme</label>
+          </div>
+        </li>
+      </ul>
+
+    </header>
+
+    <section class="section">
+      <div class="container">
+
+<section>
+  <div class="row">
+    <div class="col-md-3">
+      
+      
+      
+    <ul class="nav flex-column">
+        
+            
+    
+    
+    
+    
+    
+    
+
+    
+        
+    
+
+    
+
+    
+
+    <li class="nav-item">
+        <div class="tree-menu__label">
+            <a class="nav-link " aria-current="page" tree-menu__link" href="&#x2F;book&#x2F;getting-started&#x2F;">Getting Started</a>
+            
+        </div>
+        
+    </li>
+
+        
+            
+    
+    
+    
+    
+    
+    
+
+    
+        
+    
+
+    
+
+    
+
+    <li class="nav-item">
+        <div class="tree-menu__label">
+            <a class="nav-link " aria-current="page" tree-menu__link" href="&#x2F;book&#x2F;camera&#x2F;">Camera</a>
+            
+        </div>
+        
+    </li>
+
+        
+            
+    
+    
+    
+    
+    
+    
+
+    
+        
+        
+    
+
+    
+
+    
+
+    <li class="nav-item">
+        <div class="tree-menu__label">
+            <a class="nav-link disabled" aria-current="page" tree-menu__link" href="&#x2F;book&#x2F;context&#x2F;">Context</a>
+            
+        </div>
+        
+    </li>
+
+        
+            
+    
+    
+    
+    
+    
+    
+
+    
+        
+    
+
+    
+
+    
+
+    <li class="nav-item">
+        <div class="tree-menu__label">
+            <a class="nav-link " aria-current="page" tree-menu__link" href="&#x2F;book&#x2F;ecs&#x2F;">ECS</a>
+            
+        </div>
+        
+    </li>
+
+        
+            
+    
+    
+    
+    
+    
+    
+
+    
+        
+    
+
+    
+
+    
+
+    <li class="nav-item">
+        <div class="tree-menu__label">
+            <a class="nav-link " aria-current="page" tree-menu__link" href="&#x2F;book&#x2F;other_engines&#x2F;">Why comfy and not X?</a>
+            
+        </div>
+        
+    </li>
+
+        
+            
+    
+    
+    
+    
+    
+    
+
+    
+        
+    
+
+    
+
+    
+
+    <li class="nav-item">
+        <div class="tree-menu__label">
+            <a class="nav-link " aria-current="page" tree-menu__link" href="&#x2F;book&#x2F;roadmap&#x2F;">Roadmap</a>
+            
+        </div>
+        
+    </li>
+
+        
+            
+    
+    
+    
+    
+    
+    
+
+    
+        
+    
+
+    
+
+    
+
+    <li class="nav-item">
+        <div class="tree-menu__label">
+            <a class="nav-link " aria-current="page" tree-menu__link" href="&#x2F;book&#x2F;contributing&#x2F;">Contributing</a>
+            
+        </div>
+        
+    </li>
+
+        
+    </ul>
+
+
+    </div>
+    <div class="col-md-9">
+
+      <div class="docs-page">
+          <div class="docs-content">
+              
+              
+              
+              
+
+              
+
+              
+              
+              
+              
+
+              
+
+              <h1>
+                  
+                      Context
+                  
+                  
+              </h1>
+              <div class="media-content"><p>A core design philosophy in comfy is that the engine should get out of
+your way as much as possible. This includes things like not having to
+specify 10+ different parameters in order to read input from the keyboard,
+look at mouse position, and play a sound.</p>
+<p>This is a controversial topic, and many prefer as much decoupling as possible,
+but we've found that as far as building games goes, there is little value in
+such separation.</p>
+<p>Almost all game code will want to play some sounds, draw something, change
+animation state and run some game logic.</p>
+<p>Comfy's solution to the above is the <code>EngineContext</code>, a single struct which can
+be passed around throughout the game and that references everything you may
+want to use. <em>Almost</em> meaning that some functionality is exposed through global
+functions and does not even require using the context. These are things like
+drawing, input, playing sounds, etc.</p>
+<p>The <code>EngineContext</code> provides direct access to things like
+<a href="https://docs.rs/egui/latest/egui/"><code>egui</code></a>, lighting settings, ECS world and
+its related command buffer, cooldowns, and more.</p>
+<p>We've found that it is <em>extremely</em> common to be in the middle of writing
+gameplay logic and realize &quot;oh crap I need to make an egui window to debug this
+better&quot;. Being able to just write <code>c.egui</code> saves the developer from breaking
+their thought process, and more importantly it makes cleanup significantly
+easier.</p>
+<h2 id="game-specific-context">Game specific Context<a class="zola-anchor" href="#game-specific-context" aria-label="Anchor link for: game-specific-context">🔗</a></h2>
+<p>While the <code>EngineContext</code> idea is great, we've found that going a bit further
+is also extremely useful for game code. This section is by no means
+prescriptive, and you can structure your comfy games however you prefer. But it
+is also a pattern we've been working on for well over a year, and something
+we've found increasingly more useful throughout building our games.</p>
+<p>Firstly, let's introduce the idea of <code>GameState</code>, which is simply a struct that
+stores game-related state that is global across the game. For very complicated
+games one might want to use finite state machines and store state in a more
+complicated way, but let's leave out AAA-size games for a while and focus on
+smaller indie games, and assume we can just have our state in one place. ECS
+users might find this to be the place where they store some of their <code>Entity</code>
+handles if they don't want to use tag components.</p>
+<p>Next up this is where we introduce the <code>GameContext</code>, which is a struct we'll
+be using in <em>all</em> of our game code. It will provide us access to
+<code>EngineContext</code> for when we need it, but it'll also expose parts of <code>GameState</code>
+and whatever else we might need.</p>
+<p>The rest of this section roughly follows the <a href="https://github.com/darthdeus/comfy/blob/master/comfy/examples/physics.rs"><code>physics example</code></a>.</p>
+<p>Let's say our game state looks something like this:</p>
+<pre data-lang="rust" style="background-color:#2b303b;color:#c0c5ce;" class="language-rust "><code class="language-rust" data-lang="rust"><span style="color:#b48ead;">pub struct </span><span>GameState {
+</span><span>    </span><span style="color:#b48ead;">pub </span><span style="color:#bf616a;">spawn_timer</span><span>: </span><span style="color:#b48ead;">f32</span><span>,
+</span><span>    </span><span style="color:#b48ead;">pub </span><span style="color:#bf616a;">physics</span><span>: Physics,
+</span><span>    </span><span style="color:#b48ead;">pub </span><span style="color:#bf616a;">ball_spawning_speed</span><span>: BallSpawningSpeed,
+</span><span>}
+</span></code></pre>
+<p>We store a simple timer in f32, a physics engine state, and a flag telling us
+how fast we want to spawn balls.</p>
+<p>Now what should our <code>GameContext</code> look like? A simple variant should be
+something along the lines of the following (lifetimes removed for now):</p>
+<pre data-lang="rust" style="background-color:#2b303b;color:#c0c5ce;" class="language-rust "><code class="language-rust" data-lang="rust"><span style="color:#b48ead;">pub struct </span><span>GameContext {
+</span><span>    </span><span style="color:#b48ead;">pub </span><span style="color:#bf616a;">state</span><span>: &amp;</span><span style="color:#b48ead;">mut</span><span> GameState,
+</span><span>    </span><span style="color:#b48ead;">pub </span><span style="color:#bf616a;">engine</span><span>: &amp;</span><span style="color:#b48ead;">mut</span><span> EngineContext,
+</span><span>}
+</span></code></pre>
+<p>The benefit is we don't have to write a lot of code, but the downside is now
+all our code will have to do <code>c.state.physics</code> or <code>c.state.spawn_timer</code>. This
+is not a huge deal, and some might prefer taking a small hit in ergonomics in game code
+to save a bit of writing.</p>
+<p>But we've found that the hardest part of making a game is <em>actually making the
+game</em>, that is having good gameplay code, fun features, lots of iteration on
+the game itself, etc. This is why we prefer the significantly more verbose
+approach that will look ugly and redundant in the place where we define the
+<code>GameContext</code>, but as will also simplify all of our game code.</p>
+<pre data-lang="rust" style="background-color:#2b303b;color:#c0c5ce;" class="language-rust "><code class="language-rust" data-lang="rust"><span style="color:#b48ead;">pub struct </span><span>GameContext&lt;</span><span style="color:#b48ead;">&#39;a</span><span>, </span><span style="color:#b48ead;">&#39;b</span><span>: </span><span style="color:#b48ead;">&#39;a</span><span>&gt; {
+</span><span>    </span><span style="color:#b48ead;">pub </span><span style="color:#bf616a;">delta</span><span>: </span><span style="color:#b48ead;">f32</span><span>,
+</span><span>    </span><span style="color:#b48ead;">pub </span><span style="color:#bf616a;">spawn_timer</span><span>: &amp;</span><span style="color:#b48ead;">&#39;a mut f32</span><span>,
+</span><span>    </span><span style="color:#b48ead;">pub </span><span style="color:#bf616a;">ball_spawning_speed</span><span>: &amp;</span><span style="color:#b48ead;">&#39;a mut</span><span> BallSpawningSpeed,
+</span><span>    </span><span style="color:#b48ead;">pub </span><span style="color:#bf616a;">physics</span><span>: &amp;</span><span style="color:#b48ead;">&#39;a mut</span><span> Physics,
+</span><span>    </span><span style="color:#b48ead;">pub </span><span style="color:#bf616a;">engine</span><span>: &amp;</span><span style="color:#b48ead;">&#39;a mut </span><span>EngineContext&lt;</span><span style="color:#b48ead;">&#39;b</span><span>&gt;,
+</span><span>}
+</span></code></pre>
+<p>This time we've also included all of the necessary lifetimes. If these look
+scary (especially since there's two), don't worry as these are the only two
+lifetimes you'll see while using comfy :) There are a few ways around this, and
+many potential tradeoffs, but again, it should be noted that a <code>GameContext</code> is
+only defined once per game.</p>
+<p>Note that we also added <code>delta</code>, which while being available on the
+<code>EngineContext</code> is something that almost every bit of game code will want to
+touch, and thus having a simple <code>c.delta</code> instead of <code>c.engine.delta</code> is a nice
+quality of life improvement, at the cost of a few extra lines of code.</p>
+<p>The next part could in theory be handled by a procedural macro, but comfy wants
+to remain simple. As such we'll have to write a function which actually creates
+this context object, which means we have to specify each field <em>again</em>. If
+you're reading this and passing out from the amount of boilerplate, note that
+this is entirely optional. Your game does not have to do any of this. But it is
+a pattern we've been using for a while and found incredibly useful in terms of
+our productivity.</p>
+<p>Let's define the <code>make_context</code> function that will take <code>GameState</code> and
+<code>EngineContext</code> and create a <code>GameContext</code>.</p>
+<pre data-lang="rust" style="background-color:#2b303b;color:#c0c5ce;" class="language-rust "><code class="language-rust" data-lang="rust"><span style="color:#65737e;">// An unfortunate re-apparance of the two lifetimes.
+</span><span style="color:#65737e;">// This is the last time I promise.
+</span><span style="color:#b48ead;">fn </span><span style="color:#8fa1b3;">make_context</span><span>&lt;</span><span style="color:#b48ead;">&#39;a</span><span>, </span><span style="color:#b48ead;">&#39;b</span><span>: </span><span style="color:#b48ead;">&#39;a</span><span>&gt;(
+</span><span>    </span><span style="color:#bf616a;">state</span><span>: &amp;</span><span style="color:#b48ead;">&#39;a mut</span><span> GameState,
+</span><span>    </span><span style="color:#bf616a;">engine</span><span>: &amp;</span><span style="color:#b48ead;">&#39;a mut </span><span>EngineContext&lt;</span><span style="color:#b48ead;">&#39;b</span><span>&gt;,
+</span><span>) -&gt; GameContext&lt;</span><span style="color:#b48ead;">&#39;a</span><span>, </span><span style="color:#b48ead;">&#39;b</span><span>&gt; {
+</span><span>    GameContext {
+</span><span>        spawn_timer: &amp;</span><span style="color:#b48ead;">mut</span><span> state.spawn_timer,
+</span><span>        delta: engine.delta,
+</span><span>        ball_spawning_speed: &amp;</span><span style="color:#b48ead;">mut</span><span> state.ball_spawning_speed,
+</span><span>        egui: engine.egui,
+</span><span>        physics: &amp;</span><span style="color:#b48ead;">mut</span><span> state.physics,
+</span><span>        engine,
+</span><span>    }
+</span><span>}
+</span></code></pre>
+<p>As a last step, comfy provides a <code>comfy_game!(...)</code> macro which can take you the rest of the way
+and generate the necessary boilerplate.</p>
+<pre data-lang="rust" style="background-color:#2b303b;color:#c0c5ce;" class="language-rust "><code class="language-rust" data-lang="rust"><span>comfy_game!(
+</span><span>    &quot;</span><span style="color:#a3be8c;">Contexts are fun :)</span><span>&quot;,
+</span><span>    GameContext,
+</span><span>    GameState,
+</span><span>    make_context,
+</span><span>    setup,
+</span><span>    update
+</span><span>);
+</span></code></pre>
+<p>Feel free to look inside the macro definition, or explore the
+<a href="https://github.com/darthdeus/comfy/blob/master/comfy/examples/full_game_loop.rs"><code>full_game_loop</code></a>
+example to see what this actually does, but note there is no extra magic hidden behind it.</p>
+</div>
+              <div class="docs-footer">
+                  <nav class="docs-footer__nav">
+                      
+                      
+                  </nav>
+                  <div class="docs-footer__edit-wrapper">
+                      <a class="docs-footer__edit" href="https://github.com/darthdeus/comfy-website/edit/master/content/book&#x2F;context&#x2F;_index.md">
+                          <i class="icon icon--pencil"></i>
+                          Improve this page
+                      </a>
+                  </div>
+              </div>
+          </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+
+</div>
+    </section>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous">
+    </script>
+
+    <script>
+      document.addEventListener('DOMContentLoaded', function () {
+      const themeSwitch = document.getElementById('comfySwitch');
+      const currentTheme = document.documentElement.getAttribute('data-bs-theme') || 'dark'; // default to 'dark' if not set
+
+      // Set the checkbox state based on the current theme
+      themeSwitch.checked = currentTheme === 'dark';
+
+      themeSwitch.addEventListener('change', function () {
+          if (themeSwitch.checked && currentTheme !== 'dark') {
+              document.documentElement.setAttribute('data-bs-theme', 'dark');
+              localStorage.setItem('data-bs-theme', 'dark');
+          } else if (!themeSwitch.checked && currentTheme !== 'light') {
+              document.documentElement.setAttribute('data-bs-theme', 'light');
+              localStorage.setItem('data-bs-theme', 'light');
+          }
+        });
+      });
+    </script>
+</body>
+</html>
