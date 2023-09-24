@@ -70,6 +70,10 @@ $body-tertiary-bg: lighten($non-photo-blue, 3%);
 $link-color: $teal;
 
 
+.example-code pre {
+  padding: 20px;
+}
+
 .comfy-logo-big {
   filter: drop-shadow(0 5px 6px color.adjust(darken($non-photo-blue, 15%), $alpha: -0.2));
 }

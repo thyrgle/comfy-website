@@ -41,6 +41,10 @@ video = \"/videos/{{example}}.webm\"
 gh_source = \"//github.com/darthdeus/comfy/blob/master/comfy/examples/{{example}}.rs\"
 wasm_source = \"/wasm/{{example}}/index.html\"
 +++
+
+\`\`\`rust
+{{code}}
+\`\`\`
 """
 
 for example in $(ls comfy/examples | grep -e "\.rs$" | sed "s/\.rs//"); do
@@ -50,14 +54,25 @@ for example in $(ls comfy/examples | grep -e "\.rs$" | sed "s/\.rs//"); do
   mkdir -p "$dir"
   cat index.html | sed "s/{{example}}/$example/" > "$dir/index.html"
   wasm-bindgen --out-dir "$dir" --target web "target/wasm32-unknown-unknown/release/examples/$example.wasm"
-  echo "$template" | sed "s/{{example}}/$example/g" > "$parent_dir/content/examples/$example.md"
+  code=$(cat "comfy/examples/$example.rs")
+  # Use Python to perform the substitution
+  result=$(python3 - <<END
+template = """${template}"""
+code = """${code}"""
+example = "$example"
+print(template.replace("{{example}}", example).replace("{{code}}", code))
+END
+)
+
+  echo "$result" > "$parent_dir/content/examples/$example.md"
+  # echo "$template" | sed "s/{{example}}/$example/g" | sed "s/{{code}}/$code/" > "$parent_dir/content/examples/$example.md"
 done
 
-for example in $(ls comfy/examples | grep -e "\.rs$" | sed "s/\.rs//"); do
-  cargo run --release --example $example --features comfy-wgpu/record-pngs
-  cp "target/screenshots/$example.png" "$parent_dir/static/screenshots/$example.png"
-  cp "target/videos/$example.webm" "$parent_dir/static/videos/$example.webm"
-done
+# for example in $(ls comfy/examples | grep -e "\.rs$" | sed "s/\.rs//"); do
+#   cargo run --release --example $example --features comfy-wgpu/record-pngs
+#   cp "target/screenshots/$example.png" "$parent_dir/static/screenshots/$example.png"
+#   cp "target/videos/$example.webm" "$parent_dir/static/videos/$example.webm"
+# done
 
 rm -rf "$parent_dir/static/wasm"
 cp -R "target/generated/" "$parent_dir/static/wasm/"
