@@ -44,10 +44,17 @@
           <a href="/features" class="nav-link">Features</a>
         </li>
         <li class="nav-item"><a href="/examples" class="nav-link">Examples</a></li>
+        <li class="nav-item"><a href="/blog" class="nav-link">Blog</a></li>
         <li class="nav-item">
-          <a href="#" class="">
+          <a href="https://github.com/darthdeus/comfy" class="">
             <img class="light-github" width="40" height="40" src="/github-mark.svg" alt="Github repo" />
             <img class="dark-github" width="40" height="40" src="/github-mark-white.svg" alt="Github repo" />
+          </a>
+        </li>
+        <li class="nav-item">
+          <a href="https://discord.com/invite/XrGZQkq" class="">
+            <img class="light-discord" width="40" height="40" src="/discord-mark-black.png" alt="Discord" />
+            <img class="dark-discord" width="40" height="40" src="/discord-mark-white.png" alt="Discord" />
           </a>
         </li>
 
@@ -113,7 +120,7 @@
           if (themeSwitch.checked && currentTheme !== 'dark') {
               document.documentElement.setAttribute('data-bs-theme', 'dark');
               localStorage.setItem('data-bs-theme', 'dark');
-          } else if (!themeSwitch.checked && currentTheme !== 'light') {
+          } else if (!themeSwitch.checked) {
               document.documentElement.setAttribute('data-bs-theme', 'light');
               localStorage.setItem('data-bs-theme', 'light');
           }

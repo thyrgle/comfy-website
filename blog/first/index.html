@@ -70,43 +70,16 @@
 
     <section class="section">
       <div class="container">
-<h1 class="title">ecs_sprite</h1>
+<h1 class="title">Hello Comfy!</h1>
 <p class="subtitle"><strong>2023-09-24</strong></p>
-<pre data-lang="rust" style="background-color:#2b303b;color:#c0c5ce;" class="language-rust "><code class="language-rust" data-lang="rust"><span style="color:#b48ead;">use </span><span>comfy::*;
-</span><span>
-</span><span>simple_game!(&quot;</span><span style="color:#a3be8c;">ECS Sprite Example</span><span>&quot;, setup, update);
-</span><span>
-</span><span style="color:#b48ead;">struct </span><span>Player;
-</span><span>
-</span><span style="color:#b48ead;">fn </span><span style="color:#8fa1b3;">setup</span><span>(</span><span style="color:#bf616a;">c</span><span>: &amp;</span><span style="color:#b48ead;">mut</span><span> EngineContext) {
-</span><span>    c.</span><span style="color:#96b5b4;">load_texture_from_bytes</span><span>(
-</span><span>        </span><span style="color:#65737e;">// Every texture gets a string name later used to reference it.
-</span><span>        &quot;</span><span style="color:#a3be8c;">comfy</span><span>&quot;,
-</span><span>        include_bytes!(concat!(
-</span><span>            env!(&quot;</span><span style="color:#a3be8c;">CARGO_MANIFEST_DIR</span><span>&quot;),
-</span><span>            &quot;</span><span style="color:#a3be8c;">/../assets/comfy.png</span><span>&quot;
-</span><span>        )),
-</span><span>        wgpu::AddressMode::ClampToEdge,
-</span><span>    );
-</span><span>
-</span><span>    </span><span style="color:#65737e;">// Spawn a new entity with a sprite and a transform.
-</span><span>    c.</span><span style="color:#96b5b4;">commands</span><span>().</span><span style="color:#96b5b4;">spawn</span><span>((
-</span><span>        Sprite::new(&quot;</span><span style="color:#a3be8c;">comfy</span><span>&quot;.</span><span style="color:#96b5b4;">to_string</span><span>(), </span><span style="color:#96b5b4;">vec2</span><span>(</span><span style="color:#d08770;">1.0</span><span>, </span><span style="color:#d08770;">1.0</span><span>), </span><span style="color:#d08770;">100</span><span>, </span><span style="color:#d08770;">WHITE</span><span>),
-</span><span>        Transform::position(</span><span style="color:#96b5b4;">vec2</span><span>(</span><span style="color:#d08770;">0.0</span><span>, </span><span style="color:#d08770;">0.0</span><span>)),
-</span><span>        </span><span style="color:#65737e;">// Use simple struct to tag your entities to be able to query them later.
-</span><span>        Player,
-</span><span>    ));
-</span><span>}
-</span><span>
-</span><span style="color:#b48ead;">fn </span><span style="color:#8fa1b3;">update</span><span>(</span><span style="color:#bf616a;">c</span><span>: &amp;</span><span style="color:#b48ead;">mut</span><span> EngineContext) {
-</span><span>    </span><span style="color:#65737e;">// Query all entities with Player component, Sprite component and Transform component.
-</span><span>    </span><span style="color:#b48ead;">for </span><span>(_, (_, _, transform)) in
-</span><span>        c.</span><span style="color:#96b5b4;">world</span><span>().query::&lt;(&amp;Player, &amp;Sprite, &amp;</span><span style="color:#b48ead;">mut</span><span> Transform)&gt;().</span><span style="color:#96b5b4;">iter</span><span>()
-</span><span>    {
-</span><span>        transform.scale = (</span><span style="color:#96b5b4;">get_time</span><span>() as </span><span style="color:#b48ead;">f32</span><span>).</span><span style="color:#96b5b4;">sin</span><span>() + </span><span style="color:#d08770;">2.0</span><span>;
-</span><span>    }
-</span><span>}
-</span></code></pre>
+<p>This post introduces Comfy, a new fun 2D rust game engine built on top of wgpu.
+Comfy is designed to be opinionated, productive and easy to use. It's free and
+open source under MIT and Apache 2 licenses.</p>
+<p>Today we're releasing the first version of Comfy, <code>v0.1</code>, which is just the
+very beginning of its journey.</p>
+<p>Comfy is a product of our work at <a href="https://loglog.games/">LogLog Games</a>, where
+we've been using it for almost a year now, and have currently a few games in progress that are using Comfy,
+including some smaller released titles.</p>
  </div>
     </section>
 

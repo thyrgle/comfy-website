@@ -44,10 +44,17 @@
           <a href="/features" class="nav-link">Features</a>
         </li>
         <li class="nav-item"><a href="/examples" class="nav-link">Examples</a></li>
+        <li class="nav-item"><a href="/blog" class="nav-link">Blog</a></li>
         <li class="nav-item">
-          <a href="#" class="">
+          <a href="https://github.com/darthdeus/comfy" class="">
             <img class="light-github" width="40" height="40" src="/github-mark.svg" alt="Github repo" />
             <img class="dark-github" width="40" height="40" src="/github-mark-white.svg" alt="Github repo" />
+          </a>
+        </li>
+        <li class="nav-item">
+          <a href="https://discord.com/invite/XrGZQkq" class="">
+            <img class="light-discord" width="40" height="40" src="/discord-mark-black.png" alt="Discord" />
+            <img class="dark-discord" width="40" height="40" src="/discord-mark-white.png" alt="Discord" />
           </a>
         </li>
 
@@ -248,6 +255,56 @@
     </li>
 
         
+            
+    
+    
+    
+    
+    
+    
+
+    
+        
+    
+
+    
+
+    
+
+    <li class="nav-item">
+        <div class="tree-menu__label">
+            <a class="nav-link " aria-current="page" tree-menu__link" href="&#x2F;book&#x2F;games_using_comfy&#x2F;">Games Using Comfy</a>
+            
+        </div>
+        
+    </li>
+
+        
+            
+    
+    
+    
+    
+    
+    
+
+    
+        
+    
+
+    
+
+    
+
+    <li class="nav-item">
+        <div class="tree-menu__label">
+            <a class="nav-link " aria-current="page" tree-menu__link" href="&#x2F;book&#x2F;credits&#x2F;">Credits</a>
+            
+        </div>
+        
+    </li>
+
+        
     </ul>
 
 
@@ -325,10 +382,9 @@ opinionated way of making games.</p>
 <p>There are many more subtle differences, but in principle you can think of as
 comfy as &quot;macroquad with more batteries included, built on top of wgpu, with
 less cross platform capabilities&quot;. Note that because comfy builds on wgpu and
-not OpenGL we don't have the same immediate mode interactions with Gthat
-because comfy builds on wgpu and not OpenGL we don't have the same immediate
-mode interactions with GL. This makes some things more difficult, e.g. render
-targets, changing shader uniforms, etc.</p>
+not OpenGL we don't have the same immediate mode interactions with GL. This
+makes some things more difficult, e.g. render targets, changing shader
+uniforms, etc.</p>
 <p>Comfy intends to support all of these features, but it will take a bit more
 development. Many engines (e.g. bevy and rend3) end up using render graphs in
 order to expose the rendering logic to users. While these are very flexible and
@@ -370,6 +426,19 @@ small games.</p>
 <p>The only features you'll find in comfy are those which can be immediately used,
 understood, and that work from day 1. If a feature is not being used in a real
 game it won't appear in the engine source code.</p>
+<h2 id="godot-rust"><a href="https://godot-rust.github.io/">godot-rust</a><a class="zola-anchor" href="#godot-rust" aria-label="Anchor link for: godot-rust">🔗</a></h2>
+<p>If the goal is to &quot;actually make a game&quot;, especially in 3D, then godot-rust is
+very likely the winner. No rust engine can match what Godot offers, and having
+used godot-rust to make
+<a href="https://store.steampowered.com/app/1673940/BITGUN/">BITGUN</a> over the course of
+a year we can say that it is very mature, stable and well maintained.</p>
+<p>However, the main benefit (Godot) is also its greatest downside for us. We've
+found that code-based frameworks are much more fun to use. Many people consider
+GDScript to be the problematic part in Godot, but when working on BITGUN it
+actually helped us quite a bit, as there are many things which &quot;only need a few
+lines of code&quot; and don't really benefit from using Rust.</p>
+<p>Especially if you're considering making a 3D game, godot-rust is probably the best
+option of helping you ship something.</p>
 <h2 id="ggez"><a href="https://ggez.rs/">ggez</a><a class="zola-anchor" href="#ggez" aria-label="Anchor link for: ggez">🔗</a></h2>
 <p>ggez is one of those libraries that have been around for a while, but I've
 never really got a chance to use it. It does seem to have a bit of a history
@@ -421,7 +490,7 @@ hence why they're the ones in the comparison.</p>
           if (themeSwitch.checked && currentTheme !== 'dark') {
               document.documentElement.setAttribute('data-bs-theme', 'dark');
               localStorage.setItem('data-bs-theme', 'dark');
-          } else if (!themeSwitch.checked && currentTheme !== 'light') {
+          } else if (!themeSwitch.checked) {
               document.documentElement.setAttribute('data-bs-theme', 'light');
               localStorage.setItem('data-bs-theme', 'light');
           }

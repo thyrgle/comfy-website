@@ -4,6 +4,13 @@
         <loc>https://darthdeus.github.io/comfy/</loc>
     </url>
     <url>
+        <loc>https://darthdeus.github.io/comfy/blog/</loc>
+    </url>
+    <url>
+        <loc>https://darthdeus.github.io/comfy/blog/first/</loc>
+        <lastmod>2023-09-24</lastmod>
+    </url>
+    <url>
         <loc>https://darthdeus.github.io/comfy/book/</loc>
     </url>
     <url>
@@ -16,7 +23,13 @@
         <loc>https://darthdeus.github.io/comfy/book/contributing/</loc>
     </url>
     <url>
+        <loc>https://darthdeus.github.io/comfy/book/credits/</loc>
+    </url>
+    <url>
         <loc>https://darthdeus.github.io/comfy/book/ecs/</loc>
+    </url>
+    <url>
+        <loc>https://darthdeus.github.io/comfy/book/games_using_comfy/</loc>
     </url>
     <url>
         <loc>https://darthdeus.github.io/comfy/book/getting-started/</loc>

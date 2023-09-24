@@ -44,10 +44,17 @@
           <a href="/features" class="nav-link">Features</a>
         </li>
         <li class="nav-item"><a href="/examples" class="nav-link">Examples</a></li>
+        <li class="nav-item"><a href="/blog" class="nav-link">Blog</a></li>
         <li class="nav-item">
-          <a href="#" class="">
+          <a href="https://github.com/darthdeus/comfy" class="">
             <img class="light-github" width="40" height="40" src="/github-mark.svg" alt="Github repo" />
             <img class="dark-github" width="40" height="40" src="/github-mark-white.svg" alt="Github repo" />
+          </a>
+        </li>
+        <li class="nav-item">
+          <a href="https://discord.com/invite/XrGZQkq" class="">
+            <img class="light-discord" width="40" height="40" src="/discord-mark-black.png" alt="Discord" />
+            <img class="dark-discord" width="40" height="40" src="/discord-mark-white.png" alt="Discord" />
           </a>
         </li>
 
@@ -248,6 +255,56 @@
     </li>
 
         
+            
+    
+    
+    
+    
+    
+    
+
+    
+        
+    
+
+    
+
+    
+
+    <li class="nav-item">
+        <div class="tree-menu__label">
+            <a class="nav-link " aria-current="page" tree-menu__link" href="&#x2F;book&#x2F;games_using_comfy&#x2F;">Games Using Comfy</a>
+            
+        </div>
+        
+    </li>
+
+        
+            
+    
+    
+    
+    
+    
+    
+
+    
+        
+    
+
+    
+
+    
+
+    <li class="nav-item">
+        <div class="tree-menu__label">
+            <a class="nav-link " aria-current="page" tree-menu__link" href="&#x2F;book&#x2F;credits&#x2F;">Credits</a>
+            
+        </div>
+        
+    </li>
+
+        
     </ul>
 
 
@@ -307,6 +364,20 @@ and see what you can find. Note that almost nothing in comfy is hidden from the
 user, and all internal state/fields are exposed. This is something we've done
 intentionally to make comfy a bit more flexible without having to build complex
 render graphs and other modular data structures.</p>
+<p>The builtin <code>EngineContext</code> exposes a few helper methods:</p>
+<ul>
+<li><code>c.world()</code> for immutable access to <code>&amp;World</code></li>
+<li><code>c.world_mut()</code> for mutable access to <code>&amp;mut World</code></li>
+<li><code>c.commands()</code> for mutable access to the <a href="https://docs.rs/hecs/latest/hecs/struct.CommandBuffer.html"><code>CommandBuffer</code></a></li>
+</ul>
+<p>If you're not sure what these do or how to use them, the <a href="https://docs.rs/hecs/latest/hecs/"><code>hecs documentation</code></a> is a great place to learn!
+Out of all the ECS libraries we've tried <code>hecs</code> has been the best and simplest
+by far, and would 100% recommend it to everyone. It's not as <em>comfy</em> as bevy's
+automagic resource injection, but we've the more explicit nature of it to be a
+great productivity boost.</p>
+<p><strong>Notably, comfy does run the <code>CommandBuffer</code>'s <code>run_on(...)</code> every frame,
+which means you can just queue commands and have comfy run them on the builtin
+ECS world.</strong></p>
 </div>
               <div class="docs-footer">
                   <nav class="docs-footer__nav">
@@ -347,7 +418,7 @@ render graphs and other modular data structures.</p>
           if (themeSwitch.checked && currentTheme !== 'dark') {
               document.documentElement.setAttribute('data-bs-theme', 'dark');
               localStorage.setItem('data-bs-theme', 'dark');
-          } else if (!themeSwitch.checked && currentTheme !== 'light') {
+          } else if (!themeSwitch.checked) {
               document.documentElement.setAttribute('data-bs-theme', 'light');
               localStorage.setItem('data-bs-theme', 'light');
           }

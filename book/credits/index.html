@@ -239,7 +239,6 @@
 
     
         
-        
     
 
     
@@ -248,7 +247,7 @@
 
     <li class="nav-item">
         <div class="tree-menu__label">
-            <a class="nav-link disabled" aria-current="page" tree-menu__link" href="&#x2F;book&#x2F;contributing&#x2F;">Contributing</a>
+            <a class="nav-link " aria-current="page" tree-menu__link" href="&#x2F;book&#x2F;contributing&#x2F;">Contributing</a>
             
         </div>
         
@@ -290,6 +289,7 @@
 
     
         
+        
     
 
     
@@ -298,7 +298,7 @@
 
     <li class="nav-item">
         <div class="tree-menu__label">
-            <a class="nav-link " aria-current="page" tree-menu__link" href="&#x2F;book&#x2F;credits&#x2F;">Credits</a>
+            <a class="nav-link disabled" aria-current="page" tree-menu__link" href="&#x2F;book&#x2F;credits&#x2F;">Credits</a>
             
         </div>
         
@@ -329,39 +329,33 @@
 
               <h1>
                   
-                      Contributing
+                      Credits
                   
                   
               </h1>
-              <div class="media-content"><p>Comfy is still very early in its lifecycle. While it has been used to make
-games, only a few people have used it or even seen the source code so far.
-The best way to contribute is to use comfy and report any issues you find.</p>
-<p>The codebase is not clean by any means. It is not the goal of comfy to be the
-most beautiful codebase out there. Many things may be suboptimal, and for some
-of them it makes a lot of sense to have an open discussion about it. But pull
-requests which just reformat the code or move things around or do some kind of
-re-organization will likely be rejected unless there was a prior discussion.</p>
-<p>If you find anything that does not work as expected please do open an issue.
-Comfy is meant to be a productive and ergonomic companion for those who want to
-make games.</p>
-<p>If something is not ergonomic or you have an idea for how it could be more ergonomic
-without sacrificing too much, please open an issue.</p>
-<p>If you really just want to make a pull request to contribute <em>something</em>
-without a prior discussion, the best place are the examples. Both simple and
-advanced examples, as well as small example games, are welcome.</p>
-<p>Comfy is not currently aiming for heavy documentation coverage due to the rapid
-pace of development. Examples are preferred to documentation as they're easier
-to fix when APIs change. Most things should be self-explanatory.</p>
-<p>If you'd like to chat about anything comfy related, <a href="https://discord.gg/M8hySjuG48">join our discord
-server</a>.</p>
-<p><strong>It should again be noted that comfy's codebase is <em>not</em> the cleanest code
-you've ever seen. There is a lot of low hanging fruit and areas for
-improvement, and while we're very happy and enthusiastic about improving it, we
-also want to remain pragmatic about changes.</strong> Changes which are motivated by
-real world usages in game are very likely to be incorporated, but changes which
-are purely cosmetic, or appeal to abstract values without any pragmatic
-grounding might get rejected. An example of this would be performance improvements
-that sacrifice ergonomics, and that don't show up on a profiler.</p>
+              <div class="media-content"><p>Comfy would not be possible without the Rust ecosystem. We build on the
+shoulders of giants, notably (in no particular order)
+<a href="https://wgpu.rs/">wgpu</a>, <a href="https://docs.rs/winit/latest/winit/">winit</a>,
+<a href="https://docs.rs/glam/latest/glam/">glam</a>,
+<a href="https://docs.rs/hecs/latest/hecs/">hecs</a>, <a href="https://www.egui.rs/">egui</a>,
+<a href="https://macroquad.rs/">macroquad</a> and <a href="https://bevyengine.org/">bevy</a>.</p>
+<p>Despite not always agreeing with the design decisions of some of these,
+it should be explicitly pointed out that we greatly appreciate the efforts
+that go into these projects and the people behind them.</p>
+<p>Macroquad has been an amazing inspiration in how a simple and pragmatic
+ecosystem can be born, and how the complexity of Rust can be reduced to
+APIs which are so simple that one can <em>just use them</em>.</p>
+<p>Comfy initially started as a copy-paste of macroquad function headers with only
+the internals changed to use wgpu, and only over time evolved into something
+different.</p>
+<p>Bevy has been a great inspiration in how a community can be built around a
+unified vision, and how such a project can grow to a scale many would not think
+was possible. While we may not agree with Bevy on many things in terms of what
+a game engine should do, it would be foolish not to recognize its achievement,
+both in designing great and innovative ECS APIs, as well as pushing Rust as a
+language to its limits.</p>
+<p>Comfy uses bits of code borrowed from Bevy, notably tonemapping shaders, bits
+of logic around bloom, and a few utility functions (notably timers).</p>
 </div>
               <div class="docs-footer">
                   <nav class="docs-footer__nav">
@@ -369,7 +363,7 @@ that sacrifice ergonomics, and that don't show up on a profiler.</p>
                       
                   </nav>
                   <div class="docs-footer__edit-wrapper">
-                      <a class="docs-footer__edit" href="https://github.com/darthdeus/comfy-website/edit/master/content/book&#x2F;contributing&#x2F;_index.md">
+                      <a class="docs-footer__edit" href="https://github.com/darthdeus/comfy-website/edit/master/content/book&#x2F;credits&#x2F;_index.md">
                           <i class="icon icon--pencil"></i>
                           Improve this page
                       </a>
