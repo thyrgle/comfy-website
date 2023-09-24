@@ -7,6 +7,12 @@
         <loc>https://darthdeus.github.io/comfy/book/</loc>
     </url>
     <url>
+        <loc>https://darthdeus.github.io/comfy/book/contributing/</loc>
+    </url>
+    <url>
+        <loc>https://darthdeus.github.io/comfy/book/getting-started/</loc>
+    </url>
+    <url>
         <loc>https://darthdeus.github.io/comfy/examples/</loc>
     </url>
     <url>
@@ -80,5 +86,8 @@
     <url>
         <loc>https://darthdeus.github.io/comfy/examples/timed-draw/</loc>
         <lastmod>2023-09-24</lastmod>
+    </url>
+    <url>
+        <loc>https://darthdeus.github.io/comfy/features/</loc>
     </url>
 </urlset>
