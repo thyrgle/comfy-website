@@ -7,6 +7,9 @@ page_template = "docs-section.html"
 insert_anchor_links = "right"
 +++
 
+There are many other great frameworks and engines in Rust. This section
+goes over the most notable ones and explains how comfy differs and to an
+extent why it exists.
 
 ## [macroquad](https://macroquad.rs/)
 
@@ -131,3 +134,9 @@ with losing maintainers, which is why I never got to use it, as both times when
 I was switching frameworks/engines in Rust it was unmaintained. Although in the
 current version it did get upgraded to a wgpu-based backend, but I can't speak
 to its quality. I would imagine it's a great alternative to macroquad.
+
+---
+
+There are many other frameworks/engines in Rust, but the ones above are
+the only ones I've had a chance to interact with in any significant way,
+hence why they're the ones in the comparison.
