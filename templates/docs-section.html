@@ -7,25 +7,10 @@
 <section>
   <div class="row">
     <div class="col-md-3">
-      {% set root_section_path = section.components | slice(end=2) | concat(with="/_index.md") | join(sep="/") %}
+      {% set root_section_path = section.components | slice(end=2) | concat(with="_index.md") | join(sep="/") %}
+      {% set root_section_path = "book/_index.md" %}
       {{docs_macros::docs_menu(prefix="page-menu", root=get_section(path=root_section_path))}}
 
-      <p>components are: {{section.components}}</p>
-
-      <ul class="nav flex-column">
-        <li class="nav-item">
-          <a class="nav-link active" aria-current="page" href="#">Active</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="#">Link</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="#">Link</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link disabled" aria-disabled="true">Disabled</a>
-        </li>
-      </ul>
     </div>
     <div class="col-md-9">
 
@@ -116,7 +101,7 @@
                       {% endif %}
                   </nav>
                   <div class="docs-footer__edit-wrapper">
-                      <a class="docs-footer__edit" href="https://github.com/bevyengine/bevy-website/edit/main/content/{{ section.relative_path }}">
+                      <a class="docs-footer__edit" href="https://github.com/darthdeus/comfy-website/edit/master/content/{{ section.relative_path }}">
                           <i class="icon icon--pencil"></i>
                           Improve this page
                       </a>

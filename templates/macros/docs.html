@@ -8,6 +8,9 @@
 
     {% if is_active %}
         {% set class = class ~ " tree-menu__item--active" %}
+        {% set link_class = "disabled" %}
+    {% else %}
+        {% set link_class = "" %}
     {% endif %}
 
     {% if menu_section.extra and menu_section.extra.public_draft %}
@@ -22,9 +25,9 @@
         <input id="{{id}}" class="tree-menu__state" type="checkbox" {% if is_in_branch %}checked{% endif %}>
     {% endif %}
 
-    <li class="{{class}}">
+    <li class="nav-item">
         <div class="{{label_class}}">
-            <a class="tree-menu__link" href="{{menu_section.path}}">{{ menu_section.title }}</a>
+            <a class="nav-link {{link_class}}" aria-current="page" tree-menu__link" href="{{menu_section.path}}">{{ menu_section.title }}</a>
             {% if menu_section.subsections %}
                 <label class="tree-menu__toggle" for="{{id}}">
                     <img class="tree-menu__chevron" src="/assets/icon-chevron-down.svg">
@@ -42,7 +45,7 @@
 {% endmacro docs_menu_row %}
 
 {% macro docs_menu(root, prefix) %}
-    <ul class="tree-menu">
+    <ul class="nav flex-column">
         {% for s in root.subsections %}
             {{ self::docs_menu_row(prefix=prefix, section_path=s) }}
         {% endfor %}
