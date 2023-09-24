@@ -81,14 +81,15 @@ If you'd like to see the future direction of Comfy, check out [our
 Roadmap](https://comfyengine.org/book/roadmap/).
 
 It should also be noted that LogLog games is only two people, me
-[@darthdeus](https://github.com/darthdeus) and
-[@shosanna](https://github.com/shosanna), where basically all of the engine was
-just built by me, while my wife focused on the games. This is just to set
-expectations around the engine, as while we may be making games for a few
-years, we're not a big studio with a team of people dedicated to building the
-next AAA game engine. We've dedicated a lot of time to Comfy and our games, and
-will continue to support it, but we also both have jobs and other
-responisbilities. Please be kind in your expectations :)
+[@darthdeus](https://github.com/darthdeus) and my wife
+[@shosanna](https://github.com/shosanna), where basically all of the
+engine was just built by me, while my wife focused on the games. This is
+just to set expectations around the engine, as while we may be making
+games for a few years, we're not a big studio with a team of people
+dedicated to building the next AAA game engine. We've dedicated a lot of
+time to Comfy and our games, and will continue to support it, but we
+also both have jobs and other responisbilities. Please be kind in your
+expectations :)
 
 That being said, feedback is _very_ welcome. The best way to learn Comfy is by
 writing code, so if you found the above interesting or even exciting, check out
