@@ -79,3 +79,22 @@ not an experiment, it's a real game engine meant to be used in real games.
 
 If you'd like to see the future direction of Comfy, check out [our
 Roadmap](https://comfyengine.org/book/roadmap/).
+
+It should also be noted that LogLog games is only two people, me
+[@darthdeus](https://github.com/darthdeus) and
+[@shosanna](https://github.com/shosanna), where basically all of the engine was
+just built by me, while my wife focused on the games. This is just to set
+expectations around the engine, as while we may be making games for a few
+years, we're not a big studio with a team of people dedicated to building the
+next AAA game engine. We've dedicated a lot of time to Comfy and our games, and
+will continue to support it, but we also both have jobs and other
+responisbilities. Please be kind in your expectations :)
+
+That being said, feedback is _very_ welcome. The best way to learn Comfy is by
+writing code, so if you found the above interesting or even exciting, check out
+[our examples](https://github.com/darthdeus/comfy/tree/master/comfy/examples)
+and [the comfy book](https://comfyengine.org/book/). If you have any questions,
+feel free to reach out on our [Discord](https://discord.gg/M8hySjuG48), and if
+you run into any problems please do [open an issue on
+GitHub](https://github.com/darthdeus/comfy/issues).
+
