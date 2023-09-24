@@ -60,6 +60,41 @@
       <div class="container">
 <h1 class="title">custom_fonts</h1>
 <p class="subtitle"><strong>2023-09-24</strong></p>
+<pre data-lang="rust" style="background-color:#2b303b;color:#c0c5ce;" class="language-rust "><code class="language-rust" data-lang="rust"><span style="color:#b48ead;">use </span><span>comfy::*;
+</span><span>
+</span><span>simple_game!(&quot;</span><span style="color:#a3be8c;">Custom Fonts Example</span><span>&quot;, setup, update);
+</span><span>
+</span><span style="color:#b48ead;">fn </span><span style="color:#8fa1b3;">setup</span><span>(</span><span style="color:#bf616a;">c</span><span>: &amp;</span><span style="color:#b48ead;">mut</span><span> EngineContext) {
+</span><span>    c.</span><span style="color:#96b5b4;">load_fonts_from_bytes</span><span>(&amp;[(
+</span><span>        &quot;</span><span style="color:#a3be8c;">comfy-font</span><span>&quot;,
+</span><span>        include_bytes!(concat!(
+</span><span>            env!(&quot;</span><span style="color:#a3be8c;">CARGO_MANIFEST_DIR</span><span>&quot;),
+</span><span>            &quot;</span><span style="color:#a3be8c;">/../assets/fonts/Orbitron-Regular.ttf</span><span>&quot;
+</span><span>        )),
+</span><span>    )])
+</span><span>}
+</span><span>
+</span><span style="color:#b48ead;">fn </span><span style="color:#8fa1b3;">update</span><span>(</span><span style="color:#bf616a;">_c</span><span>: &amp;</span><span style="color:#b48ead;">mut</span><span> EngineContext) {
+</span><span>    </span><span style="color:#b48ead;">let</span><span> text = &quot;</span><span style="color:#a3be8c;">comfy has comfy text rendering with egui</span><span>&quot;;
+</span><span>
+</span><span>    </span><span style="color:#96b5b4;">draw_text</span><span>(text, </span><span style="color:#96b5b4;">vec2</span><span>(</span><span style="color:#d08770;">0.0</span><span>, </span><span style="color:#d08770;">1.0</span><span>), </span><span style="color:#d08770;">WHITE</span><span>, TextAlign::Center);
+</span><span>
+</span><span>    </span><span style="color:#96b5b4;">draw_text_ex</span><span>(
+</span><span>        &quot;</span><span style="color:#a3be8c;">with configurable fonts</span><span>&quot;,
+</span><span>        </span><span style="color:#96b5b4;">vec2</span><span>(</span><span style="color:#d08770;">0.0</span><span>, </span><span style="color:#d08770;">0.0</span><span>),
+</span><span>        TextAlign::Center,
+</span><span>        TextParams {
+</span><span>            color: </span><span style="color:#d08770;">RED</span><span>,
+</span><span>            </span><span style="color:#65737e;">// Use egui fonts
+</span><span>            font: egui::FontId::new(
+</span><span>                </span><span style="color:#d08770;">32.0</span><span>,
+</span><span>                egui::FontFamily::Name(&quot;</span><span style="color:#a3be8c;">comfy-font</span><span>&quot;.</span><span style="color:#96b5b4;">into</span><span>()),
+</span><span>            ),
+</span><span>            ..Default::default()
+</span><span>        },
+</span><span>    );
+</span><span>}
+</span></code></pre>
  </div>
     </section>
 

@@ -60,6 +60,146 @@
       <div class="container">
 <h1 class="title">particle_systems</h1>
 <p class="subtitle"><strong>2023-09-24</strong></p>
+<pre data-lang="rust" style="background-color:#2b303b;color:#c0c5ce;" class="language-rust "><code class="language-rust" data-lang="rust"><span style="color:#b48ead;">use </span><span>comfy::*;
+</span><span>
+</span><span>simple_game!(&quot;</span><span style="color:#a3be8c;">Particle Systems Example</span><span>&quot;, setup, update);
+</span><span>
+</span><span style="color:#b48ead;">fn </span><span style="color:#8fa1b3;">setup</span><span>(</span><span style="color:#bf616a;">c</span><span>: &amp;</span><span style="color:#b48ead;">mut</span><span> EngineContext) {
+</span><span>    c.</span><span style="color:#96b5b4;">load_texture_from_bytes</span><span>(
+</span><span>        </span><span style="color:#65737e;">// Every texture gets a string name later used to reference it.
+</span><span>        &quot;</span><span style="color:#a3be8c;">comfy</span><span>&quot;,
+</span><span>        include_bytes!(concat!(
+</span><span>            env!(&quot;</span><span style="color:#a3be8c;">CARGO_MANIFEST_DIR</span><span>&quot;),
+</span><span>            &quot;</span><span style="color:#a3be8c;">/../assets/comfy.png</span><span>&quot;
+</span><span>        )),
+</span><span>        wgpu::AddressMode::ClampToEdge,
+</span><span>    );
+</span><span>
+</span><span>    </span><span style="color:#65737e;">// ParticleSystem&#39;s are based off the same principle as singular Particle&#39;s, except the
+</span><span>    </span><span style="color:#65737e;">// automatically handle the spawning.
+</span><span>
+</span><span>    c.</span><span style="color:#96b5b4;">commands</span><span>().</span><span style="color:#96b5b4;">spawn</span><span>((
+</span><span>        ParticleSystem::with_spawn_rate(</span><span style="color:#d08770;">500</span><span>, </span><span style="color:#d08770;">0.01</span><span>, || {
+</span><span>            Particle {
+</span><span>                texture: </span><span style="color:#96b5b4;">texture_id</span><span>(&quot;</span><span style="color:#a3be8c;">comfy</span><span>&quot;),
+</span><span>                position: </span><span style="color:#96b5b4;">random_circle</span><span>(</span><span style="color:#d08770;">5.0</span><span>),
+</span><span>                size: </span><span style="color:#96b5b4;">splat</span><span>(</span><span style="color:#d08770;">0.5</span><span>),
+</span><span>                </span><span style="color:#65737e;">// Other than the builtin easing curves, any f32 -&gt; f32 curve
+</span><span>                </span><span style="color:#65737e;">// will work.
+</span><span>                size_curve: quad_in_out,
+</span><span>
+</span><span>                direction: </span><span style="color:#96b5b4;">vec2</span><span>(</span><span style="color:#d08770;">0.0</span><span>, </span><span style="color:#d08770;">1.0</span><span>),
+</span><span>                velocity: </span><span style="color:#d08770;">10.0</span><span>,
+</span><span>                velocity_end: </span><span style="color:#d08770;">5.0</span><span>,
+</span><span>                ..Default::default()
+</span><span>            }
+</span><span>        })
+</span><span>        .</span><span style="color:#96b5b4;">with_size</span><span>(</span><span style="color:#96b5b4;">vec2</span><span>(</span><span style="color:#d08770;">3.0</span><span>, </span><span style="color:#d08770;">8.0</span><span>)),
+</span><span>        Transform::position(</span><span style="color:#96b5b4;">vec2</span><span>(-</span><span style="color:#d08770;">8.0</span><span>, </span><span style="color:#d08770;">0.0</span><span>)),
+</span><span>    ));
+</span><span>
+</span><span>    c.</span><span style="color:#96b5b4;">commands</span><span>().</span><span style="color:#96b5b4;">spawn</span><span>((
+</span><span>        ParticleSystem::with_spawn_on_death(</span><span style="color:#d08770;">300</span><span>, || {
+</span><span>            Particle {
+</span><span>                texture: </span><span style="color:#96b5b4;">texture_id</span><span>(&quot;</span><span style="color:#a3be8c;">comfy</span><span>&quot;),
+</span><span>                position: </span><span style="color:#96b5b4;">random_circle</span><span>(</span><span style="color:#d08770;">5.0</span><span>),
+</span><span>
+</span><span>                direction: </span><span style="color:#96b5b4;">random_dir</span><span>().</span><span style="color:#96b5b4;">normalize</span><span>(),
+</span><span>
+</span><span>                velocity: </span><span style="color:#d08770;">3.0</span><span>,
+</span><span>                velocity_end: </span><span style="color:#d08770;">10.0</span><span>,
+</span><span>                lifetime_max: </span><span style="color:#d08770;">10.0</span><span>,
+</span><span>                size: </span><span style="color:#96b5b4;">splat</span><span>(</span><span style="color:#d08770;">0.5</span><span>),
+</span><span>
+</span><span>                </span><span style="color:#65737e;">// Both size and color can be faded.
+</span><span>                fade_type: FadeType::None,
+</span><span>
+</span><span>                color_start: </span><span style="color:#d08770;">GREEN</span><span>,
+</span><span>                color_end: </span><span style="color:#d08770;">LIME</span><span>,
+</span><span>
+</span><span>                </span><span style="color:#65737e;">// Particles can have trails. These aren&#39;t currently
+</span><span>                </span><span style="color:#65737e;">// very nice to configure, but they do work!
+</span><span>                trail: TrailRef::Local(Trail::new(
+</span><span>                    </span><span style="color:#d08770;">0.1</span><span>,
+</span><span>                    </span><span style="color:#d08770;">1.0</span><span>,
+</span><span>                    </span><span style="color:#d08770;">5</span><span>,
+</span><span>                    </span><span style="color:#d08770;">GREEN</span><span>,
+</span><span>                    </span><span style="color:#d08770;">BLACK</span><span>,
+</span><span>                    </span><span style="color:#d08770;">50</span><span>,
+</span><span>                    </span><span style="color:#d08770;">0.5</span><span>,
+</span><span>                    </span><span style="color:#d08770;">5.0</span><span>,
+</span><span>                    None,
+</span><span>                    None,
+</span><span>                    BlendMode::Additive,
+</span><span>                )),
+</span><span>
+</span><span>                </span><span style="color:#65737e;">// If the builtin particle system logic isn&#39;t enough, the particles can also use a
+</span><span>                </span><span style="color:#65737e;">// custom `update` function with arbitrary logic inside that gets called on each
+</span><span>                </span><span style="color:#65737e;">// frame.
+</span><span>                update: Some(|</span><span style="color:#bf616a;">p</span><span>| {
+</span><span>                    </span><span style="color:#65737e;">// Calculate distance from origin.
+</span><span>                    </span><span style="color:#b48ead;">let</span><span> current_distance = p.position.</span><span style="color:#96b5b4;">length</span><span>();
+</span><span>
+</span><span>                    </span><span style="color:#b48ead;">const </span><span style="color:#d08770;">DESIRED_RADIUS</span><span>: </span><span style="color:#b48ead;">f32 </span><span>= </span><span style="color:#d08770;">5.0</span><span>;
+</span><span>
+</span><span>                    </span><span style="color:#65737e;">// Calculate the difference from the desired radius.
+</span><span>                    </span><span style="color:#b48ead;">let</span><span> difference = </span><span style="color:#d08770;">DESIRED_RADIUS </span><span>- current_distance;
+</span><span>
+</span><span>                    </span><span style="color:#65737e;">// Calculate a direction towards or away from the origin.
+</span><span>                    </span><span style="color:#b48ead;">let</span><span> orbit_pull = </span><span style="color:#b48ead;">if</span><span> difference &gt; </span><span style="color:#d08770;">0.0 </span><span>{
+</span><span>                        p.position.</span><span style="color:#96b5b4;">normalize_or_zero</span><span>() </span><span style="color:#65737e;">// Towards origin.
+</span><span>                    } </span><span style="color:#b48ead;">else </span><span>{
+</span><span>                        -p.position.</span><span style="color:#96b5b4;">normalize_or_zero</span><span>() </span><span style="color:#65737e;">// Away from origin.
+</span><span>                    };
+</span><span>
+</span><span>                    </span><span style="color:#65737e;">// Tangent along the orbit.
+</span><span>                    </span><span style="color:#b48ead;">let</span><span> side_pull = p.position.</span><span style="color:#96b5b4;">perp</span><span>().</span><span style="color:#96b5b4;">normalize_or_right</span><span>();
+</span><span>
+</span><span>                    </span><span style="color:#b48ead;">let</span><span> abs_diff = difference.</span><span style="color:#96b5b4;">abs</span><span>();
+</span><span>
+</span><span>                    </span><span style="color:#65737e;">// Rescale the radius from 0..radius for interpolation
+</span><span>                    </span><span style="color:#b48ead;">let</span><span> abs_diff_scaled =
+</span><span>                        abs_diff.</span><span style="color:#96b5b4;">clamp_scale</span><span>(</span><span style="color:#d08770;">0.0</span><span>..</span><span style="color:#d08770;">DESIRED_RADIUS</span><span>, </span><span style="color:#d08770;">0.2</span><span>..</span><span style="color:#d08770;">0.8</span><span>);
+</span><span>
+</span><span>                    </span><span style="color:#b48ead;">let</span><span> t = </span><span style="color:#b48ead;">if</span><span> abs_diff &lt; </span><span style="color:#d08770;">1.0 </span><span>{
+</span><span>                        </span><span style="color:#d08770;">1.0 </span><span>- abs_diff_scaled
+</span><span>                    } </span><span style="color:#b48ead;">else </span><span>{
+</span><span>                        abs_diff_scaled
+</span><span>                    };
+</span><span>
+</span><span>                    </span><span style="color:#65737e;">// Combine the two directions.
+</span><span>                    p.direction =
+</span><span>                        orbit_pull.</span><span style="color:#96b5b4;">lerp</span><span>(side_pull, t).</span><span style="color:#96b5b4;">normalize_or_right</span><span>();
+</span><span>                }),
+</span><span>
+</span><span>                ..Default::default()
+</span><span>            }
+</span><span>        }),
+</span><span>        Transform::position(Vec2::</span><span style="color:#d08770;">ZERO</span><span>),
+</span><span>    ));
+</span><span>
+</span><span>    c.</span><span style="color:#96b5b4;">commands</span><span>().</span><span style="color:#96b5b4;">spawn</span><span>((
+</span><span>        ParticleSystem::with_spawn_on_death(</span><span style="color:#d08770;">300</span><span>, || {
+</span><span>            Particle {
+</span><span>                texture: </span><span style="color:#96b5b4;">texture_id</span><span>(&quot;</span><span style="color:#a3be8c;">comfy</span><span>&quot;),
+</span><span>                position: </span><span style="color:#96b5b4;">random_circle</span><span>(</span><span style="color:#d08770;">5.0</span><span>),
+</span><span>                size: </span><span style="color:#96b5b4;">splat</span><span>(</span><span style="color:#d08770;">0.7</span><span>),
+</span><span>                size_curve: expo_out,
+</span><span>
+</span><span>                angular_velocity: </span><span style="color:#96b5b4;">random</span><span>() * </span><span style="color:#d08770;">10.0</span><span>,
+</span><span>                </span><span style="color:#65737e;">// Both size and color can be faded.
+</span><span>                fade_type: FadeType::Both,
+</span><span>                color_start: </span><span style="color:#d08770;">RED</span><span>,
+</span><span>                color_end: </span><span style="color:#d08770;">RED</span><span>,
+</span><span>                ..Default::default()
+</span><span>            }
+</span><span>        }), </span><span style="color:#65737e;">// .with_size(vec2(0.2, 5.0))
+</span><span>        Transform::position(</span><span style="color:#96b5b4;">vec2</span><span>(</span><span style="color:#d08770;">10.0</span><span>, </span><span style="color:#d08770;">0.0</span><span>)),
+</span><span>    ));
+</span><span>}
+</span><span>
+</span><span style="color:#b48ead;">fn </span><span style="color:#8fa1b3;">update</span><span>(</span><span style="color:#bf616a;">_c</span><span>: &amp;</span><span style="color:#b48ead;">mut</span><span> EngineContext) {}
+</span></code></pre>
  </div>
     </section>
 

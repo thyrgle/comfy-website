@@ -60,6 +60,99 @@
       <div class="container">
 <h1 class="title">animated_sprites</h1>
 <p class="subtitle"><strong>2023-09-24</strong></p>
+<pre data-lang="rust" style="background-color:#2b303b;color:#c0c5ce;" class="language-rust "><code class="language-rust" data-lang="rust"><span style="color:#b48ead;">use </span><span>comfy::*;
+</span><span>
+</span><span>simple_game!(&quot;</span><span style="color:#a3be8c;">Sprite Example</span><span>&quot;, setup, update);
+</span><span>
+</span><span style="color:#b48ead;">fn </span><span style="color:#8fa1b3;">setup</span><span>(</span><span style="color:#bf616a;">c</span><span>: &amp;</span><span style="color:#b48ead;">mut</span><span> EngineContext) {
+</span><span>    </span><span style="color:#96b5b4;">load_texture_from_engine_bytes</span><span>(
+</span><span>        &amp;c.renderer.context,
+</span><span>        &quot;</span><span style="color:#a3be8c;">player</span><span>&quot;,
+</span><span>        include_bytes!(concat!(
+</span><span>            env!(&quot;</span><span style="color:#a3be8c;">CARGO_MANIFEST_DIR</span><span>&quot;),
+</span><span>            &quot;</span><span style="color:#a3be8c;">/../assets/player.png</span><span>&quot;
+</span><span>        )),
+</span><span>        &amp;</span><span style="color:#b48ead;">mut</span><span> c.renderer.textures.</span><span style="color:#96b5b4;">lock</span><span>(),
+</span><span>        wgpu::AddressMode::ClampToEdge,
+</span><span>    );
+</span><span>}
+</span><span>
+</span><span style="color:#b48ead;">fn </span><span style="color:#8fa1b3;">update</span><span>(</span><span style="color:#bf616a;">_c</span><span>: &amp;</span><span style="color:#b48ead;">mut</span><span> EngineContext) {
+</span><span>    </span><span style="color:#96b5b4;">draw_sprite_ex</span><span>(
+</span><span>        </span><span style="color:#96b5b4;">texture_id</span><span>(&quot;</span><span style="color:#a3be8c;">player</span><span>&quot;),
+</span><span>        Vec2::</span><span style="color:#d08770;">ZERO</span><span>,
+</span><span>        </span><span style="color:#d08770;">WHITE</span><span>,
+</span><span>        </span><span style="color:#d08770;">0</span><span>,
+</span><span>        DrawTextureParams {
+</span><span>            dest_size: Some(</span><span style="color:#96b5b4;">vec2</span><span>(</span><span style="color:#d08770;">3.0</span><span>, </span><span style="color:#d08770;">2.5</span><span>).</span><span style="color:#96b5b4;">as_world_size</span><span>()),
+</span><span>            ..Default::default()
+</span><span>        },
+</span><span>    );
+</span><span>
+</span><span>    </span><span style="color:#b48ead;">let</span><span> t = </span><span style="color:#96b5b4;">get_time</span><span>() as </span><span style="color:#b48ead;">f32</span><span>;
+</span><span>
+</span><span>    </span><span style="color:#b48ead;">let</span><span> size = </span><span style="color:#d08770;">8</span><span>;
+</span><span>    </span><span style="color:#b48ead;">let</span><span> animation_time = </span><span style="color:#d08770;">0.4</span><span>;
+</span><span>    </span><span style="color:#b48ead;">let</span><span> frame_count = </span><span style="color:#d08770;">3</span><span>;
+</span><span>    </span><span style="color:#b48ead;">let</span><span> frame_time = animation_time / frame_count as </span><span style="color:#b48ead;">f32</span><span>;
+</span><span>    </span><span style="color:#b48ead;">let</span><span> frame = (t / frame_time % frame_count as </span><span style="color:#b48ead;">f32</span><span>) as </span><span style="color:#b48ead;">i32</span><span>;
+</span><span>
+</span><span>    </span><span style="color:#b48ead;">let</span><span> src_rect = IRect::new(</span><span style="color:#96b5b4;">ivec2</span><span>(size * frame, </span><span style="color:#d08770;">0</span><span>), </span><span style="color:#96b5b4;">isplat</span><span>(size));
+</span><span>    </span><span style="color:#b48ead;">let</span><span> dest_size =
+</span><span>        </span><span style="color:#96b5b4;">splat</span><span>(</span><span style="color:#96b5b4;">rescale</span><span>(t.</span><span style="color:#96b5b4;">sin</span><span>(), -</span><span style="color:#d08770;">1.0</span><span>..</span><span style="color:#d08770;">1.0</span><span>, </span><span style="color:#d08770;">1.0</span><span>..</span><span style="color:#d08770;">2.0</span><span>)).</span><span style="color:#96b5b4;">as_world_size</span><span>();
+</span><span>
+</span><span>    </span><span style="color:#b48ead;">let</span><span> params = DrawTextureParams {
+</span><span>        dest_size: Some(dest_size),
+</span><span>        source_rect: Some(src_rect),
+</span><span>        ..Default::default()
+</span><span>    };
+</span><span>
+</span><span>    </span><span style="color:#96b5b4;">draw_sprite_ex</span><span>(</span><span style="color:#96b5b4;">texture_id</span><span>(&quot;</span><span style="color:#a3be8c;">player</span><span>&quot;), </span><span style="color:#96b5b4;">vec2</span><span>(</span><span style="color:#d08770;">0.0</span><span>, </span><span style="color:#d08770;">3.0</span><span>), </span><span style="color:#d08770;">WHITE</span><span>, </span><span style="color:#d08770;">0</span><span>, params);
+</span><span>
+</span><span>    </span><span style="color:#96b5b4;">draw_sprite_ex</span><span>(
+</span><span>        </span><span style="color:#96b5b4;">texture_id</span><span>(&quot;</span><span style="color:#a3be8c;">player</span><span>&quot;),
+</span><span>        </span><span style="color:#96b5b4;">vec2</span><span>(-</span><span style="color:#d08770;">6.0</span><span>, </span><span style="color:#d08770;">3.0</span><span>),
+</span><span>        </span><span style="color:#d08770;">RED</span><span>,
+</span><span>        </span><span style="color:#d08770;">0</span><span>,
+</span><span>        DrawTextureParams { rotation: t.</span><span style="color:#96b5b4;">sin</span><span>() * </span><span style="color:#d08770;">PI</span><span>, ..params },
+</span><span>    );
+</span><span>
+</span><span>    </span><span style="color:#96b5b4;">draw_sprite_ex</span><span>(
+</span><span>        </span><span style="color:#96b5b4;">texture_id</span><span>(&quot;</span><span style="color:#a3be8c;">player</span><span>&quot;),
+</span><span>        </span><span style="color:#96b5b4;">vec2</span><span>(</span><span style="color:#d08770;">6.0</span><span>, </span><span style="color:#d08770;">3.0</span><span>),
+</span><span>        </span><span style="color:#d08770;">BLUE</span><span>.</span><span style="color:#96b5b4;">lerp</span><span>(</span><span style="color:#d08770;">YELLOW</span><span>, t.</span><span style="color:#96b5b4;">sin</span><span>().</span><span style="color:#96b5b4;">abs</span><span>()),
+</span><span>        </span><span style="color:#d08770;">0</span><span>,
+</span><span>        DrawTextureParams { rotation: t.</span><span style="color:#96b5b4;">sin</span><span>() * </span><span style="color:#d08770;">PI </span><span>* </span><span style="color:#d08770;">5.0</span><span>, ..params },
+</span><span>    );
+</span><span>
+</span><span>    </span><span style="color:#b48ead;">for</span><span> i in </span><span style="color:#d08770;">0</span><span>..</span><span style="color:#d08770;">6 </span><span>{
+</span><span>        </span><span style="color:#b48ead;">let</span><span> off = i as </span><span style="color:#b48ead;">f32 </span><span>* </span><span style="color:#d08770;">0.5</span><span>;
+</span><span>        </span><span style="color:#b48ead;">let</span><span> position = </span><span style="color:#96b5b4;">vec2</span><span>(</span><span style="color:#d08770;">6.0</span><span>, -</span><span style="color:#d08770;">6.0 </span><span>+ off * </span><span style="color:#d08770;">2.0</span><span>);
+</span><span>        </span><span style="color:#b48ead;">let</span><span> pivot = position + </span><span style="color:#96b5b4;">splat</span><span>(off / </span><span style="color:#d08770;">3.0</span><span>);
+</span><span>
+</span><span>        </span><span style="color:#b48ead;">let</span><span> z_index = </span><span style="color:#d08770;">0</span><span>;
+</span><span>
+</span><span>        </span><span style="color:#96b5b4;">draw_circle</span><span>(position, </span><span style="color:#d08770;">0.1</span><span>, </span><span style="color:#d08770;">RED</span><span>, z_index + </span><span style="color:#d08770;">1</span><span>);
+</span><span>        </span><span style="color:#96b5b4;">draw_circle</span><span>(pivot, </span><span style="color:#d08770;">0.1</span><span>, </span><span style="color:#d08770;">RED</span><span>, z_index + </span><span style="color:#d08770;">1</span><span>);
+</span><span>        </span><span style="color:#96b5b4;">draw_line</span><span>(position, pivot, </span><span style="color:#d08770;">0.05</span><span>, </span><span style="color:#d08770;">RED</span><span>, z_index + </span><span style="color:#d08770;">1</span><span>);
+</span><span>        </span><span style="color:#96b5b4;">draw_circle_outline</span><span>(position, </span><span style="color:#d08770;">0.5</span><span>, </span><span style="color:#d08770;">0.05</span><span>, </span><span style="color:#d08770;">RED</span><span>, z_index + </span><span style="color:#d08770;">1</span><span>);
+</span><span>
+</span><span>        </span><span style="color:#96b5b4;">draw_sprite_ex</span><span>(
+</span><span>            </span><span style="color:#96b5b4;">texture_id</span><span>(&quot;</span><span style="color:#a3be8c;">player</span><span>&quot;),
+</span><span>            position,
+</span><span>            </span><span style="color:#d08770;">GREEN</span><span>.</span><span style="color:#96b5b4;">lerp</span><span>(</span><span style="color:#d08770;">PINK</span><span>, t.</span><span style="color:#96b5b4;">sin</span><span>().</span><span style="color:#96b5b4;">abs</span><span>()),
+</span><span>            z_index,
+</span><span>            DrawTextureParams {
+</span><span>                rotation: (t.</span><span style="color:#96b5b4;">sin</span><span>() + </span><span style="color:#d08770;">1.0</span><span>) * </span><span style="color:#d08770;">PI</span><span>,
+</span><span>                source_rect: Some(IRect::new(</span><span style="color:#96b5b4;">ivec2</span><span>(</span><span style="color:#d08770;">0</span><span>, </span><span style="color:#d08770;">0</span><span>), </span><span style="color:#96b5b4;">isplat</span><span>(size))),
+</span><span>                pivot: Some(pivot),
+</span><span>                dest_size: None,
+</span><span>                ..params
+</span><span>            },
+</span><span>        );
+</span><span>    }
+</span><span>}
+</span></code></pre>
  </div>
     </section>
 

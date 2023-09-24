@@ -60,6 +60,21 @@
       <div class="container">
 <h1 class="title">post_processing</h1>
 <p class="subtitle"><strong>2023-09-24</strong></p>
+<pre data-lang="rust" style="background-color:#2b303b;color:#c0c5ce;" class="language-rust "><code class="language-rust" data-lang="rust"><span style="color:#b48ead;">use </span><span>comfy::*;
+</span><span>
+</span><span>simple_game!(&quot;</span><span style="color:#a3be8c;">Post Processing</span><span>&quot;, setup, update);
+</span><span>
+</span><span style="color:#b48ead;">fn </span><span style="color:#8fa1b3;">setup</span><span>(</span><span style="color:#bf616a;">c</span><span>: &amp;</span><span style="color:#b48ead;">mut</span><span> EngineContext) {
+</span><span>    </span><span style="color:#b48ead;">let</span><span> name = &quot;</span><span style="color:#a3be8c;">fun-chromatic-aberration</span><span>&quot;;
+</span><span>    </span><span style="color:#b48ead;">let</span><span> shader = include_wgsl_fragment_shader!(&quot;</span><span style="color:#a3be8c;">fun-chromatic-aberration.wgsl</span><span>&quot;);
+</span><span>
+</span><span>    c.</span><span style="color:#96b5b4;">insert_post_processing_effect</span><span>(</span><span style="color:#d08770;">0</span><span>, name, shader);
+</span><span>}
+</span><span>
+</span><span style="color:#b48ead;">fn </span><span style="color:#8fa1b3;">update</span><span>(</span><span style="color:#bf616a;">_c</span><span>: &amp;</span><span style="color:#b48ead;">mut</span><span> EngineContext) {
+</span><span>    </span><span style="color:#96b5b4;">draw_rect</span><span>(Vec2::</span><span style="color:#d08770;">ZERO</span><span>, </span><span style="color:#96b5b4;">splat</span><span>(</span><span style="color:#d08770;">5.0</span><span>), </span><span style="color:#d08770;">WHITE</span><span>, </span><span style="color:#d08770;">0</span><span>);
+</span><span>}
+</span></code></pre>
  </div>
     </section>
 

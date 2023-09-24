@@ -60,6 +60,53 @@
       <div class="container">
 <h1 class="title">animated_shapes</h1>
 <p class="subtitle"><strong>2023-09-24</strong></p>
+<pre data-lang="rust" style="background-color:#2b303b;color:#c0c5ce;" class="language-rust "><code class="language-rust" data-lang="rust"><span style="color:#b48ead;">use </span><span>comfy::*;
+</span><span>
+</span><span>simple_game!(&quot;</span><span style="color:#a3be8c;">Animated Shapes Example</span><span>&quot;, update);
+</span><span>
+</span><span style="color:#b48ead;">fn </span><span style="color:#8fa1b3;">update</span><span>(</span><span style="color:#bf616a;">_c</span><span>: &amp;</span><span style="color:#b48ead;">mut</span><span> EngineContext) {
+</span><span>    </span><span style="color:#b48ead;">let</span><span> time = </span><span style="color:#96b5b4;">get_time</span><span>() as </span><span style="color:#b48ead;">f32</span><span>;
+</span><span>
+</span><span>    </span><span style="color:#96b5b4;">clear_background</span><span>(Color::rgb8(</span><span style="color:#d08770;">13</span><span>, </span><span style="color:#d08770;">2</span><span>, </span><span style="color:#d08770;">8</span><span>));
+</span><span>
+</span><span>    </span><span style="color:#b48ead;">let</span><span> colors = [</span><span style="color:#d08770;">RED</span><span>, </span><span style="color:#d08770;">GREEN</span><span>, </span><span style="color:#d08770;">BLUE</span><span>, </span><span style="color:#d08770;">YELLOW</span><span>, </span><span style="color:#d08770;">CYAN</span><span>];
+</span><span>
+</span><span>    </span><span style="color:#b48ead;">for </span><span>(i, color) in colors.</span><span style="color:#96b5b4;">into_iter</span><span>().</span><span style="color:#96b5b4;">enumerate</span><span>() {
+</span><span>        </span><span style="color:#b48ead;">let</span><span> s = (i + </span><span style="color:#d08770;">1</span><span>) as </span><span style="color:#b48ead;">f32</span><span>;
+</span><span>        </span><span style="color:#b48ead;">let</span><span> t = s * time;
+</span><span>
+</span><span>        </span><span style="color:#b48ead;">let</span><span> z_index = i as </span><span style="color:#b48ead;">i32</span><span>;
+</span><span>
+</span><span>        </span><span style="color:#96b5b4;">draw_circle</span><span>(
+</span><span>            </span><span style="color:#96b5b4;">vec2</span><span>(i as </span><span style="color:#b48ead;">f32 </span><span>* </span><span style="color:#d08770;">2.0 </span><span>+ </span><span style="color:#d08770;">2.0</span><span>, t.</span><span style="color:#96b5b4;">sin</span><span>() - </span><span style="color:#d08770;">2.0</span><span>),
+</span><span>            s * </span><span style="color:#d08770;">0.75</span><span>,
+</span><span>            color,
+</span><span>            z_index,
+</span><span>        );
+</span><span>
+</span><span>        </span><span style="color:#b48ead;">let</span><span> r = </span><span style="color:#96b5b4;">rescale</span><span>(i, </span><span style="color:#d08770;">0</span><span>..colors.</span><span style="color:#96b5b4;">len</span><span>(), </span><span style="color:#d08770;">2</span><span>..</span><span style="color:#d08770;">5</span><span>);
+</span><span>        </span><span style="color:#96b5b4;">draw_arc</span><span>(
+</span><span>            </span><span style="color:#96b5b4;">vec2</span><span>(-s - </span><span style="color:#d08770;">2.0</span><span>, t.</span><span style="color:#96b5b4;">sin</span><span>() - </span><span style="color:#d08770;">2.0</span><span>),
+</span><span>            r,
+</span><span>            </span><span style="color:#d08770;">PI </span><span>- t.</span><span style="color:#96b5b4;">sin</span><span>(),
+</span><span>            </span><span style="color:#d08770;">PI </span><span>- t.</span><span style="color:#96b5b4;">cos</span><span>(),
+</span><span>            color,
+</span><span>            z_index,
+</span><span>        );
+</span><span>
+</span><span>        </span><span style="color:#96b5b4;">draw_arc_outline</span><span>(
+</span><span>            </span><span style="color:#96b5b4;">vec2</span><span>(-</span><span style="color:#d08770;">0.5</span><span>, s - </span><span style="color:#d08770;">0.5</span><span>),
+</span><span>            r,
+</span><span>            s / </span><span style="color:#d08770;">10.0</span><span>,
+</span><span>            </span><span style="color:#d08770;">PI </span><span>/ </span><span style="color:#d08770;">4.0 </span><span>- t.</span><span style="color:#96b5b4;">cos</span><span>().</span><span style="color:#96b5b4;">powf</span><span>(</span><span style="color:#d08770;">2.0</span><span>),
+</span><span>            t.</span><span style="color:#96b5b4;">sin</span><span>().</span><span style="color:#96b5b4;">powf</span><span>(</span><span style="color:#d08770;">2.0</span><span>) + </span><span style="color:#d08770;">PI </span><span>* </span><span style="color:#d08770;">3.0 </span><span>/ </span><span style="color:#d08770;">4.0</span><span>,
+</span><span>            </span><span style="color:#65737e;">// t.cos(),
+</span><span>            color,
+</span><span>            z_index,
+</span><span>        );
+</span><span>    }
+</span><span>}
+</span></code></pre>
  </div>
     </section>
 

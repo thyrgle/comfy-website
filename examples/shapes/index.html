@@ -60,6 +60,24 @@
       <div class="container">
 <h1 class="title">shapes</h1>
 <p class="subtitle"><strong>2023-09-24</strong></p>
+<pre data-lang="rust" style="background-color:#2b303b;color:#c0c5ce;" class="language-rust "><code class="language-rust" data-lang="rust"><span style="color:#b48ead;">use </span><span>comfy::*;
+</span><span>
+</span><span>simple_game!(&quot;</span><span style="color:#a3be8c;">Shapes Example</span><span>&quot;, update);
+</span><span>
+</span><span style="color:#b48ead;">fn </span><span style="color:#8fa1b3;">update</span><span>(</span><span style="color:#bf616a;">_c</span><span>: &amp;</span><span style="color:#b48ead;">mut</span><span> EngineContext) {
+</span><span>    </span><span style="color:#96b5b4;">clear_background</span><span>(Color::rgb8(</span><span style="color:#d08770;">13</span><span>, </span><span style="color:#d08770;">2</span><span>, </span><span style="color:#d08770;">8</span><span>));
+</span><span>
+</span><span>    </span><span style="color:#b48ead;">let</span><span> z = </span><span style="color:#d08770;">0</span><span>;
+</span><span>    </span><span style="color:#b48ead;">let</span><span> size = </span><span style="color:#d08770;">1.0</span><span>;
+</span><span>    </span><span style="color:#b48ead;">let</span><span> thickness = </span><span style="color:#d08770;">0.1</span><span>;
+</span><span>
+</span><span>    </span><span style="color:#96b5b4;">draw_circle</span><span>(</span><span style="color:#96b5b4;">vec2</span><span>(</span><span style="color:#d08770;">0.0</span><span>, </span><span style="color:#d08770;">0.0</span><span>), size / </span><span style="color:#d08770;">2.0</span><span>, </span><span style="color:#d08770;">RED</span><span>, z);
+</span><span>    </span><span style="color:#96b5b4;">draw_circle_outline</span><span>(</span><span style="color:#96b5b4;">vec2</span><span>(</span><span style="color:#d08770;">0.0</span><span>, </span><span style="color:#d08770;">2.0</span><span>), size / </span><span style="color:#d08770;">2.0</span><span>, thickness, </span><span style="color:#d08770;">RED</span><span>, z);
+</span><span>
+</span><span>    </span><span style="color:#96b5b4;">draw_rect</span><span>(</span><span style="color:#96b5b4;">vec2</span><span>(</span><span style="color:#d08770;">2.0</span><span>, </span><span style="color:#d08770;">0.0</span><span>), </span><span style="color:#96b5b4;">splat</span><span>(size), </span><span style="color:#d08770;">GREEN</span><span>, z);
+</span><span>    </span><span style="color:#96b5b4;">draw_rect_outline</span><span>(</span><span style="color:#96b5b4;">vec2</span><span>(</span><span style="color:#d08770;">2.0</span><span>, </span><span style="color:#d08770;">2.0</span><span>), </span><span style="color:#96b5b4;">splat</span><span>(size), thickness, </span><span style="color:#d08770;">GREEN</span><span>, z);
+</span><span>}
+</span></code></pre>
  </div>
     </section>
 

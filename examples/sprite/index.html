@@ -60,6 +60,35 @@
       <div class="container">
 <h1 class="title">sprite</h1>
 <p class="subtitle"><strong>2023-09-24</strong></p>
+<pre data-lang="rust" style="background-color:#2b303b;color:#c0c5ce;" class="language-rust "><code class="language-rust" data-lang="rust"><span style="color:#b48ead;">use </span><span>comfy::*;
+</span><span>
+</span><span>simple_game!(&quot;</span><span style="color:#a3be8c;">Sprite Example</span><span>&quot;, setup, update);
+</span><span>
+</span><span style="color:#b48ead;">fn </span><span style="color:#8fa1b3;">setup</span><span>(</span><span style="color:#bf616a;">c</span><span>: &amp;</span><span style="color:#b48ead;">mut</span><span> EngineContext) {
+</span><span>    c.</span><span style="color:#96b5b4;">load_texture_from_bytes</span><span>(
+</span><span>        </span><span style="color:#65737e;">// Every texture gets a string name later used to reference it.
+</span><span>        &quot;</span><span style="color:#a3be8c;">comfy</span><span>&quot;,
+</span><span>        include_bytes!(concat!(
+</span><span>            env!(&quot;</span><span style="color:#a3be8c;">CARGO_MANIFEST_DIR</span><span>&quot;),
+</span><span>            &quot;</span><span style="color:#a3be8c;">/../assets/comfy.png</span><span>&quot;
+</span><span>        )),
+</span><span>        wgpu::AddressMode::ClampToEdge,
+</span><span>    );
+</span><span>}
+</span><span>
+</span><span style="color:#b48ead;">fn </span><span style="color:#8fa1b3;">update</span><span>(</span><span style="color:#bf616a;">_c</span><span>: &amp;</span><span style="color:#b48ead;">mut</span><span> EngineContext) {
+</span><span>    </span><span style="color:#96b5b4;">draw_sprite</span><span>(
+</span><span>        </span><span style="color:#65737e;">// Drawing sprites/textures requires a TextureHandle which can be calculated from its
+</span><span>        </span><span style="color:#65737e;">// string name. This incurs a non-measurable overhead in hashing the string, but saves
+</span><span>        </span><span style="color:#65737e;">// a lot of boilerplate in user code that would have to store asset handles.
+</span><span>        </span><span style="color:#96b5b4;">texture_id</span><span>(&quot;</span><span style="color:#a3be8c;">comfy</span><span>&quot;),
+</span><span>        Vec2::</span><span style="color:#d08770;">ZERO</span><span>,
+</span><span>        </span><span style="color:#d08770;">WHITE</span><span>,
+</span><span>        </span><span style="color:#d08770;">0</span><span>,
+</span><span>        </span><span style="color:#96b5b4;">splat</span><span>(</span><span style="color:#d08770;">5.0</span><span>),
+</span><span>    );
+</span><span>}
+</span></code></pre>
  </div>
     </section>
 

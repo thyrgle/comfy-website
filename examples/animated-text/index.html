@@ -60,6 +60,52 @@
       <div class="container">
 <h1 class="title">animated_text</h1>
 <p class="subtitle"><strong>2023-09-24</strong></p>
+<pre data-lang="rust" style="background-color:#2b303b;color:#c0c5ce;" class="language-rust "><code class="language-rust" data-lang="rust"><span style="color:#b48ead;">use </span><span>comfy::*;
+</span><span>
+</span><span>simple_game!(&quot;</span><span style="color:#a3be8c;">Animated Text Example</span><span>&quot;, update);
+</span><span>
+</span><span style="color:#b48ead;">fn </span><span style="color:#8fa1b3;">lerped_color</span><span>(</span><span style="color:#bf616a;">colors</span><span>: &amp;[Color], </span><span style="color:#bf616a;">t</span><span>: </span><span style="color:#b48ead;">f32</span><span>) -&gt; Color {
+</span><span>    </span><span style="color:#b48ead;">let</span><span> n = colors.</span><span style="color:#96b5b4;">len</span><span>() - </span><span style="color:#d08770;">1</span><span>;
+</span><span>    </span><span style="color:#b48ead;">let</span><span> tt = t * n as </span><span style="color:#b48ead;">f32</span><span>;
+</span><span>    </span><span style="color:#b48ead;">let</span><span> idx = tt as </span><span style="color:#b48ead;">usize</span><span>;
+</span><span>    </span><span style="color:#b48ead;">let</span><span> frac = tt.</span><span style="color:#96b5b4;">fract</span><span>();
+</span><span>
+</span><span>    </span><span style="color:#b48ead;">let</span><span> color1 = colors[idx % colors.</span><span style="color:#96b5b4;">len</span><span>()];
+</span><span>    </span><span style="color:#b48ead;">let</span><span> color2 = colors[(idx + </span><span style="color:#d08770;">1</span><span>) % colors.</span><span style="color:#96b5b4;">len</span><span>()];
+</span><span>
+</span><span>    color1.</span><span style="color:#96b5b4;">lerp</span><span>(color2, frac)
+</span><span>}
+</span><span>
+</span><span style="color:#b48ead;">fn </span><span style="color:#8fa1b3;">update</span><span>(</span><span style="color:#bf616a;">_c</span><span>: &amp;</span><span style="color:#b48ead;">mut</span><span> EngineContext) {
+</span><span>    </span><span style="color:#b48ead;">let</span><span> time = </span><span style="color:#96b5b4;">get_time</span><span>() as </span><span style="color:#b48ead;">f32</span><span>;
+</span><span>    </span><span style="color:#b48ead;">let</span><span> colors = [</span><span style="color:#d08770;">RED</span><span>, </span><span style="color:#d08770;">GREEN</span><span>, </span><span style="color:#d08770;">BLUE</span><span>, </span><span style="color:#d08770;">YELLOW</span><span>, </span><span style="color:#d08770;">CYAN</span><span>];
+</span><span>    </span><span style="color:#b48ead;">let</span><span> text = &quot;</span><span style="color:#a3be8c;">comfy has comfy text rendering with egui</span><span>&quot;;
+</span><span>
+</span><span>    </span><span style="color:#b48ead;">let</span><span> s = time.</span><span style="color:#96b5b4;">sin</span><span>();
+</span><span>    </span><span style="color:#b48ead;">let text_t </span><span>= </span><span style="color:#96b5b4;">rescale</span><span>(s, -</span><span style="color:#d08770;">1.0</span><span>..</span><span style="color:#d08770;">1.0</span><span>, </span><span style="color:#d08770;">0.0</span><span>..</span><span style="color:#d08770;">1.0</span><span>);
+</span><span>    </span><span style="color:#b48ead;">let</span><span> text_idx = </span><span style="color:#96b5b4;">rescale</span><span>(s, -</span><span style="color:#d08770;">1.0</span><span>..</span><span style="color:#d08770;">1.0</span><span>, </span><span style="color:#d08770;">0.0</span><span>..(text.</span><span style="color:#96b5b4;">len</span><span>() + </span><span style="color:#d08770;">1</span><span>) as </span><span style="color:#b48ead;">f32</span><span>) as </span><span style="color:#b48ead;">usize</span><span>;
+</span><span>
+</span><span>    </span><span style="color:#b48ead;">let color_t </span><span>= (time * </span><span style="color:#d08770;">0.1</span><span>).</span><span style="color:#96b5b4;">fract</span><span>(); </span><span style="color:#65737e;">// 0.1 controls the speed of color change
+</span><span>    </span><span style="color:#b48ead;">let</span><span> color = </span><span style="color:#96b5b4;">lerped_color</span><span>(&amp;colors, </span><span style="color:#b48ead;">color_t</span><span>);
+</span><span>
+</span><span>    </span><span style="color:#96b5b4;">draw_text</span><span>(text, Vec2::</span><span style="color:#d08770;">ZERO</span><span>, color, TextAlign::Center);
+</span><span>
+</span><span>    </span><span style="color:#96b5b4;">draw_text_ex</span><span>(
+</span><span>        &amp;text[..text_idx.</span><span style="color:#96b5b4;">clamp</span><span>(</span><span style="color:#d08770;">5</span><span>, text.</span><span style="color:#96b5b4;">len</span><span>())],
+</span><span>        </span><span style="color:#96b5b4;">vec2</span><span>(</span><span style="color:#d08770;">0.0</span><span>, -</span><span style="color:#d08770;">2.0</span><span>),
+</span><span>        TextAlign::Center,
+</span><span>        TextParams {
+</span><span>            color,
+</span><span>            </span><span style="color:#65737e;">// Use egui fonts
+</span><span>            font: egui::FontId::new(
+</span><span>                (</span><span style="color:#d08770;">10.0 </span><span>+ </span><span style="color:#b48ead;">text_t </span><span>* </span><span style="color:#d08770;">30.0</span><span>) / </span><span style="color:#96b5b4;">egui_scale_factor</span><span>(),
+</span><span>                egui::FontFamily::Proportional,
+</span><span>            ),
+</span><span>            ..Default::default()
+</span><span>        },
+</span><span>    );
+</span><span>}
+</span></code></pre>
  </div>
     </section>
 
