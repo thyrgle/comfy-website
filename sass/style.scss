@@ -79,6 +79,19 @@ $link-color: $teal;
 }
 
 
+.card-body.example-card-body {
+  padding: 0;
+
+  a.example-detail-link {
+    display: block;
+
+    video {
+      // display: block;
+      // width: 100%;
+    }
+  }
+}
+
 [data-bs-theme="light"] {
   .dark-github {
     display: none;
