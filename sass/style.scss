@@ -17,7 +17,7 @@
   // --cadet-gray: #a2aebbff;
   // --platinum: #dfe0e2ff;
 
-  // // https://coolors.co/331832-d81e5b-f0544f-c6d8d3-fdf0d5
+  // // // https://coolors.co/331832-d81e5b-f0544f-c6d8d3-fdf0d5
   // --dark-purple: #331832ff;
   // --raspberry: #d81e5bff;
   // --vermilion: #f0544fff;
@@ -30,7 +30,7 @@
   // --coolors-d: var(--ash-gray);
   // --coolors-e: var(--papaya-whip);
   //
-  // --bs-body-bg: var(--coolors-a);
+  // // --bs-body-bg: var(--coolors-a);
   // --bs-body-color: var(--coolors-e);
   //
   // --bs-emphasis-color: var(--coolors-b);
@@ -52,15 +52,16 @@ $beige: #f1edd0;
 $night: #12130f;
 $non-photo-blue: #acecf7;
 
-$comfy: #ffc4dd; 
 $teal: #38808C;
 
-// $primary: darken($nyanza, 10%);
+$comfy: #ffc4dd; 
+
+$primary: darken($comfy, 4%);
+
 // $secondary: darken($salmon-pink, 20%);
 // $secondary: darken($comfy, 20%);
 
-$primary: $comfy;
-$secondary: darken($nyanza, 10%);
+$secondary: darken($nyanza, 15%);
 
 $border-color: darken($non-photo-blue, 8%);
 
@@ -71,19 +72,20 @@ $body-secondary-bg: $non-photo-blue;
 
 $body-tertiary-bg: lighten($non-photo-blue, 3%);
 
+$font-size-root: 1.22rem;
+// $font-size-base: 1.22rem;
 $link-color: $teal;
+$link-color-dark: darken($comfy, 6%);
 
 $light: #d2d2d2;
-
-
-.example-code pre {
-  padding: 20px;
-}
 
 .comfy-logo-big {
   filter: drop-shadow(0 5px 6px color.adjust(darken($non-photo-blue, 15%), $alpha: -0.2));
 }
 
+.example-code pre {
+  padding: 20px;
+}
 
 .card-body.example-card-body {
   padding: 0;
