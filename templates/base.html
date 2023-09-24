@@ -88,7 +88,7 @@
           if (themeSwitch.checked && currentTheme !== 'dark') {
               document.documentElement.setAttribute('data-bs-theme', 'dark');
               localStorage.setItem('data-bs-theme', 'dark');
-          } else if (!themeSwitch.checked && currentTheme !== 'light') {
+          } else if (!themeSwitch.checked) {
               document.documentElement.setAttribute('data-bs-theme', 'light');
               localStorage.setItem('data-bs-theme', 'light');
           }
