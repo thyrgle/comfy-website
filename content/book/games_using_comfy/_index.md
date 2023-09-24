@@ -22,3 +22,6 @@ which will be opensourced soon. It's a relatively small game, but hopefully
 will serve as a nice illustration of non-conventional ways to make games.
 Specifically, the whole game is a single texture where every pixel is copied
 over from other textures, and lighting calculated using simple raytracing.
+
+{{ webm(src="/nanovoid.webm") }}
+{{ webm(src="/bitgun-survivors.webm") }}
