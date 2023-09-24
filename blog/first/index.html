@@ -44,17 +44,17 @@
           <a href="/features" class="nav-link">Features</a>
         </li>
         <li class="nav-item"><a href="/examples" class="nav-link">Examples</a></li>
-        <li class="nav-item"><a href="/blog" class="nav-link">Blog</a></li>
+        <li class="nav-item"><a href="/blog/first" class="nav-link">Blog</a></li>
         <li class="nav-item">
           <a href="https://github.com/darthdeus/comfy" class="">
             <img class="light-github" width="40" height="40" src="/github-mark.svg" alt="Github repo" />
             <img class="dark-github" width="40" height="40" src="/github-mark-white.svg" alt="Github repo" />
           </a>
         </li>
-        <li class="nav-item">
+        <li class="nav-item mx-2">
           <a href="https://discord.com/invite/XrGZQkq" class="">
-            <img class="light-discord" width="40" height="40" src="/discord-mark-black.png" alt="Discord" />
-            <img class="dark-discord" width="40" height="40" src="/discord-mark-white.png" alt="Discord" />
+            <img class="light-discord" height="40" src="/discord-mark-black.png" alt="Discord" />
+            <img class="dark-discord" height="40" src="/discord-mark-white.png" alt="Discord" />
           </a>
         </li>
 
@@ -78,8 +78,61 @@ open source under MIT and Apache 2 licenses.</p>
 <p>Today we're releasing the first version of Comfy, <code>v0.1</code>, which is just the
 very beginning of its journey.</p>
 <p>Comfy is a product of our work at <a href="https://loglog.games/">LogLog Games</a>, where
-we've been using it for almost a year now, and have currently a few games in progress that are using Comfy,
-including some smaller released titles.</p>
+we've been using it for almost a year now, and have currently a few games in
+progress that are it. Internally, we have well over 20k lines of game code
+using using Comfy.</p>
+<p>While still in its infancy, Comfy provides a solid foundation for making 2D
+games in Rust. It offers an immediate mode style API for drawing and audio
+(similar to macroquad), and a small ECS foundation that builds on top of it.</p>
+<p>Comfy is not prescriptive in how you build your games. It's not an ECS based
+engine, nor is it a macro-heavy engine. It's a pragmatic toolkit that lets you
+focus on your game. We didn't aim to create the fastest engine, or the most
+performant renderer, the most flexible render graph, or the most powerful ECS.</p>
+<p>We're not trying to compete with Unity, Unreal, Godot, or even Bevy. If you're
+looking for state of the art usage of Rust's type system, a fully featured PBR
+renderer, or the most extensible and performant solution, Comfy is not for you.</p>
+<p>Our goal was to build an engine where if you're making a 2D game, you can just
+run <code>cargo new game</code>, and start writing game code. Comfy does not require you
+to study its internals, watch tutorials, or read lots of documentation. Comfy
+does not want you to do things in any specific way. You're free to structure
+your game however you want.</p>
+<p>If you want to draw a sprite, you just call <code>draw_sprite</code>. If you want to play
+a sound, you just call <code>play_sound</code>. If you want to access the ECS command
+buffer, you don't need to use dependency injection or macros, you just call
+<code>c.commands()</code>. If you want to create an <a href="https://www.egui.rs/">egui</a> window,
+you access the <code>egui::Context</code> simply as <code>c.egui</code>. Comfy uses a single <code>c: &amp;mut EngineContext</code> passed around your code which can be used to access all of its
+functionality.</p>
+<p>Comfy also uses global variables for state internally. This is intentional, as
+we haven't really found performance gains from using implicitly parallel ECS in
+our past experiments with other engines. We prefer to use data parallelism
+(e.g. with <a href="https://docs.rs/rayon/latest/rayon/">rayon</a>) where necessary, while
+keeping the core engine single threaded. This may be suboptimal, but it also
+massively simplifies everything.</p>
+<p>We also use <code>RefCell</code>s, which to many may seem like an anti-pattern, but it
+also greatly simplifies game code as it lets us work around limitations with
+partial borrows.</p>
+<p>Despite the above, Comfy is still very fast. It's not as fast as some of the
+alternatives, and you will 100% be able to create a benchmark that will make it
+look bad. But game development is not a competition about who can render 100k
+sprites the fastest. It's about making games. Comfy has a builtin integration
+with <a href="https://github.com/wolfpld/tracy">the Tracy profiler</a>, and we use it
+heavily throughout our development to make sure our games run fast enough.</p>
+<p>The hardest part of making a game engine is actually making the game. Comfy
+tries to take reasonable sacrifices and just allow its users on the game
+itself.</p>
+<p>By game we mean <em>something a small team of indie developers can make and ship
+in a reasonable amount of time</em>. Comfy will not power the next AAA game, it
+won't help you build a 3D MMO, or an infinite voxel world. It won't help you
+beating UE5's Nanite in benchmarks, we don't even have a 3D perspective camera
+(yet).</p>
+<p>But it might help you make a small 2D game in the next few months, release it
+on Steam, and have real players enjoy it. If that is something that you aspire
+to, Comfy might be a good fit. We're still very very early on our journey, but
+the foundation is solid, and games can already be made. There are many rough
+edges and incomplete features, but we're in this for the long term. Comfy is
+not an experiment, it's a real game engine meant to be used in real games.</p>
+<p>If you'd like to see the future direction of Comfy, check out <a href="https://comfyengine.org/book/roadmap/">our
+Roadmap</a>.</p>
  </div>
     </section>
 

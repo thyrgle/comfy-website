@@ -1,4 +1,4 @@
 User-agent: *
 Disallow:
 Allow: /
-Sitemap: https://darthdeus.github.io/comfy/sitemap.xml
+Sitemap: https://comfyengine.org/sitemap.xml
