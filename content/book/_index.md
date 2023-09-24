@@ -44,28 +44,3 @@ for 2D first. Some internals of comfy (batching and z-sorting) will need
 to be re-implemented to allow for this and ultimately more performant
 rendering techniques, but this should not happen at the cost of API
 clarity and ergonomics for most games.
-
-# Getting started
-
-The repository contains many examples under the `comfy/examples` folder.
-While there is currently no documentation, the API is simple enough that
-just reading the examples should explain things.
-
----
-
-There are many other frameworks/engines in Rust, but I haven't had a chance to
-interact with those in any significant way, hence why they're not in this
-comparison.
-
-
-# Games using comfy
-
-Comfy is being used by [LogLog Games](https://loglog.games/), and currently
-used in a few of our games, two of which you can check out on Steam.
-
-- [NANOVOID](https://store.steampowered.com/app/2326430/NANOVOID) - 2d top down tactical space shooter.
-- [BITGUN Survivors](https://store.steampowered.com/app/2081500/BITGUN_Survivors) - open world take on the vampire survivors genre, a spiritual successor to our last big Rust game [BITGUN](https://store.steampowered.com/app/1673940/BITGUN).
-
-We've also used comfy in a few smaller games, e.g. our [1-bit jam
-entry](https://logloggames.itch.io/bitmob-1-bit-jam) where we experimented with
-CPU textures and 2D raytracing.
