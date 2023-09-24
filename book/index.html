@@ -115,6 +115,31 @@
     </li>
 
         
+            
+    
+    
+    
+    
+    
+    
+
+    
+        
+    
+
+    
+
+    
+
+    <li class="nav-item">
+        <div class="tree-menu__label">
+            <a class="nav-link " aria-current="page" tree-menu__link" href="&#x2F;book&#x2F;other_engines&#x2F;">Why comfy and not X?</a>
+            
+        </div>
+        
+    </li>
+
+        
     </ul>
 
 
@@ -139,12 +164,28 @@
 
                   
               
+                  
+                  
+
+                  
+              
 
               
               
               
               
 
+              
+                  
+                  
+                  
+
+                  
+
+                  
+
+                  
+                  
               
                   
                   
@@ -175,17 +216,193 @@
                   
                   
               </h1>
-              <div class="media-content"><p>Book goes here :O</p>
-<p>and lolol</p>
+              <div class="media-content"><p>Comfy is a fun 2D game engine built in Rust. It's designed to be
+opinionated, productive, and easy to use. It uses <a href="https://wgpu.rs/">wgpu</a>
+and <a href="https://docs.rs/winit/latest/winit/">winit</a>, which makes it
+cross-platform, currently supporting Windows, Linux, MacOS and WASM.
+Inspired by macroquad, Raylib, Love2D and many others, it is designed to
+just work and fill most of the common use cases.</p>
+<p><strong>Warning</strong>: comfy is currently under heavy development. While there are
+games already being made using comfy, the API is not yet stable and
+breaking changes will happen. If you want to use comfy for your game you
+may be forced to dig into the source code and possibly tweak things
+manually. That being said, the source code is designed to be simple and
+modifiable. If you want to make a game jam game comfy is definitely mature
+enough.</p>
+<blockquote>
+<p><code>comfy</code> is named comfy, because it is very comfy to use.</p>
+</blockquote>
+<p>The ultimate goal of comfy is to do the obvious thing as simply as
+possible without unnecessray ceremony. If something is annoying to use, it
+is a bug that should be fixed. We're not necessarily aiming at beginner
+friendliness, but rather productive and ergonomic APIs. If you're a
+beginner, comfy should be easy to pick up, but it might not be as polished
+as some of the other alternatives. The goal of comfy is ultimately not
+polish, cleanliness of API, clean design, type safety, extensibility, or
+maximum features. It's an engine that gets out of your way so you can make
+your game.</p>
+<p>There is nothing that fundamentally prevents comfy from becoming a 3D
+engine, but the last thing we want is to try to fight rend3 or bevy in
+terms of PBR accuracy or skeletal animations. Comfy is not fighting
+against Unreal Engine 5. It would be nice if
+<a href="https://store.steampowered.com/app/824600/HROT/">simple</a>
+<a href="https://store.steampowered.com/app/1055540/A_Short_Hike/">stylized</a>
+<a href="https://store.steampowered.com/app/219890/Antichamber/">3D</a>
+<a href="https://store.steampowered.com/app/219890/Antichamber/">games</a> were
+ultimately possible, but we want to get all of the basic building blocks
+for 2D first. Some internals of comfy (batching and z-sorting) will need
+to be re-implemented to allow for this and ultimately more performant
+rendering techniques, but this should not happen at the cost of API
+clarity and ergonomics for most games.</p>
+<h1 id="features">Features<a class="zola-anchor" href="#features" aria-label="Anchor link for: features">🔗</a></h1>
+<ul>
+<li>Simple and productive API.</li>
+<li>Immediate mode rendering for sprites, text and shapes with automatic
+batching. If you want to draw a circle, you call a function <code>draw_circle</code>.</li>
+<li>2D lighting with HDR, tonemapping and bloom.</li>
+<li>Built-in support for z-index, meaning you don't have to worry about the order
+of your draw calls.</li>
+<li><a href="https://egui.rs/">egui</a> support built in.</li>
+<li>Parallel asset loading with support for most image and audio formats.</li>
+<li>No complex ECS or abstractions to learn. Just build your game and let comfy
+get out of your way.</li>
+<li>Simple audio using <a href="https://docs.rs/kira/latest/kira/">kira</a>. If you want to
+play a sound, you call a function <code>play_sound</code>.</li>
+<li>Simple 2D camera.</li>
+<li>Particles, both simple API for individual particles &amp; systems with lots of
+options.</li>
+<li>Trails with a custom mesh &amp; scrolling texture.</li>
+<li>Text rendering (currently using egui).</li>
+<li>Lots of utilities for common tasks.</li>
+</ul>
+<h1 id="design-goals-philosophy">Design goals &amp; philosophy<a class="zola-anchor" href="#design-goals-philosophy" aria-label="Anchor link for: design-goals-philosophy">🔗</a></h1>
+<ul>
+<li>Heavy focus on ergonomics and productivity.</li>
+<li>No magic. The code does what it looks like it does.</li>
+<li>Targeted at simple games, currently only 2D.</li>
+<li>Opinionated and useful defaults.</li>
+<li><strong>Simple</strong> immediate mode APIs for almost everything.</li>
+<li>Exposed internals for when you need more. Almost all struct fields are
+public, comfy doesn't keep things away from its user.</li>
+<li>Reasonable compile times. Comfy is slower to compile than macroquad, but we
+want to avoid things getting out of hand. End users are not going to be
+required to use any proc macros to use comfy.</li>
+<li>Global variables are nice. Comfy uses a lot of them.</li>
+<li>Typing less is nice. Comfy has a single context object that gets passed around everywhere.</li>
+<li>Constraints are nice. Comfy wants to be used for a lot of games, but not all
+of them.</li>
+<li><code>RefCell</code>'s are nice. Comfy uses them a lot to work around partial borrows.
+We tried doing things without them multiple times, it was more painful.</li>
+</ul>
+<h1 id="non-goals">Non-goals<a class="zola-anchor" href="#non-goals" aria-label="Anchor link for: non-goals">🔗</a></h1>
+<ul>
+<li>AAA 3D support. While it's entirely possible to extend the renderer to handle
+3D, this was intentionally not done yet. There is a lot of complexity that
+comes with 3d models, materials, skeletal animations, etc. Comfy may grow to
+support simple 3d games in the future, but it is extremely unlikely it'll
+ever attempt to be competitive with big 3D engines. We want to make sure that
+the stuff we have works well and is usable before adding lots more complex
+features.</li>
+<li>ECS based engine. While comfy does embed <a href="https://docs.rs/hecs">hecs</a> and
+provides some helpers for using it, it is by no means required or even
+optimal for most cases.</li>
+<li>Modularity. Comfy is not a modular engine. It's an opinionated toolkit
+with defaults that make sense for most games. There is no intention of
+having a plugin system or the ability to replace wgpu with something
+else.</li>
+<li>Maximum performance. Comfy is not designed to be the fastest engine out
+there. There are many tradeoffs made for the sake of ergonomics and ease of
+use, some of which affect performance. If you're looking for the fastest way
+to draw a million quads, comfy is not for you. If however you have a
+legitimate use case where the performance is not good enough, please open an
+issue. There is a lot of low hanging fruit with respect to performance, but
+as the development is driven by real world usage, unless something shows up
+in a profiler in a game, it's unlikely to be optimized further.</li>
+</ul>
+<h1 id="getting-started">Getting started<a class="zola-anchor" href="#getting-started" aria-label="Anchor link for: getting-started">🔗</a></h1>
+<p>The repository contains many examples under the <code>comfy/examples</code> folder.
+While there is currently no documentation, the API is simple enough that
+just reading the examples should explain things.</p>
+<hr />
+<p>There are many other frameworks/engines in Rust, but I haven't had a chance to
+interact with those in any significant way, hence why they're not in this
+comparison.</p>
+<h1 id="roadmap">Roadmap<a class="zola-anchor" href="#roadmap" aria-label="Anchor link for: roadmap">🔗</a></h1>
+<p>The following goals are not in any particular order, but should come reasonably
+soon. Comfy is not an aetheral project that will only materialize in 2 years.
+Only features that require maximum few weeks of work are listed here.</p>
+<ul>
+<li>Improved lighting. Right now we do have 2d lights, but they're basic,
+ugly in some scenarios, and not very flexible.</li>
+<li>Configurable bloom. Currently bloom is hard-coded to simplify a few things
+and always enabled. We don't want to delay the release to fix this since it
+does make games look better by default, but it is one of the first few things
+that will get fixed after v0.1 release.</li>
+<li>Configurable post processing.</li>
+<li>Custom shaders/materials.</li>
+<li>Render targets.</li>
+<li>Gamepad &amp; touchpad support.</li>
+<li>Antialiasing.</li>
+<li>2D shadowcasters with soft shadows.</li>
+<li>Asset packing without <code>include_dir</code>. Right now comfy relies on either its
+builtin use of <a href="https://github.com/darthdeus/include_dir">include_dir</a> (a
+small fork with a few extra features), or the user handling asset loading
+manually. There are many other ways of packing assets, and it would be cool
+to support those, but we don't currently because for reasonably (&lt;1GB) sized
+assets <code>include_dir</code> works well enough.</li>
+<li>Text rendering without egui. Right now all text (drawn with <code>draw_text</code> and
+friends) is rendered using <code>egui</code>'s painter on a separate layer. This gives
+us a lot of features in terms of text rendering, but also comes with some
+limitations. The goal is to implement text rendering on top of just wgpu.
+We've tried a few different approaches (e.g. <code>glyphon</code>) but ultimately found
+none to be easy enough to just replace what we have in <code>egui</code>, and since no
+games were yet blocked on more flexible rendering this remains a relatively
+low priority problem.</li>
+<li>Overall engine/renderer code cleanup. The code in comfy is not beautiful as
+it developed organically while building multiple games. There are some
+features that could be better exposed, and some remains of what our games
+needed. The provided examples should serve as a foundation to make sure comfy
+is flexible enough, but it is an ongoing effort to improve the codebase. That
+being said, almost everything you find in comfy should work to a reasonable
+extent.</li>
+<li>Reduce re-borrows &amp; <code>RefCell</code>s. Right now we use <em>a lot</em> of <code>RefCell</code>
+for almost everything. While this helps in a few places there are many
+places where it is not necessary, and where we also excessively borrow
+and re-borrow multiple times per frame. Currently we haven't noticed any of
+this impacting performance, but it is something that should be cleaned up.
+There's also a few things which use a <code>Mutex</code> unnecessarily.</li>
+</ul>
+<p>While comfy is ready to use, the codebase is far from clean. The engine
+evolves rapidly as we work on our games, and there are many parts that can
+and will be improved. Comfy is being released before it is 100% perfect,
+because even in its current state it can be very well used to make 2D games.</p>
+<p>There may be a few oddities you may run into, and some internals are
+planned to be re-done, but anything covered by the examples should 100%
+work. We have been using comfy internally for over 6 months, and a large
+part of its codebase has been ported from our previous OpenGL based
+engine. This doesn't mean the engine is mature, but we have had real
+players play our games made with comfy.</p>
+<h1 id="license">License<a class="zola-anchor" href="#license" aria-label="Anchor link for: license">🔗</a></h1>
+<p>comfy is free and open source and dual licensed under MIT and Apache 2.0 licenses.</p>
+<h1 id="games-using-comfy">Games using comfy<a class="zola-anchor" href="#games-using-comfy" aria-label="Anchor link for: games-using-comfy">🔗</a></h1>
+<p>Comfy is being used by <a href="https://loglog.games/">LogLog Games</a>, and currently
+used in a few of our games, two of which you can check out on Steam.</p>
+<ul>
+<li><a href="https://store.steampowered.com/app/2326430/NANOVOID">NANOVOID</a> - 2d top down tactical space shooter.</li>
+<li><a href="https://store.steampowered.com/app/2081500/BITGUN_Survivors">BITGUN Survivors</a> - open world take on the vampire survivors genre, a spiritual successor to our last big Rust game <a href="https://store.steampowered.com/app/1673940/BITGUN">BITGUN</a>.</li>
+</ul>
+<p>We've also used comfy in a few smaller games, e.g. our <a href="https://logloggames.itch.io/bitmob-1-bit-jam">1-bit jam
+entry</a> where we experimented with
+CPU textures and 2D raytracing.</p>
 </div>
               <div class="docs-footer">
                   <nav class="docs-footer__nav">
                       
                       
-                          <a class="docs-footer__link docs-footer__link--prev" href="&#x2F;book&#x2F;contributing&#x2F;" data-docs-nav-previous>
+                          <a class="docs-footer__link docs-footer__link--prev" href="&#x2F;book&#x2F;other_engines&#x2F;" data-docs-nav-previous>
                               <div class="docs-footer__label">
                                   <div class="docs-footer__dir">Previous</div>
-                                  Contributing
+                                  Why comfy and not X?
                               </div>
                               <i class="docs-footer__chevron icon icon--chevron-left"></i>
                           </a>

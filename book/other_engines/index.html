@@ -1,0 +1,312 @@
+<!doctype html>
+<html lang="en" data-bs-theme="dark">
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
+  <meta name="description" content="Comfy is an ergonomic 2D game engine built in Rust. It's designed to be opinionated, productive, and easy to use.">
+
+  <title>Comfy Engine</title>
+
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fira+Sans:wght@400;700&display=swap" />
+
+  <!-- <link -->
+  <!--   href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" -->
+  <!--   rel="stylesheet" -->
+  <!--   integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" -->
+  <!--   crossorigin="anonymous" -->
+  <!-- /> -->
+
+  <link rel="stylesheet" href="/style.css" />
+</head>
+
+<body>
+  <div class="container">
+    <header class="d-flex flex-wrap justify-content-center py-3 mb-4 border-bottom">
+      <a href="/" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto link-body-emphasis text-decoration-none">
+        <img src="/comfy.png" alt="logo of the comfy engine" class="bi me-2" width="32" height="32" />
+        <span class="fs-4"><strong>Comfy</strong></span>
+      </a>
+
+      <ul class="nav nav-pills">
+        <li class="nav-item">
+          <a href="/book" class="nav-link">Book</a>
+        </li>
+        <li class="nav-item">
+          <a href="/features" class="nav-link">Features</a>
+        </li>
+        <li class="nav-item"><a href="/examples" class="nav-link">Examples</a></li>
+        <li class="nav-item">
+          <a href="#" class="">
+            <img class="light-github" width="40" height="40" src="/github-mark.svg" alt="Github repo" />
+            <img class="dark-github" width="40" height="40" src="/github-mark-white.svg" alt="Github repo" />
+          </a>
+        </li>
+
+        <li class="ms-3 my-2">
+          <div class="form-check form-switch">
+            <input class="form-check-input" type="checkbox" checked role="switch" id="comfySwitch" style="cursor: pointer">
+            <label class="form-check-label" for="comfySwitch">Dark Theme</label>
+          </div>
+        </li>
+      </ul>
+
+    </header>
+
+    <section class="section">
+      <div class="container">
+
+<section>
+  <div class="row">
+    <div class="col-md-3">
+      
+      
+      
+    <ul class="nav flex-column">
+        
+            
+    
+    
+    
+    
+    
+    
+
+    
+        
+    
+
+    
+
+    
+
+    <li class="nav-item">
+        <div class="tree-menu__label">
+            <a class="nav-link " aria-current="page" tree-menu__link" href="&#x2F;book&#x2F;getting-started&#x2F;">Getting Started</a>
+            
+        </div>
+        
+    </li>
+
+        
+            
+    
+    
+    
+    
+    
+    
+
+    
+        
+    
+
+    
+
+    
+
+    <li class="nav-item">
+        <div class="tree-menu__label">
+            <a class="nav-link " aria-current="page" tree-menu__link" href="&#x2F;book&#x2F;contributing&#x2F;">Contributing</a>
+            
+        </div>
+        
+    </li>
+
+        
+            
+    
+    
+    
+    
+    
+    
+
+    
+        
+        
+    
+
+    
+
+    
+
+    <li class="nav-item">
+        <div class="tree-menu__label">
+            <a class="nav-link disabled" aria-current="page" tree-menu__link" href="&#x2F;book&#x2F;other_engines&#x2F;">Why comfy and not X?</a>
+            
+        </div>
+        
+    </li>
+
+        
+    </ul>
+
+
+    </div>
+    <div class="col-md-9">
+
+      <div class="docs-page">
+          <div class="docs-content">
+              
+              
+              
+              
+
+              
+
+              
+              
+              
+              
+
+              
+
+              <h1>
+                  
+                      Why comfy and not X?
+                  
+                  
+              </h1>
+              <div class="media-content"><h2 id="macroquad"><a href="https://macroquad.rs/">macroquad</a><a class="zola-anchor" href="#macroquad" aria-label="Anchor link for: macroquad">🔗</a></h2>
+<p>Before I started working on comfy I was using <a href="https://macroquad.rs/">macroquad</a>
+for my games. It works great, but a few things were missing, most notably
+RGBA16F textures, which are a feature of OpenGL 3.x, and without which HDR is
+not really possible. This is because macroquad targets older versions of GLES
+to achieve better cross-platform support. While this is great for many use
+cases, at the time I really wanted to play with HDR, bloom and tonemapping,
+which lead me down the <a href="https://wgpu.rs/">wgpu</a> path.</p>
+<p>The first version of comfy actually had an API almost identical to macroquad,
+where I basically copy pasted function definitions and implemented most of the
+functionality on top of wgpu instead. Over time I realized I wanted a few more
+things, namely built-in z-index so that my game code wouldn't have to worry
+about draw order.</p>
+<p>If you like the idea of comfy but it's not stable enough for your use case I
+very highly recommend giving macroquad a try. While it is not perfect it has
+helped me build a bunch of small games, and most importantly I had fun while
+making them.</p>
+<h3 id="differences-between-comfy-and-macroquad">Differences between <code>comfy</code> and <code>macroquad</code><a class="zola-anchor" href="#differences-between-comfy-and-macroquad" aria-label="Anchor link for: differences-between-comfy-and-macroquad">🔗</a></h3>
+<p>Macroquad is the biggest inspiration to comfy, and as such there are many
+things which are similar, but there are quite a few differences.</p>
+<p><strong>Coordinate systems:</strong></p>
+<ul>
+<li>Macroquad's coordinate system is <code>[0, 0]</code> in top left, <code>y</code>-down, measured in
+pixels.</li>
+<li>Comfy's coordinate system is <code>[0, 0]</code> in the center, <code>y</code>-up, measured in
+world units. Default camera has zoom set to <code>30</code>, which means you can see
+roughly <code>30</code> world units. In a pixel-art game with 16x16 sprites, you would
+ideally set your camera's zoom so each sprite is <code>1</code> world unit.</li>
+</ul>
+<p><strong>Z-index built in</strong>. In macroquad, draw calls happen in the order you call
+them. In comfy, almost everything (excluding text and UI) accepts a <code>z_index: i32</code>. This means you don't need to sort the calls yourself, comfy will do it
+for you while still batching the draw calls as best it can.</p>
+<p><strong>HDR render textures</strong>: Macroquad targets GLES2/3 to support as many platforms
+as possible, and as such it can't support RGBA16F textures. Comfy targets
+desktop and WASM through WebGL 2, both of which allow <code>f16</code> textures, and thus
+all rendering is done with HDR and tonemapped accordingly. This allows our
+bloom implementation to work off of HDR colors and greatly simplify working
+with lights, as the light intensity can go well beyond 1.</p>
+<p><strong>Batteries included</strong>: Comfy includes many extra things that macroquad does
+not, for example egui itself is part of comfy and likely will remain this way
+until a better alternative comes along. Macroquad and miniquad provide small
+flexible building blocks, while comfy aims to be a full and relatively
+opinionated way of making games.</p>
+<p>There are many more subtle differences, but in principle you can think of as
+comfy as &quot;macroquad with more batteries included, built on top of wgpu, with
+less cross platform capabilities&quot;. Note that because comfy builds on wgpu and
+not OpenGL we don't have the same immediate mode interactions with Gthat
+because comfy builds on wgpu and not OpenGL we don't have the same immediate
+mode interactions with GL. This makes some things more difficult, e.g. render
+targets, changing shader uniforms, etc.</p>
+<p>Comfy intends to support all of these features, but it will take a bit more
+development. Many engines (e.g. bevy and rend3) end up using render graphs in
+order to expose the rendering logic to users. While these are very flexible and
+offer high performance their APIs are anything but simple.</p>
+<p>Since our intention is not to support AAA graphics the goal should be to find
+some form of middle ground, where we could achieve something similar to
+macroquad in terms of API simplicity, expressivity, and fun, while utilizing
+all of the power wgpu has to offer.</p>
+<p>The ultimate design goal of comfy is that most of its API should be
+understandable from just looking at the type signatures, without needing to
+study documentation in depth, and without excessive footguns.</p>
+<h2 id="rend3"><a href="https://rend3.rs/">rend3</a><a class="zola-anchor" href="#rend3" aria-label="Anchor link for: rend3">🔗</a></h2>
+<p>I don't have much experience with rend3 apart from digging a bit through its
+code, but as a 3d renderer it fills a very different niche than comfy. If you're
+building a 3d game and don't want to do PBR rendering, rend3 is probably
+something you want to consider.</p>
+<h2 id="fyrox"><a href="https://fyrox.rs/">Fyrox</a><a class="zola-anchor" href="#fyrox" aria-label="Anchor link for: fyrox">🔗</a></h2>
+<p>Fyrox seems like it is trying to fight Unity, Godot and Unreal head on by
+currently being the only fully featured Rust game engine, notably also
+including a full 3D scene editor. Its 3D demos are very impressive in
+particular, and if you're looking for a fully featured 3D engine it's
+definitely something to consider.</p>
+<p>That being said, comfy is unapologetically focused on simple games, and as such
+fills a very different niche than Fyrox.</p>
+<h2 id="bevy"><a href="https://bevyengine.org/">bevy</a><a class="zola-anchor" href="#bevy" aria-label="Anchor link for: bevy">🔗</a></h2>
+<p>Bevy is another contender for the &quot;big Rust game engine&quot; spot. In terms of its
+2D features Bevy definitely wins on the size of community and overall crate
+support and modularity, but this is something where comfy is not even attempting
+to compete. comfy is designed to be opinionated, simple and pragmatic, while
+Bevy's goal is to be modular, extensible and build on top of its
+all-encompasing ECS.</p>
+<p>Due to its modularity Bevy offers many more features through community asset
+crates which greatly extend it, but also has a rather distributed and unstable
+ecosystem.</p>
+<p>Comfy's goal is opposite in many ways. The goal is to provide a simple, stable
+and pragmatic foundation. comfy is not a platform for experimenting with Rust's
+type system, ECS, or other abstractions. It's a toolkit designed for making
+small games.</p>
+<p>The only features you'll find in comfy are those which can be immediately used,
+understood, and that work from day 1. If a feature is not being used in a real
+game it won't appear in the engine source code.</p>
+<h2 id="ggez"><a href="https://ggez.rs/">ggez</a><a class="zola-anchor" href="#ggez" aria-label="Anchor link for: ggez">🔗</a></h2>
+<p>ggez is one of those libraries that have been around for a while, but I've
+never really got a chance to use it. It does seem to have a bit of a history
+with losing maintainers, which is why I never got to use it, as both times when
+I was switching frameworks/engines in Rust it was unmaintained. Although in the
+current version it did get upgraded to a wgpu-based backend, but I can't speak
+to its quality. I would imagine it's a great alternative to macroquad.</p>
+</div>
+              <div class="docs-footer">
+                  <nav class="docs-footer__nav">
+                      
+                      
+                  </nav>
+                  <div class="docs-footer__edit-wrapper">
+                      <a class="docs-footer__edit" href="https://github.com/darthdeus/comfy-website/edit/master/content/book&#x2F;other_engines&#x2F;_index.md">
+                          <i class="icon icon--pencil"></i>
+                          Improve this page
+                      </a>
+                  </div>
+              </div>
+          </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+
+</div>
+    </section>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous">
+      </script>
+    <script>
+      document.addEventListener('DOMContentLoaded', function () {
+        const themeSwitch = document.getElementById('comfySwitch');
+
+        themeSwitch.addEventListener('change', function () {
+          if (themeSwitch.checked) {
+            document.documentElement.setAttribute('data-bs-theme', 'dark');
+          } else {
+            document.documentElement.setAttribute('data-bs-theme', 'light');
+          }
+        });
+      });
+    </script>
+</body>
+
+</html>
