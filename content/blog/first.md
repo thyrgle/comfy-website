@@ -77,6 +77,14 @@ the foundation is solid, and games can already be made. There are many rough
 edges and incomplete features, but we're in this for the long term. Comfy is
 not an experiment, it's a real game engine meant to be used in real games.
 
+While Comfy has many examples, the code remains currently undocumented. It's
+something we want to fix very soon, but the core APIs as presented in the
+examples are very simple and should be understandable without any
+documentation. The core concepts of Comfy are explained in [the comfy
+book](https://comfyengine.org/book/). The code itself is also far from clean,
+as we've been focusing our efforts on making the engine functional for our games,
+and only now that Comfy is becoming opensource more people are going to see it.
+
 If you'd like to see the future direction of Comfy, check out [our
 Roadmap](https://comfyengine.org/book/roadmap/).
 
@@ -98,4 +106,3 @@ and [the comfy book](https://comfyengine.org/book/). If you have any questions,
 feel free to reach out on our [Discord](https://discord.gg/M8hySjuG48), and if
 you run into any problems please do [open an issue on
 GitHub](https://github.com/darthdeus/comfy/issues).
-
