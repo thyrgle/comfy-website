@@ -15,7 +15,13 @@ cd tmp/comfy
 git pull origin master
 
 mkdir -p target/generated/
+mkdir -p target/videos/
+mkdir -p target/screenshots/
+mkdir -p target/wasm/
 rm -rf target/generated/*
+rm -rf target/videos/*
+rm -rf target/screenshots/*
+rm -rf target/wasm/*
 
 date=$(date +"%Y-%m-%d")
 
@@ -28,7 +34,7 @@ date = $date
 [extra]
 screenshot = \"/screenshots/{{example}}.png\"
 video = \"/videos/{{example}}.webm\"
-gh_source = \"//github.com/darthdeus/comfy/blob/master/examples/{{example}}.rs\"
+gh_source = \"//github.com/darthdeus/comfy/blob/master/comfy/examples/{{example}}.rs\"
 wasm_source = \"/wasm/{{example}}/index.html\"
 +++
 """
@@ -44,7 +50,7 @@ for example in $(ls comfy/examples | grep -e "\.rs$" | sed "s/\.rs//"); do
 done
 
 for example in $(ls comfy/examples | grep -e "\.rs$" | sed "s/\.rs//"); do
-  # cargo run --release --example $example --features comfy-wgpu/record-pngs
+  cargo run --release --example $example --features comfy-wgpu/record-pngs
   cp "target/screenshots/$example.png" "$parent_dir/static/screenshots/$example.png"
   cp "target/videos/$example.webm" "$parent_dir/static/videos/$example.webm"
 done
