@@ -43,3 +43,20 @@ and see what you can find. Note that almost nothing in comfy is hidden from the
 user, and all internal state/fields are exposed. This is something we've done
 intentionally to make comfy a bit more flexible without having to build complex
 render graphs and other modular data structures.
+
+The builtin `EngineContext` exposes a few helper methods:
+
+- `c.world()` for immutable access to `&World`
+- `c.world_mut()` for mutable access to `&mut World`
+- `c.commands()` for mutable access to the [`CommandBuffer`](https://docs.rs/hecs/latest/hecs/struct.CommandBuffer.html)
+
+If you're not sure what these do or how to use them, the [`hecs
+documentation`](https://docs.rs/hecs/latest/hecs/) is a great place to learn!
+Out of all the ECS libraries we've tried `hecs` has been the best and simplest
+by far, and would 100% recommend it to everyone. It's not as _comfy_ as bevy's
+automagic resource injection, but we've the more explicit nature of it to be a
+great productivity boost.
+
+**Notably, comfy does run the `CommandBuffer`'s `run_on(...)` every frame,
+which means you can just queue commands and have comfy run them on the builtin
+ECS world.**
