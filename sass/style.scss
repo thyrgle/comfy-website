@@ -83,8 +83,10 @@ $light: #d2d2d2;
   filter: drop-shadow(0 5px 6px color.adjust(darken($non-photo-blue, 15%), $alpha: -0.2));
 }
 
-.example-code pre {
+.example-code pre, pre {
   padding: 20px;
+
+  overflow: hidden;
 }
 
 .card-body.example-card-body {

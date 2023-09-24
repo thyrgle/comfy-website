@@ -1,6 +1,6 @@
 +++
 title = "Contributing"
-weight = 10
+weight = 50
 sort_by = "weight"
 template = "docs-section.html"
 page_template = "docs-section.html"
@@ -34,3 +34,12 @@ to fix when APIs change. Most things should be self-explanatory.
 
 If you'd like to chat about anything comfy related, [join our discord
 server](https://discord.gg/M8hySjuG48).
+
+**It should again be noted that comfy's codebase is _not_ the cleanest code
+you've ever seen. There is a lot of low hanging fruit and areas for
+improvement, and while we're very happy and enthusiastic about improving it, we
+also want to remain pragmatic about changes.** Changes which are motivated by
+real world usages in game are very likely to be incorporated, but changes which
+are purely cosmetic, or appeal to abstract values without any pragmatic
+grounding might get rejected. An example of this would be performance improvements
+that sacrifice ergonomics, and that don't show up on a profiler.

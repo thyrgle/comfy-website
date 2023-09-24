@@ -111,7 +111,8 @@ fn setup(c: &mut EngineContext) {
 
 fn update(_c: &mut EngineContext) {
     draw_sprite(
-        // Sprites are referenced with their string name. Comfy doesn't use asset handles.
+        // Sprites are referenced with their string name.
+        // Comfy doesn't use asset handles.
         texture_id("comfy"),
         // position
         Vec2::ZERO,
