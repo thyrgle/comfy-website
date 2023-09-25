@@ -133,7 +133,7 @@ game is initialized.
 In this case we load a texture from a byte slice, and then draw it. The
 `texture_id(...)` function is a simple hashing function which turns string
 names into an asset id. Every texture is assigned a unique name to make
-referencing it easier. Many engines use asset handles, but we've them to be
+referencing it easier. Many engines use asset handles, but we've found them to be
 annoying to work with when all you want is to say "draw this sprite".
 
 If you ever run into a scenario where the cost of calling `texture_id(...)` is
