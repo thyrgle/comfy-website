@@ -71,7 +71,7 @@
     <section class="section">
       <div class="container">
 <h1 class="title">ecs_topdown_game</h1>
-<p class="subtitle"><strong>2023-09-24</strong></p>
+<p class="subtitle"><strong>2023-09-25</strong></p>
 <pre data-lang="rust" style="background-color:#2b303b;color:#c0c5ce;" class="language-rust "><code class="language-rust" data-lang="rust"><span style="color:#b48ead;">use </span><span>comfy::*;
 </span><span>
 </span><span>simple_game!(&quot;</span><span style="color:#a3be8c;">ECS Topdown Game</span><span>&quot;, setup, update);
@@ -87,7 +87,6 @@
 </span><span>            env!(&quot;</span><span style="color:#a3be8c;">CARGO_MANIFEST_DIR</span><span>&quot;),
 </span><span>            &quot;</span><span style="color:#a3be8c;">/../assets/grass.png</span><span>&quot;
 </span><span>        )),
-</span><span>        wgpu::AddressMode::ClampToEdge,
 </span><span>    );
 </span><span>
 </span><span>    </span><span style="color:#65737e;">// Load the player texture
@@ -97,7 +96,6 @@
 </span><span>            env!(&quot;</span><span style="color:#a3be8c;">CARGO_MANIFEST_DIR</span><span>&quot;),
 </span><span>            &quot;</span><span style="color:#a3be8c;">/../assets/chicken.png</span><span>&quot;
 </span><span>        )),
-</span><span>        wgpu::AddressMode::ClampToEdge,
 </span><span>    );
 </span><span>
 </span><span>    </span><span style="color:#b48ead;">for</span><span> x in </span><span style="color:#d08770;">0</span><span>..</span><span style="color:#d08770;">50 </span><span>{

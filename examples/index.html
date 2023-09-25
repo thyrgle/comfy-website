@@ -188,15 +188,12 @@
 &lt;&#x2F;span&gt;&lt;span&gt;simple_game!(&amp;quot;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt;Sprite Example&lt;&#x2F;span&gt;&lt;span&gt;&amp;quot;, setup, update);
 &lt;&#x2F;span&gt;&lt;span&gt;
 &lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;fn &lt;&#x2F;span&gt;&lt;span style=&quot;color:#8fa1b3;&quot;&gt;setup&lt;&#x2F;span&gt;&lt;span&gt;(&lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;c&lt;&#x2F;span&gt;&lt;span&gt;: &amp;amp;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;mut&lt;&#x2F;span&gt;&lt;span&gt; EngineContext) {
-&lt;&#x2F;span&gt;&lt;span&gt;    &lt;&#x2F;span&gt;&lt;span style=&quot;color:#96b5b4;&quot;&gt;load_texture_from_engine_bytes&lt;&#x2F;span&gt;&lt;span&gt;(
-&lt;&#x2F;span&gt;&lt;span&gt;        &amp;amp;c.renderer.context,
+&lt;&#x2F;span&gt;&lt;span&gt;    c.&lt;&#x2F;span&gt;&lt;span style=&quot;color:#96b5b4;&quot;&gt;load_texture_from_bytes&lt;&#x2F;span&gt;&lt;span&gt;(
 &lt;&#x2F;span&gt;&lt;span&gt;        &amp;quot;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt;player&lt;&#x2F;span&gt;&lt;span&gt;&amp;quot;,
 &lt;&#x2F;span&gt;&lt;span&gt;        include_bytes!(concat!(
 &lt;&#x2F;span&gt;&lt;span&gt;            env!(&amp;quot;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt;CARGO_MANIFEST_DIR&lt;&#x2F;span&gt;&lt;span&gt;&amp;quot;),
 &lt;&#x2F;span&gt;&lt;span&gt;            &amp;quot;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt;&#x2F;..&#x2F;assets&#x2F;player.png&lt;&#x2F;span&gt;&lt;span&gt;&amp;quot;
 &lt;&#x2F;span&gt;&lt;span&gt;        )),
-&lt;&#x2F;span&gt;&lt;span&gt;        &amp;amp;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;mut&lt;&#x2F;span&gt;&lt;span&gt; c.renderer.textures.&lt;&#x2F;span&gt;&lt;span style=&quot;color:#96b5b4;&quot;&gt;lock&lt;&#x2F;span&gt;&lt;span&gt;(),
-&lt;&#x2F;span&gt;&lt;span&gt;        wgpu::AddressMode::ClampToEdge,
 &lt;&#x2F;span&gt;&lt;span&gt;    );
 &lt;&#x2F;span&gt;&lt;span&gt;}
 &lt;&#x2F;span&gt;&lt;span&gt;
@@ -440,7 +437,6 @@
 &lt;&#x2F;span&gt;&lt;span&gt;            env!(&amp;quot;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt;CARGO_MANIFEST_DIR&lt;&#x2F;span&gt;&lt;span&gt;&amp;quot;),
 &lt;&#x2F;span&gt;&lt;span&gt;            &amp;quot;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt;&#x2F;..&#x2F;assets&#x2F;comfy.png&lt;&#x2F;span&gt;&lt;span&gt;&amp;quot;
 &lt;&#x2F;span&gt;&lt;span&gt;        )),
-&lt;&#x2F;span&gt;&lt;span&gt;        wgpu::AddressMode::ClampToEdge,
 &lt;&#x2F;span&gt;&lt;span&gt;    );
 &lt;&#x2F;span&gt;&lt;span&gt;
 &lt;&#x2F;span&gt;&lt;span&gt;    &lt;&#x2F;span&gt;&lt;span style=&quot;color:#65737e;&quot;&gt;&#x2F;&#x2F; Spawn a new entity with a sprite and a transform.
@@ -499,7 +495,6 @@
 &lt;&#x2F;span&gt;&lt;span&gt;            env!(&amp;quot;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt;CARGO_MANIFEST_DIR&lt;&#x2F;span&gt;&lt;span&gt;&amp;quot;),
 &lt;&#x2F;span&gt;&lt;span&gt;            &amp;quot;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt;&#x2F;..&#x2F;assets&#x2F;grass.png&lt;&#x2F;span&gt;&lt;span&gt;&amp;quot;
 &lt;&#x2F;span&gt;&lt;span&gt;        )),
-&lt;&#x2F;span&gt;&lt;span&gt;        wgpu::AddressMode::ClampToEdge,
 &lt;&#x2F;span&gt;&lt;span&gt;    );
 &lt;&#x2F;span&gt;&lt;span&gt;
 &lt;&#x2F;span&gt;&lt;span&gt;    &lt;&#x2F;span&gt;&lt;span style=&quot;color:#65737e;&quot;&gt;&#x2F;&#x2F; Load the player texture
@@ -509,7 +504,6 @@
 &lt;&#x2F;span&gt;&lt;span&gt;            env!(&amp;quot;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt;CARGO_MANIFEST_DIR&lt;&#x2F;span&gt;&lt;span&gt;&amp;quot;),
 &lt;&#x2F;span&gt;&lt;span&gt;            &amp;quot;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt;&#x2F;..&#x2F;assets&#x2F;chicken.png&lt;&#x2F;span&gt;&lt;span&gt;&amp;quot;
 &lt;&#x2F;span&gt;&lt;span&gt;        )),
-&lt;&#x2F;span&gt;&lt;span&gt;        wgpu::AddressMode::ClampToEdge,
 &lt;&#x2F;span&gt;&lt;span&gt;    );
 &lt;&#x2F;span&gt;&lt;span&gt;
 &lt;&#x2F;span&gt;&lt;span&gt;    &lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;for&lt;&#x2F;span&gt;&lt;span&gt; x in &lt;&#x2F;span&gt;&lt;span style=&quot;color:#d08770;&quot;&gt;0&lt;&#x2F;span&gt;&lt;span&gt;..&lt;&#x2F;span&gt;&lt;span style=&quot;color:#d08770;&quot;&gt;50 &lt;&#x2F;span&gt;&lt;span&gt;{
@@ -800,7 +794,6 @@
 &lt;&#x2F;span&gt;&lt;span&gt;            env!(&amp;quot;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt;CARGO_MANIFEST_DIR&lt;&#x2F;span&gt;&lt;span&gt;&amp;quot;),
 &lt;&#x2F;span&gt;&lt;span&gt;            &amp;quot;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt;&#x2F;..&#x2F;assets&#x2F;comfy.png&lt;&#x2F;span&gt;&lt;span&gt;&amp;quot;
 &lt;&#x2F;span&gt;&lt;span&gt;        )),
-&lt;&#x2F;span&gt;&lt;span&gt;        wgpu::AddressMode::ClampToEdge,
 &lt;&#x2F;span&gt;&lt;span&gt;    );
 &lt;&#x2F;span&gt;&lt;span&gt;
 &lt;&#x2F;span&gt;&lt;span&gt;    c.lighting.ambient_light_intensity = &lt;&#x2F;span&gt;&lt;span style=&quot;color:#d08770;&quot;&gt;0.1&lt;&#x2F;span&gt;&lt;span&gt;;
@@ -950,7 +943,6 @@
 &lt;&#x2F;span&gt;&lt;span&gt;            env!(&amp;quot;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt;CARGO_MANIFEST_DIR&lt;&#x2F;span&gt;&lt;span&gt;&amp;quot;),
 &lt;&#x2F;span&gt;&lt;span&gt;            &amp;quot;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt;&#x2F;..&#x2F;assets&#x2F;comfy.png&lt;&#x2F;span&gt;&lt;span&gt;&amp;quot;
 &lt;&#x2F;span&gt;&lt;span&gt;        )),
-&lt;&#x2F;span&gt;&lt;span&gt;        wgpu::AddressMode::ClampToEdge,
 &lt;&#x2F;span&gt;&lt;span&gt;    );
 &lt;&#x2F;span&gt;&lt;span&gt;
 &lt;&#x2F;span&gt;&lt;span&gt;    &lt;&#x2F;span&gt;&lt;span style=&quot;color:#65737e;&quot;&gt;&#x2F;&#x2F; ParticleSystem&amp;#39;s are based off the same principle as singular Particle&amp;#39;s, except the
@@ -1101,8 +1093,14 @@
             <a class="example-detail-link card-img-top" data-bs-toggle="modal" data-bs-target="#comfyModal" data-bs-title="physics"
               data-bs-wasm-source="&#x2F;wasm&#x2F;physics&#x2F;index.html"
               data-bs-github-href="&#x2F;&#x2F;github.com&#x2F;darthdeus&#x2F;comfy&#x2F;blob&#x2F;master&#x2F;comfy&#x2F;examples&#x2F;physics.rs"
-              data-bs-example-code="&lt;pre data-lang=&quot;rust&quot; style=&quot;background-color:#2b303b;color:#c0c5ce;&quot; class=&quot;language-rust &quot;&gt;&lt;code class=&quot;language-rust&quot; data-lang=&quot;rust&quot;&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;use &lt;&#x2F;span&gt;&lt;span&gt;blobs::*;
+              data-bs-example-code="&lt;pre data-lang=&quot;rust&quot; style=&quot;background-color:#2b303b;color:#c0c5ce;&quot; class=&quot;language-rust &quot;&gt;&lt;code class=&quot;language-rust&quot; data-lang=&quot;rust&quot;&gt;&lt;span&gt;#[&lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;cfg&lt;&#x2F;span&gt;&lt;span&gt;(&lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;not&lt;&#x2F;span&gt;&lt;span&gt;(feature = &amp;quot;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt;blobs&lt;&#x2F;span&gt;&lt;span&gt;&amp;quot;))]
+&lt;&#x2F;span&gt;&lt;span&gt;compile_error!(
+&lt;&#x2F;span&gt;&lt;span&gt;    &amp;quot;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt;The `blobs` must be enabled to compile the physics example. Compile with      `cargo run --example physics --features blobs`&lt;&#x2F;span&gt;&lt;span&gt;&amp;quot;
+&lt;&#x2F;span&gt;&lt;span&gt;);
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;use &lt;&#x2F;span&gt;&lt;span&gt;blobs::*;
 &lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;use &lt;&#x2F;span&gt;&lt;span&gt;comfy::*;
+&lt;&#x2F;span&gt;&lt;span&gt;
 &lt;&#x2F;span&gt;&lt;span&gt;
 &lt;&#x2F;span&gt;&lt;span style=&quot;color:#65737e;&quot;&gt;&#x2F;&#x2F; This example shows an integration between comfy and blobs, a simple 2d physics engine. It&amp;#39;s not
 &lt;&#x2F;span&gt;&lt;span style=&quot;color:#65737e;&quot;&gt;&#x2F;&#x2F; the most beautiful example, and maybe a bit verbose for what it does, but it tries to showcase
@@ -1314,44 +1312,6 @@
       
       <div class="col">
         <div class="card border">
-          <div class="header card-header text-center border">post_processing</div>
-          <div class="content card-body example-card-body">
-            <a class="example-detail-link card-img-top" data-bs-toggle="modal" data-bs-target="#comfyModal" data-bs-title="post_processing"
-              data-bs-wasm-source="&#x2F;wasm&#x2F;post_processing&#x2F;index.html"
-              data-bs-github-href="&#x2F;&#x2F;github.com&#x2F;darthdeus&#x2F;comfy&#x2F;blob&#x2F;master&#x2F;comfy&#x2F;examples&#x2F;post_processing.rs"
-              data-bs-example-code="&lt;pre data-lang=&quot;rust&quot; style=&quot;background-color:#2b303b;color:#c0c5ce;&quot; class=&quot;language-rust &quot;&gt;&lt;code class=&quot;language-rust&quot; data-lang=&quot;rust&quot;&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;use &lt;&#x2F;span&gt;&lt;span&gt;comfy::*;
-&lt;&#x2F;span&gt;&lt;span&gt;
-&lt;&#x2F;span&gt;&lt;span&gt;simple_game!(&amp;quot;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt;Post Processing&lt;&#x2F;span&gt;&lt;span&gt;&amp;quot;, setup, update);
-&lt;&#x2F;span&gt;&lt;span&gt;
-&lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;fn &lt;&#x2F;span&gt;&lt;span style=&quot;color:#8fa1b3;&quot;&gt;setup&lt;&#x2F;span&gt;&lt;span&gt;(&lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;c&lt;&#x2F;span&gt;&lt;span&gt;: &amp;amp;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;mut&lt;&#x2F;span&gt;&lt;span&gt; EngineContext) {
-&lt;&#x2F;span&gt;&lt;span&gt;    &lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;let&lt;&#x2F;span&gt;&lt;span&gt; name = &amp;quot;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt;fun-chromatic-aberration&lt;&#x2F;span&gt;&lt;span&gt;&amp;quot;;
-&lt;&#x2F;span&gt;&lt;span&gt;    &lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;let&lt;&#x2F;span&gt;&lt;span&gt; shader = include_wgsl_fragment_shader!(&amp;quot;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt;fun-chromatic-aberration.wgsl&lt;&#x2F;span&gt;&lt;span&gt;&amp;quot;);
-&lt;&#x2F;span&gt;&lt;span&gt;
-&lt;&#x2F;span&gt;&lt;span&gt;    c.&lt;&#x2F;span&gt;&lt;span style=&quot;color:#96b5b4;&quot;&gt;insert_post_processing_effect&lt;&#x2F;span&gt;&lt;span&gt;(&lt;&#x2F;span&gt;&lt;span style=&quot;color:#d08770;&quot;&gt;0&lt;&#x2F;span&gt;&lt;span&gt;, name, shader);
-&lt;&#x2F;span&gt;&lt;span&gt;}
-&lt;&#x2F;span&gt;&lt;span&gt;
-&lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;fn &lt;&#x2F;span&gt;&lt;span style=&quot;color:#8fa1b3;&quot;&gt;update&lt;&#x2F;span&gt;&lt;span&gt;(&lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;_c&lt;&#x2F;span&gt;&lt;span&gt;: &amp;amp;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;mut&lt;&#x2F;span&gt;&lt;span&gt; EngineContext) {
-&lt;&#x2F;span&gt;&lt;span&gt;    &lt;&#x2F;span&gt;&lt;span style=&quot;color:#96b5b4;&quot;&gt;draw_rect&lt;&#x2F;span&gt;&lt;span&gt;(Vec2::&lt;&#x2F;span&gt;&lt;span style=&quot;color:#d08770;&quot;&gt;ZERO&lt;&#x2F;span&gt;&lt;span&gt;, &lt;&#x2F;span&gt;&lt;span style=&quot;color:#96b5b4;&quot;&gt;splat&lt;&#x2F;span&gt;&lt;span&gt;(&lt;&#x2F;span&gt;&lt;span style=&quot;color:#d08770;&quot;&gt;5.0&lt;&#x2F;span&gt;&lt;span&gt;), &lt;&#x2F;span&gt;&lt;span style=&quot;color:#d08770;&quot;&gt;WHITE&lt;&#x2F;span&gt;&lt;span&gt;, &lt;&#x2F;span&gt;&lt;span style=&quot;color:#d08770;&quot;&gt;0&lt;&#x2F;span&gt;&lt;span&gt;);
-&lt;&#x2F;span&gt;&lt;span&gt;}
-&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
-"
-              style="cursor: pointer;">
-              <video src="&#x2F;videos&#x2F;post_processing.webm" autoplay loop width="408" style="border-radius: 5px" />
-            </a>
-
-            <!-- <div> -->
-            <!--   <a href="&#x2F;&#x2F;github.com&#x2F;darthdeus&#x2F;comfy&#x2F;blob&#x2F;master&#x2F;comfy&#x2F;examples&#x2F;post_processing.rs"> -->
-            <!--     <i class=""> -->
-            <!--       <img src="/github-mark-white.svg" width="22px" /> -->
-            <!--     </i> -->
-            <!--   </a> -->
-            <!-- </div> -->
-          </div>
-        </div>
-      </div>
-      
-      <div class="col">
-        <div class="card border">
           <div class="header card-header text-center border">shapes</div>
           <div class="content card-body example-card-body">
             <a class="example-detail-link card-img-top" data-bs-toggle="modal" data-bs-target="#comfyModal" data-bs-title="shapes"
@@ -1502,7 +1462,6 @@
 &lt;&#x2F;span&gt;&lt;span&gt;            env!(&amp;quot;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt;CARGO_MANIFEST_DIR&lt;&#x2F;span&gt;&lt;span&gt;&amp;quot;),
 &lt;&#x2F;span&gt;&lt;span&gt;            &amp;quot;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt;&#x2F;..&#x2F;assets&#x2F;comfy.png&lt;&#x2F;span&gt;&lt;span&gt;&amp;quot;
 &lt;&#x2F;span&gt;&lt;span&gt;        )),
-&lt;&#x2F;span&gt;&lt;span&gt;        wgpu::AddressMode::ClampToEdge,
 &lt;&#x2F;span&gt;&lt;span&gt;    );
 &lt;&#x2F;span&gt;&lt;span&gt;}
 &lt;&#x2F;span&gt;&lt;span&gt;
@@ -1631,6 +1590,44 @@
 
             <!-- <div> -->
             <!--   <a href="&#x2F;&#x2F;github.com&#x2F;darthdeus&#x2F;comfy&#x2F;blob&#x2F;master&#x2F;comfy&#x2F;examples&#x2F;timed_draw.rs"> -->
+            <!--     <i class=""> -->
+            <!--       <img src="/github-mark-white.svg" width="22px" /> -->
+            <!--     </i> -->
+            <!--   </a> -->
+            <!-- </div> -->
+          </div>
+        </div>
+      </div>
+      
+      <div class="col">
+        <div class="card border">
+          <div class="header card-header text-center border">post_processing</div>
+          <div class="content card-body example-card-body">
+            <a class="example-detail-link card-img-top" data-bs-toggle="modal" data-bs-target="#comfyModal" data-bs-title="post_processing"
+              data-bs-wasm-source="&#x2F;wasm&#x2F;post_processing&#x2F;index.html"
+              data-bs-github-href="&#x2F;&#x2F;github.com&#x2F;darthdeus&#x2F;comfy&#x2F;blob&#x2F;master&#x2F;comfy&#x2F;examples&#x2F;post_processing.rs"
+              data-bs-example-code="&lt;pre data-lang=&quot;rust&quot; style=&quot;background-color:#2b303b;color:#c0c5ce;&quot; class=&quot;language-rust &quot;&gt;&lt;code class=&quot;language-rust&quot; data-lang=&quot;rust&quot;&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;use &lt;&#x2F;span&gt;&lt;span&gt;comfy::*;
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span&gt;simple_game!(&amp;quot;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt;Post Processing&lt;&#x2F;span&gt;&lt;span&gt;&amp;quot;, setup, update);
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;fn &lt;&#x2F;span&gt;&lt;span style=&quot;color:#8fa1b3;&quot;&gt;setup&lt;&#x2F;span&gt;&lt;span&gt;(&lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;c&lt;&#x2F;span&gt;&lt;span&gt;: &amp;amp;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;mut&lt;&#x2F;span&gt;&lt;span&gt; EngineContext) {
+&lt;&#x2F;span&gt;&lt;span&gt;    &lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;let&lt;&#x2F;span&gt;&lt;span&gt; name = &amp;quot;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt;fun-chromatic-aberration&lt;&#x2F;span&gt;&lt;span&gt;&amp;quot;;
+&lt;&#x2F;span&gt;&lt;span&gt;    &lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;let&lt;&#x2F;span&gt;&lt;span&gt; shader = include_wgsl_fragment_shader!(&amp;quot;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt;fun-chromatic-aberration.wgsl&lt;&#x2F;span&gt;&lt;span&gt;&amp;quot;);
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span&gt;    c.&lt;&#x2F;span&gt;&lt;span style=&quot;color:#96b5b4;&quot;&gt;insert_post_processing_effect&lt;&#x2F;span&gt;&lt;span&gt;(&lt;&#x2F;span&gt;&lt;span style=&quot;color:#d08770;&quot;&gt;0&lt;&#x2F;span&gt;&lt;span&gt;, name, shader);
+&lt;&#x2F;span&gt;&lt;span&gt;}
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;fn &lt;&#x2F;span&gt;&lt;span style=&quot;color:#8fa1b3;&quot;&gt;update&lt;&#x2F;span&gt;&lt;span&gt;(&lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;_c&lt;&#x2F;span&gt;&lt;span&gt;: &amp;amp;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;mut&lt;&#x2F;span&gt;&lt;span&gt; EngineContext) {
+&lt;&#x2F;span&gt;&lt;span&gt;    &lt;&#x2F;span&gt;&lt;span style=&quot;color:#96b5b4;&quot;&gt;draw_rect&lt;&#x2F;span&gt;&lt;span&gt;(Vec2::&lt;&#x2F;span&gt;&lt;span style=&quot;color:#d08770;&quot;&gt;ZERO&lt;&#x2F;span&gt;&lt;span&gt;, &lt;&#x2F;span&gt;&lt;span style=&quot;color:#96b5b4;&quot;&gt;splat&lt;&#x2F;span&gt;&lt;span&gt;(&lt;&#x2F;span&gt;&lt;span style=&quot;color:#d08770;&quot;&gt;5.0&lt;&#x2F;span&gt;&lt;span&gt;), &lt;&#x2F;span&gt;&lt;span style=&quot;color:#d08770;&quot;&gt;WHITE&lt;&#x2F;span&gt;&lt;span&gt;, &lt;&#x2F;span&gt;&lt;span style=&quot;color:#d08770;&quot;&gt;0&lt;&#x2F;span&gt;&lt;span&gt;);
+&lt;&#x2F;span&gt;&lt;span&gt;}
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+"
+              style="cursor: pointer;">
+              <video src="&#x2F;videos&#x2F;post_processing.webm" autoplay loop width="408" style="border-radius: 5px" />
+            </a>
+
+            <!-- <div> -->
+            <!--   <a href="&#x2F;&#x2F;github.com&#x2F;darthdeus&#x2F;comfy&#x2F;blob&#x2F;master&#x2F;comfy&#x2F;examples&#x2F;post_processing.rs"> -->
             <!--     <i class=""> -->
             <!--       <img src="/github-mark-white.svg" width="22px" /> -->
             <!--     </i> -->

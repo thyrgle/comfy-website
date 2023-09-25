@@ -52,8 +52,8 @@ export function wgpu_render_pass_set_index_buffer(a: number, b: number, c: numbe
 export function __wbindgen_malloc(a: number, b: number): number;
 export function __wbindgen_realloc(a: number, b: number, c: number, d: number): number;
 export const __wbindgen_export_2: WebAssembly.Table;
-export function wasm_bindgen__convert__closures__invoke1_mut__h38bb7e1ecc2d6c38(a: number, b: number, c: number): void;
-export function wasm_bindgen__convert__closures__invoke0_mut__h34b7524f6cd913cf(a: number, b: number): void;
+export function wasm_bindgen__convert__closures__invoke1_mut__h1a96859f07d34a9f(a: number, b: number, c: number): void;
+export function wasm_bindgen__convert__closures__invoke0_mut__he16071dd4ecbb19c(a: number, b: number): void;
 export function wasm_bindgen__convert__closures__invoke0_mut__hfae2cc1f542cf0e6(a: number, b: number): void;
 export function _dyn_core__ops__function__FnMut__A____Output___R_as_wasm_bindgen__closure__WasmClosure___describe__invoke__hce1018d9df3b7b7c(a: number, b: number, c: number): void;
 export function _dyn_core__ops__function__FnMut__A____Output___R_as_wasm_bindgen__closure__WasmClosure___describe__invoke__h022293da62ada74b(a: number, b: number, c: number): void;
