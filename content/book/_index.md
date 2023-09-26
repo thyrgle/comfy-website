@@ -22,7 +22,7 @@ and many others, it is designed to just work and fill most of the common
 use cases.
 
 The ultimate goal of comfy is to do the obvious thing as simply as
-possible without unnecessray ceremony. If something is annoying to use, it
+possible without unnecessary ceremony. If something is annoying to use, it
 is a bug that should be fixed. We're not necessarily aiming at beginner
 friendliness, but rather productive and ergonomic APIs. If you're a
 beginner, comfy should be easy to pick up, but it might not be as polished
