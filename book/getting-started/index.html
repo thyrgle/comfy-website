@@ -39,7 +39,7 @@
 </head>
 
 <body>
-  <div class="container">
+  <div class="container mb-4">
     <header class="d-flex flex-wrap justify-content-center py-3 mb-4 border-bottom">
       <a href="/" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto link-body-emphasis text-decoration-none">
         <img src="/comfy.png" alt="logo of the comfy engine" class="bi me-2" width="32" height="32" />
@@ -363,15 +363,36 @@ public immediate mode APIs you can use directly if you prefer, and which are
 also used in many of the examples. You should not feel limited by the existing ECS types,
 they mainly exist as an evolution of what we use for our own games, but comfy should be flexible
 enough so you can build games in whatever way you prefer.</p>
-<p>To get started, all you need is an <code>update</code> function.</p>
+<h2 id="drawing-a-red-circle">Drawing a red circle<a class="zola-anchor" href="#drawing-a-red-circle" aria-label="Anchor link for: drawing-a-red-circle">🔗</a></h2>
+<ol>
+<li>
+<p><a href="https://www.rust-lang.org/learn/get-started">Install Rust</a></p>
+</li>
+<li>
+<p>From a terminal, create a new Rust project and add comfy as a dependency:</p>
+<pre data-lang="sh" style="background-color:#2b303b;color:#c0c5ce;" class="language-sh "><code class="language-sh" data-lang="sh"><span style="color:#bf616a;">cargo</span><span> new my-comfy-game
+</span><span style="color:#96b5b4;">cd</span><span> my-comfy-game
+</span><span style="color:#bf616a;">cargo</span><span> add comfy
+</span></code></pre>
+</li>
+<li>
+<p>Replace <code>src/main.rs</code> with a simple comfy game that draws a red circle:</p>
 <pre data-lang="rust" style="background-color:#2b303b;color:#c0c5ce;" class="language-rust "><code class="language-rust" data-lang="rust"><span style="color:#b48ead;">use </span><span>comfy::*;
 </span><span>
 </span><span>simple_game!(&quot;</span><span style="color:#a3be8c;">Nice red circle</span><span>&quot;, update);
 </span><span>
 </span><span style="color:#b48ead;">fn </span><span style="color:#8fa1b3;">update</span><span>(</span><span style="color:#bf616a;">_c</span><span>: &amp;</span><span style="color:#b48ead;">mut</span><span> EngineContext) {
-</span><span>    </span><span style="color:#96b5b4;">draw_circle</span><span>(</span><span style="color:#96b5b4;">vec2</span><span>(</span><span style="color:#d08770;">0.0</span><span>, </span><span style="color:#d08770;">0.0</span><span>), </span><span style="color:#d08770;">0.5</span><span>, </span><span style="color:#d08770;">RED</span><span>, </span><span style="color:#d08770;">0</span><span>);
+</span><span>   </span><span style="color:#96b5b4;">draw_circle</span><span>(</span><span style="color:#96b5b4;">vec2</span><span>(</span><span style="color:#d08770;">0.0</span><span>, </span><span style="color:#d08770;">0.0</span><span>), </span><span style="color:#d08770;">0.5</span><span>, </span><span style="color:#d08770;">RED</span><span>, </span><span style="color:#d08770;">0</span><span>);
 </span><span>}
 </span></code></pre>
+</li>
+<li>
+<p>Run your game:</p>
+<pre data-lang="sh" style="background-color:#2b303b;color:#c0c5ce;" class="language-sh "><code class="language-sh" data-lang="sh"><span style="color:#bf616a;">cargo</span><span> run
+</span></code></pre>
+</li>
+</ol>
+<h3 id="how-does-the-game-work">How does the game work?<a class="zola-anchor" href="#how-does-the-game-work" aria-label="Anchor link for: how-does-the-game-work">🔗</a></h3>
 <p>The parameters of circle are simply just <code>position</code>, <code>radius</code>, <code>color</code>, and
 <code>z_index</code>. Unlike macroquad and a few other engines, all of comfy's drawing
 functions accept a <code>z_index</code>, and all draw calls will get internally batched
@@ -449,7 +470,7 @@ game is initialized.</p>
 <p>In this case we load a texture from a byte slice, and then draw it. The
 <code>texture_id(...)</code> function is a simple hashing function which turns string
 names into an asset id. Every texture is assigned a unique name to make
-referencing it easier. Many engines use asset handles, but we've them to be
+referencing it easier. Many engines use asset handles, but we've found them to be
 annoying to work with when all you want is to say &quot;draw this sprite&quot;.</p>
 <p>If you ever run into a scenario where the cost of calling <code>texture_id(...)</code> is
 too high, you can simply cache the result. That being said, we've never
