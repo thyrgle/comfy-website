@@ -33,7 +33,8 @@ enough so you can build games in whatever way you prefer.
 
 ## Drawing a red circle
 
-1. Install Rust: https://www.rust-lang.org/learn/get-started
+1. [Install Rust](https://www.rust-lang.org/learn/get-started)
+
 2. From a terminal, create a new Rust project and add comfy as a dependency:
 
    ```sh
