@@ -21,37 +21,6 @@ and Android support planned _soon_). Inspired by macroquad, Raylib, Love2D
 and many others, it is designed to just work and fill most of the common
 use cases.
 
-## Creating a comfy game
-
-1. Install Rust: https://www.rust-lang.org/learn/get-started
-2. From a terminal, create a new Rust project and add comfy as a dependency:
-
-   ```sh
-   cargo new my-comfy-game
-   cd my-comfy-game
-   cargo add comfy
-   ```
-
-3. Replace `src/main.rs` with a simple comfy game:
-
-   ```rust
-   use comfy::*;
-
-   simple_game!("Nice red circle", update);
-
-   fn update(_c: &mut EngineContext) {
-      draw_circle(vec2(0.0, 0.0), 0.5, RED, 0);
-   }
-   ```
-
-4. Run your game:
-
-   ```sh
-   cargo run
-   ```
-
-## Philosophy
-
 The ultimate goal of comfy is to do the obvious thing as simply as
 possible without unnecessray ceremony. If something is annoying to use, it
 is a bug that should be fixed. We're not necessarily aiming at beginner

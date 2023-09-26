@@ -31,17 +31,36 @@ also used in many of the examples. You should not feel limited by the existing E
 they mainly exist as an evolution of what we use for our own games, but comfy should be flexible
 enough so you can build games in whatever way you prefer.
 
-To get started, all you need is an `update` function.
+## Drawing a red circle
 
-```rust
-use comfy::*;
+1. Install Rust: https://www.rust-lang.org/learn/get-started
+2. From a terminal, create a new Rust project and add comfy as a dependency:
 
-simple_game!("Nice red circle", update);
+   ```sh
+   cargo new my-comfy-game
+   cd my-comfy-game
+   cargo add comfy
+   ```
 
-fn update(_c: &mut EngineContext) {
-    draw_circle(vec2(0.0, 0.0), 0.5, RED, 0);
-}
-```
+3. Replace `src/main.rs` with a simple comfy game that draws a red circle:
+
+   ```rust
+   use comfy::*;
+
+   simple_game!("Nice red circle", update);
+
+   fn update(_c: &mut EngineContext) {
+      draw_circle(vec2(0.0, 0.0), 0.5, RED, 0);
+   }
+   ```
+
+4. Run your game:
+
+   ```sh
+   cargo run
+   ```
+
+### How does the game work?
 
 The parameters of circle are simply just `position`, `radius`, `color`, and
 `z_index`. Unlike macroquad and a few other engines, all of comfy's drawing
