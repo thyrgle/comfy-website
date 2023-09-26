@@ -28,7 +28,20 @@
     </div>
   </div>
 </div>
+<div>
+  <h2>Example usage</h2>
+  {{ "
+  ```rust
+    use comfy::*;
 
+    simple_game!('Nice red circle', update);
+
+    fn update(_c: &mut EngineContext) {
+        draw_circle(vec2(0.0, 0.0), 0.5, RED, 0);
+    }
+  ```
+  " | markdown | safe }}
+</div>
 <!-- <div class="row align-items-md-stretch"> -->
 <!--   <div class="col"> -->
 <!--     <div class="h-100 p-5 rounded-4 bg-body-tertiary"> -->
