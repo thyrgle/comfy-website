@@ -47,8 +47,8 @@ wasm_source = \"/wasm/{{example}}/index.html\"
 \`\`\`
 """
 
-for example in $(ls comfy/examples | grep -e "\.rs$" | sed "s/\.rs//"); do
-  RUSTFLAGS=--cfg=web_sys_unstable_apis cargo build --target wasm32-unknown-unknown --release --example "$example"
+for example in $(ls comfy/examples | grep -e "\.rs$" | grep -v "custom_config" | sed "s/\.rs//"); do
+  RUSTFLAGS=--cfg=web_sys_unstable_apis cargo build --target wasm32-unknown-unknown --release --example "$example" --features blobs
   # cp -r examples/$1/resources target/generated/ || true
   dir="target/generated/$example"
   mkdir -p "$dir"
@@ -68,11 +68,11 @@ END
   # echo "$template" | sed "s/{{example}}/$example/g" | sed "s/{{code}}/$code/" > "$parent_dir/content/examples/$example.md"
 done
 
-# for example in $(ls comfy/examples | grep -e "\.rs$" | sed "s/\.rs//"); do
-#   cargo run --release --example $example --features comfy-wgpu/record-pngs
-#   cp "target/screenshots/$example.png" "$parent_dir/static/screenshots/$example.png"
-#   cp "target/videos/$example.webm" "$parent_dir/static/videos/$example.webm"
-# done
+for example in $(ls comfy/examples | grep -e "\.rs$" | grep -v "custom_config" | sed "s/\.rs//"); do
+  cargo run --release --example $example --features comfy-wgpu/record-pngs,blobs
+  cp "target/screenshots/$example.png" "$parent_dir/static/screenshots/$example.png"
+  cp "target/videos/$example.webm" "$parent_dir/static/videos/$example.webm"
+done
 
 rm -rf "$parent_dir/static/wasm"
 cp -R "target/generated/" "$parent_dir/static/wasm/"
