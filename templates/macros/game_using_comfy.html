@@ -1,6 +1,6 @@
-{% macro game_using_comfy(src, description) %}
+{% macro game_using_comfy(src, link_text, url) %}
     <div class="vstack gap-1">
         <video src="{{ src }}" autoplay controls loop width="600" class="rounded mx-auto"></video>
-        <span class="text-center"> {{ description }} </span>
+        <a href="{{ url }}" class="text-center"> {{ link_text }} </a>
     </div>
 {% endmacro game_using_comfy %}
