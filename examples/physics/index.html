@@ -81,15 +81,9 @@
     <section class="section">
       <div class="container">
 <h1 class="title">physics</h1>
-<p class="subtitle"><strong>2023-09-25</strong></p>
-<pre data-lang="rust" style="background-color:#2b303b;color:#c0c5ce;" class="language-rust "><code class="language-rust" data-lang="rust"><span>#[</span><span style="color:#bf616a;">cfg</span><span>(</span><span style="color:#bf616a;">not</span><span>(feature = &quot;</span><span style="color:#a3be8c;">blobs</span><span>&quot;))]
-</span><span>compile_error!(
-</span><span>    &quot;</span><span style="color:#a3be8c;">The `blobs` must be enabled to compile the physics example. Compile with      `cargo run --example physics --features blobs`</span><span>&quot;
-</span><span>);
-</span><span>
-</span><span style="color:#b48ead;">use </span><span>blobs::*;
+<p class="subtitle"><strong>2023-09-28</strong></p>
+<pre data-lang="rust" style="background-color:#2b303b;color:#c0c5ce;" class="language-rust "><code class="language-rust" data-lang="rust"><span style="color:#b48ead;">use </span><span>blobs::*;
 </span><span style="color:#b48ead;">use </span><span>comfy::*;
-</span><span>
 </span><span>
 </span><span style="color:#65737e;">// This example shows an integration between comfy and blobs, a simple 2d physics engine. It&#39;s not
 </span><span style="color:#65737e;">// the most beautiful example, and maybe a bit verbose for what it does, but it tries to showcase

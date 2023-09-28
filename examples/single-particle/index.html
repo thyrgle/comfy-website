@@ -81,7 +81,7 @@
     <section class="section">
       <div class="container">
 <h1 class="title">single_particle</h1>
-<p class="subtitle"><strong>2023-09-25</strong></p>
+<p class="subtitle"><strong>2023-09-28</strong></p>
 <pre data-lang="rust" style="background-color:#2b303b;color:#c0c5ce;" class="language-rust "><code class="language-rust" data-lang="rust"><span style="color:#b48ead;">use </span><span>comfy::*;
 </span><span>
 </span><span>simple_game!(&quot;</span><span style="color:#a3be8c;">Single Particle Example</span><span>&quot;, update);
@@ -92,7 +92,7 @@
 </span><span>    </span><span style="color:#65737e;">//
 </span><span>    </span><span style="color:#65737e;">// A cooldown is identified by a string key and automatically ticked
 </span><span>    </span><span style="color:#65737e;">// by the engine.
-</span><span>    </span><span style="color:#b48ead;">if</span><span> c.cooldowns.</span><span style="color:#96b5b4;">borrow_mut</span><span>().</span><span style="color:#96b5b4;">can_use</span><span>(&quot;</span><span style="color:#a3be8c;">spawn-particle</span><span>&quot;, </span><span style="color:#d08770;">0.1</span><span>) {
+</span><span>    </span><span style="color:#b48ead;">if </span><span style="color:#96b5b4;">cooldowns</span><span>().</span><span style="color:#96b5b4;">can_use</span><span>(&quot;</span><span style="color:#a3be8c;">spawn-particle</span><span>&quot;, </span><span style="color:#d08770;">0.1</span><span>) {
 </span><span>        </span><span style="color:#65737e;">// Particles are automatically simulated once they&#39;re spawned.
 </span><span>        </span><span style="color:#96b5b4;">spawn_particle</span><span>(Particle {
 </span><span>            position: </span><span style="color:#96b5b4;">random_circle</span><span>(</span><span style="color:#d08770;">5.0</span><span>),

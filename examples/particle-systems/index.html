@@ -81,7 +81,7 @@
     <section class="section">
       <div class="container">
 <h1 class="title">particle_systems</h1>
-<p class="subtitle"><strong>2023-09-25</strong></p>
+<p class="subtitle"><strong>2023-09-28</strong></p>
 <pre data-lang="rust" style="background-color:#2b303b;color:#c0c5ce;" class="language-rust "><code class="language-rust" data-lang="rust"><span style="color:#b48ead;">use </span><span>comfy::*;
 </span><span>
 </span><span>simple_game!(&quot;</span><span style="color:#a3be8c;">Particle Systems Example</span><span>&quot;, setup, update);
@@ -99,7 +99,7 @@
 </span><span>    </span><span style="color:#65737e;">// ParticleSystem&#39;s are based off the same principle as singular Particle&#39;s, except the
 </span><span>    </span><span style="color:#65737e;">// automatically handle the spawning.
 </span><span>
-</span><span>    c.</span><span style="color:#96b5b4;">commands</span><span>().</span><span style="color:#96b5b4;">spawn</span><span>((
+</span><span>    </span><span style="color:#96b5b4;">commands</span><span>().</span><span style="color:#96b5b4;">spawn</span><span>((
 </span><span>        ParticleSystem::with_spawn_rate(</span><span style="color:#d08770;">500</span><span>, </span><span style="color:#d08770;">0.01</span><span>, || {
 </span><span>            Particle {
 </span><span>                texture: </span><span style="color:#96b5b4;">texture_id</span><span>(&quot;</span><span style="color:#a3be8c;">comfy</span><span>&quot;),
@@ -119,7 +119,7 @@
 </span><span>        Transform::position(</span><span style="color:#96b5b4;">vec2</span><span>(-</span><span style="color:#d08770;">8.0</span><span>, </span><span style="color:#d08770;">0.0</span><span>)),
 </span><span>    ));
 </span><span>
-</span><span>    c.</span><span style="color:#96b5b4;">commands</span><span>().</span><span style="color:#96b5b4;">spawn</span><span>((
+</span><span>    </span><span style="color:#96b5b4;">commands</span><span>().</span><span style="color:#96b5b4;">spawn</span><span>((
 </span><span>        ParticleSystem::with_spawn_on_death(</span><span style="color:#d08770;">300</span><span>, || {
 </span><span>            Particle {
 </span><span>                texture: </span><span style="color:#96b5b4;">texture_id</span><span>(&quot;</span><span style="color:#a3be8c;">comfy</span><span>&quot;),
@@ -199,7 +199,7 @@
 </span><span>        Transform::position(Vec2::</span><span style="color:#d08770;">ZERO</span><span>),
 </span><span>    ));
 </span><span>
-</span><span>    c.</span><span style="color:#96b5b4;">commands</span><span>().</span><span style="color:#96b5b4;">spawn</span><span>((
+</span><span>    </span><span style="color:#96b5b4;">commands</span><span>().</span><span style="color:#96b5b4;">spawn</span><span>((
 </span><span>        ParticleSystem::with_spawn_on_death(</span><span style="color:#d08770;">300</span><span>, || {
 </span><span>            Particle {
 </span><span>                texture: </span><span style="color:#96b5b4;">texture_id</span><span>(&quot;</span><span style="color:#a3be8c;">comfy</span><span>&quot;),

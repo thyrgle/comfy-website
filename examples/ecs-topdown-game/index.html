@@ -81,7 +81,7 @@
     <section class="section">
       <div class="container">
 <h1 class="title">ecs_topdown_game</h1>
-<p class="subtitle"><strong>2023-09-25</strong></p>
+<p class="subtitle"><strong>2023-09-28</strong></p>
 <pre data-lang="rust" style="background-color:#2b303b;color:#c0c5ce;" class="language-rust "><code class="language-rust" data-lang="rust"><span style="color:#b48ead;">use </span><span>comfy::*;
 </span><span>
 </span><span>simple_game!(&quot;</span><span style="color:#a3be8c;">ECS Topdown Game</span><span>&quot;, setup, update);
@@ -112,7 +112,7 @@
 </span><span>        </span><span style="color:#b48ead;">for</span><span> y in </span><span style="color:#d08770;">0</span><span>..</span><span style="color:#d08770;">50 </span><span>{
 </span><span>            </span><span style="color:#b48ead;">let</span><span> variant = </span><span style="color:#96b5b4;">random_i32</span><span>(</span><span style="color:#d08770;">0</span><span>, </span><span style="color:#d08770;">2</span><span>);
 </span><span>            </span><span style="color:#65737e;">// Tile the world with random variant of grass sprite
-</span><span>            c.</span><span style="color:#96b5b4;">commands</span><span>().</span><span style="color:#96b5b4;">spawn</span><span>((
+</span><span>            </span><span style="color:#96b5b4;">commands</span><span>().</span><span style="color:#96b5b4;">spawn</span><span>((
 </span><span>                Sprite::new(&quot;</span><span style="color:#a3be8c;">grass</span><span>&quot;.</span><span style="color:#96b5b4;">to_string</span><span>(), </span><span style="color:#96b5b4;">vec2</span><span>(</span><span style="color:#d08770;">1.0</span><span>, </span><span style="color:#d08770;">1.0</span><span>), </span><span style="color:#d08770;">0</span><span>, </span><span style="color:#d08770;">WHITE</span><span>)
 </span><span>                    .</span><span style="color:#96b5b4;">with_rect</span><span>(</span><span style="color:#d08770;">32 </span><span>* variant, </span><span style="color:#d08770;">0</span><span>, </span><span style="color:#d08770;">32</span><span>, </span><span style="color:#d08770;">32</span><span>),
 </span><span>                Transform::position(</span><span style="color:#96b5b4;">vec2</span><span>(x as </span><span style="color:#b48ead;">f32</span><span>, y as </span><span style="color:#b48ead;">f32</span><span>)),
@@ -122,25 +122,35 @@
 </span><span>    }
 </span><span>
 </span><span>    </span><span style="color:#65737e;">// Spawn the player entity and make sure z-index is above the grass
-</span><span>    c.</span><span style="color:#96b5b4;">commands</span><span>().</span><span style="color:#96b5b4;">spawn</span><span>((
+</span><span>    </span><span style="color:#96b5b4;">commands</span><span>().</span><span style="color:#96b5b4;">spawn</span><span>((
 </span><span>        Transform::position(</span><span style="color:#96b5b4;">vec2</span><span>(</span><span style="color:#d08770;">25.0</span><span>, </span><span style="color:#d08770;">25.0</span><span>)),
 </span><span>        Player,
 </span><span>        AnimatedSpriteBuilder::new()
 </span><span>            .</span><span style="color:#96b5b4;">z_index</span><span>(</span><span style="color:#d08770;">10</span><span>)
-</span><span>            .</span><span style="color:#96b5b4;">add_animation</span><span>(&quot;</span><span style="color:#a3be8c;">idle</span><span>&quot;, </span><span style="color:#d08770;">0.1</span><span>, </span><span style="color:#d08770;">true</span><span>, AnimationSource::Atlas {
-</span><span>                name: &quot;</span><span style="color:#a3be8c;">player</span><span>&quot;.</span><span style="color:#96b5b4;">into</span><span>(),
-</span><span>                offset: </span><span style="color:#96b5b4;">ivec2</span><span>(</span><span style="color:#d08770;">0</span><span>, </span><span style="color:#d08770;">0</span><span>),
-</span><span>                step: </span><span style="color:#96b5b4;">ivec2</span><span>(</span><span style="color:#d08770;">16</span><span>, </span><span style="color:#d08770;">0</span><span>),
-</span><span>                size: </span><span style="color:#96b5b4;">isplat</span><span>(</span><span style="color:#d08770;">16</span><span>),
-</span><span>                frames: </span><span style="color:#d08770;">1</span><span>,
-</span><span>            })
-</span><span>            .</span><span style="color:#96b5b4;">add_animation</span><span>(&quot;</span><span style="color:#a3be8c;">walk</span><span>&quot;, </span><span style="color:#d08770;">0.05</span><span>, </span><span style="color:#d08770;">true</span><span>, AnimationSource::Atlas {
-</span><span>                name: &quot;</span><span style="color:#a3be8c;">player</span><span>&quot;.</span><span style="color:#96b5b4;">into</span><span>(),
-</span><span>                offset: </span><span style="color:#96b5b4;">ivec2</span><span>(</span><span style="color:#d08770;">16</span><span>, </span><span style="color:#d08770;">0</span><span>),
-</span><span>                step: </span><span style="color:#96b5b4;">ivec2</span><span>(</span><span style="color:#d08770;">16</span><span>, </span><span style="color:#d08770;">0</span><span>),
-</span><span>                size: </span><span style="color:#96b5b4;">isplat</span><span>(</span><span style="color:#d08770;">16</span><span>),
-</span><span>                frames: </span><span style="color:#d08770;">6</span><span>,
-</span><span>            })
+</span><span>            .</span><span style="color:#96b5b4;">add_animation</span><span>(
+</span><span>                &quot;</span><span style="color:#a3be8c;">idle</span><span>&quot;,
+</span><span>                </span><span style="color:#d08770;">0.1</span><span>,
+</span><span>                </span><span style="color:#d08770;">true</span><span>,
+</span><span>                AnimationSource::Atlas {
+</span><span>                    name: &quot;</span><span style="color:#a3be8c;">player</span><span>&quot;.</span><span style="color:#96b5b4;">into</span><span>(),
+</span><span>                    offset: </span><span style="color:#96b5b4;">ivec2</span><span>(</span><span style="color:#d08770;">0</span><span>, </span><span style="color:#d08770;">0</span><span>),
+</span><span>                    step: </span><span style="color:#96b5b4;">ivec2</span><span>(</span><span style="color:#d08770;">16</span><span>, </span><span style="color:#d08770;">0</span><span>),
+</span><span>                    size: </span><span style="color:#96b5b4;">isplat</span><span>(</span><span style="color:#d08770;">16</span><span>),
+</span><span>                    frames: </span><span style="color:#d08770;">1</span><span>,
+</span><span>                },
+</span><span>            )
+</span><span>            .</span><span style="color:#96b5b4;">add_animation</span><span>(
+</span><span>                &quot;</span><span style="color:#a3be8c;">walk</span><span>&quot;,
+</span><span>                </span><span style="color:#d08770;">0.05</span><span>,
+</span><span>                </span><span style="color:#d08770;">true</span><span>,
+</span><span>                AnimationSource::Atlas {
+</span><span>                    name: &quot;</span><span style="color:#a3be8c;">player</span><span>&quot;.</span><span style="color:#96b5b4;">into</span><span>(),
+</span><span>                    offset: </span><span style="color:#96b5b4;">ivec2</span><span>(</span><span style="color:#d08770;">16</span><span>, </span><span style="color:#d08770;">0</span><span>),
+</span><span>                    step: </span><span style="color:#96b5b4;">ivec2</span><span>(</span><span style="color:#d08770;">16</span><span>, </span><span style="color:#d08770;">0</span><span>),
+</span><span>                    size: </span><span style="color:#96b5b4;">isplat</span><span>(</span><span style="color:#d08770;">16</span><span>),
+</span><span>                    frames: </span><span style="color:#d08770;">6</span><span>,
+</span><span>                },
+</span><span>            )
 </span><span>            .</span><span style="color:#96b5b4;">build</span><span>(),
 </span><span>    ));
 </span><span>}
@@ -150,10 +160,8 @@
 </span><span>
 </span><span>    </span><span style="color:#b48ead;">let</span><span> dt = c.delta;
 </span><span>
-</span><span>    </span><span style="color:#b48ead;">for </span><span>(_, (_, animated_sprite, transform)) in c
-</span><span>        .</span><span style="color:#96b5b4;">world</span><span>()
-</span><span>        .query::&lt;(&amp;Player, &amp;</span><span style="color:#b48ead;">mut</span><span> AnimatedSprite, &amp;</span><span style="color:#b48ead;">mut</span><span> Transform)&gt;()
-</span><span>        .</span><span style="color:#96b5b4;">iter</span><span>()
+</span><span>    </span><span style="color:#b48ead;">for </span><span>(_, (_, animated_sprite, transform)) in
+</span><span>        </span><span style="color:#96b5b4;">world</span><span>().query::&lt;(&amp;Player, &amp;</span><span style="color:#b48ead;">mut</span><span> AnimatedSprite, &amp;</span><span style="color:#b48ead;">mut</span><span> Transform)&gt;().</span><span style="color:#96b5b4;">iter</span><span>()
 </span><span>    {
 </span><span>        </span><span style="color:#65737e;">// Handle movement and animation
 </span><span>        </span><span style="color:#b48ead;">let mut</span><span> moved = </span><span style="color:#d08770;">false</span><span>;
@@ -179,7 +187,7 @@
 </span><span>
 </span><span>        </span><span style="color:#b48ead;">if</span><span> moved {
 </span><span>            animated_sprite.flip_x = move_dir.x &lt; </span><span style="color:#d08770;">0.0</span><span>;
-</span><span>            transform.position += move_dir.</span><span style="color:#96b5b4;">normalize</span><span>() * speed * dt;
+</span><span>            transform.position += move_dir.</span><span style="color:#96b5b4;">normalize_or_zero</span><span>() * speed * dt;
 </span><span>            animated_sprite.</span><span style="color:#96b5b4;">play</span><span>(&quot;</span><span style="color:#a3be8c;">walk</span><span>&quot;);
 </span><span>        } </span><span style="color:#b48ead;">else </span><span>{
 </span><span>            animated_sprite.</span><span style="color:#96b5b4;">play</span><span>(&quot;</span><span style="color:#a3be8c;">idle</span><span>&quot;);
