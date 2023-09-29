@@ -3,7 +3,7 @@ set -euxo pipefail
 
 parent_dir="$PWD"
 
-local_build=true
+local_build=false
 
 if [ "$local_build" = true ]; then
   cd ../comfy
