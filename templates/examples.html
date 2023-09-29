@@ -35,32 +35,27 @@
   <!-- <h1 class="title">{{ section.title }}</h1> -->
 
   <div class="container text-center">
-    <div class="card-group grid gap-2">
+    <div class="d-flex flex-row flex-wrap justify-content-center gap-3">
       {% for post in section.pages %}
-      <div class="col">
-        <div class="card border">
-          <div class="header card-header text-center border">{{ post.title }}</div>
-          <div class="content card-body example-card-body">
-            <a class="example-detail-link card-img-top" data-bs-toggle="modal" data-bs-target="#comfyModal" data-bs-title="{{ post.title }}"
-              data-bs-wasm-source="{{post.extra.wasm_source}}"
-              data-bs-github-href="{{post.extra.gh_source}}"
-              data-bs-example-code="{{post.content}}"
-              style="cursor: pointer;">
-              <video src="{{ post.extra.video }}" autoplay loop width="408" style="border-radius: 5px" />
-            </a>
 
-            <!-- <div> -->
-            <!--   <a href="{{post.extra.gh_source}}"> -->
-            <!--     <i class=""> -->
-            <!--       <img src="/github-mark-white.svg" width="22px" /> -->
-            <!--     </i> -->
-            <!--   </a> -->
-            <!-- </div> -->
-          </div>
+      <a data-bs-toggle="modal" data-bs-target="#comfyModal" data-bs-title="{{ post.title }}"
+        data-bs-wasm-source="{{post.extra.wasm_source}}" data-bs-github-href="{{post.extra.gh_source}}"
+        data-bs-example-code="{{post.content}}" style="cursor: pointer;">
+        <div class="card border width-fit-content">
+          <div class="header card-header text-center border">{{ post.title }}</div>
+          <video src="{{ post.extra.video }}" autoplay loop width="408" class="object-fit-cover rounded-bottom"></video>
         </div>
-      </div>
+      </a>
+
+      <!-- <div> -->
+      <!--   <a href="{{post.extra.gh_source}}"> -->
+      <!--     <i class=""> -->
+      <!--       <img src="/github-mark-white.svg" width="22px" /> -->
+      <!--     </i> -->
+      <!--   </a> -->
+      <!-- </div> -->
+
       {% endfor %}
-      </ul>
     </div>
   </div>
 </section>
