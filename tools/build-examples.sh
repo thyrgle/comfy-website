@@ -10,7 +10,7 @@ if [ "$local_build" = true ]; then
 else
   mkdir -p tmp
   if [ ! -d "tmp/comfy" ]; then
-    git clone --depth=1 git@github.com:darthdeus/comfy.git tmp/comfy
+    git clone --depth=1 https://github.com/darthdeus/comfy tmp/comfy
   else
     echo "Directory tmp/comfy already exists, skipping clone."
   fi
