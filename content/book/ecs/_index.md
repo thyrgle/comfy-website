@@ -54,7 +54,7 @@ If you're not sure what these do or how to use them, the [`hecs
 documentation`](https://docs.rs/hecs/latest/hecs/) is a great place to learn!
 Out of all the ECS libraries we've tried `hecs` has been the best and simplest
 by far, and would 100% recommend it to everyone. It's not as _comfy_ as bevy's
-automagic resource injection, but we've the more explicit nature of it to be a
+automagic resource injection, but we've found the more explicit nature of it to be a
 great productivity boost.
 
 **Notably, comfy does run the `CommandBuffer`'s `run_on(...)` every frame,
