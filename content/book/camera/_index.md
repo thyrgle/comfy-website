@@ -62,7 +62,7 @@ let mouse_world = screen_to_world(mouse_position());
 let player_screen = world_to_screen(...);
 ```
 
-Notes that here we use another global function, `mouse_position`, which returns
+Note that here we use another global function, `mouse_position`, which returns
 the screen-space mouse position. We also have a helper `mouse_world()` which
 already returns the world-space mouse position as would be converted by the
 above code.
