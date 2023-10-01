@@ -85,6 +85,7 @@ $light: #d2d2d2;
 
 .example-code pre, pre {
   padding: 20px;
+  margin-bottom: 0;
 
   overflow: hidden;
 }
@@ -127,6 +128,10 @@ $light: #d2d2d2;
   .light-discord {
     display: none;
   }
+}
+
+.width-fit-content {
+  width: fit-content;
 }
 
 
