@@ -66,3 +66,10 @@ Note that here we use another global function, `mouse_position`, which returns
 the screen-space mouse position. We also have a helper `mouse_world()` which
 already returns the world-space mouse position as would be converted by the
 above code.
+
+To get the current screen size in pixels or world units:
+```rust
+let screen_width_pixels = screen_width(); // for example: 1800
+let screen_height_pixels = screen_height(); // for example: 920
+let visible_world_size = main_camera().world_viewport(); // for example: 30.0 x 16.8
+```
