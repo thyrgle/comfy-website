@@ -21,8 +21,9 @@
 
   <script>
     (function () {
-      const savedTheme = localStorage.getItem('data-bs-theme') || 'dark';  // default to 'dark' if not set
-      document.documentElement.setAttribute('data-bs-theme', savedTheme);
+      const savedTheme = localStorage.getItem('data-bs-theme');
+      const preferredTheme = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+      document.documentElement.setAttribute('data-bs-theme', savedTheme || preferredTheme);
     })();
   </script>
 
