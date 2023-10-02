@@ -95,10 +95,10 @@
         themeSwitch.checked = currentTheme === 'dark';
 
         themeSwitch.addEventListener('change', function () {
-          if (themeSwitch.checked && currentTheme !== 'dark') {
+          if (themeSwitch.checked) {
             document.documentElement.setAttribute('data-bs-theme', 'dark');
             localStorage.setItem('data-bs-theme', 'dark');
-          } else if (!themeSwitch.checked) {
+          } else {
             document.documentElement.setAttribute('data-bs-theme', 'light');
             localStorage.setItem('data-bs-theme', 'light');
           }
