@@ -141,6 +141,13 @@ slower engines out there.
 - `GameConfig` is no longer `Copy`. This shouldn't really affect anyone in
   any way, as it was behind a `RefCell` anyway.
 
+## First Comfy demo on Steam :)
+
+Last week we released a demo of one of our smaller games on Steam. It's a
+Vampire Survivors clone called [Unrelaxing
+Quacks](https://store.steampowered.com/app/2331980/Unrelaxing_Quacks/), built
+100% in Comfy and Rust, and can be played for free on Windows and Linux.
+
 ## Next up
 
 The global namespace is currently polluted by a lot of things. The next
