@@ -41,6 +41,7 @@ List of removed things and where to find them now:
   internally `Arc<Mutex<ContextImpl>>`, so this function is actually very
   cheap to call as it just returns a `&'static egui::Context` :)
 - `c.egui_wants_mouse` -> `egui().wants_pointer_input()`
+- `c.config` -> `game_config()` and `game_config_mut()`.
 - `c.cached_loader.borrow_mut()` -> `cached_loader_mut()` (for `&` just
   omit `_mut`).
 - similarly `c.changes.borrow_mut()` -> `changes()` and `c.notifications.borrow_mut()` -> `notifications()`.

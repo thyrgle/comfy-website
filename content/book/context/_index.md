@@ -14,24 +14,26 @@ look at mouse position, and play a sound.
 
 This is a controversial topic, and many prefer as much decoupling as possible,
 but we've found that as far as building games goes, there is little value in
-such separation.
+such separation. Almost all game code will want to play some sounds, draw
+something, change animation state and run some game logic.
 
-Almost all game code will want to play some sounds, draw something, change
-animation state and run some game logic.
+_Note: If you've read this section for Comfy `v0.1` a few things have moved
+from `EngineContext` into globals. See [v0.2 release announcement for more
+details](/blog/release-v0-2)._
 
-Comfy's solution to the above is the `EngineContext`, a single struct which can
-be passed around throughout the game and that references everything you may
-want to use. _Almost_ meaning that some functionality is exposed through global
-functions and does not even require using the context. These are things like
-drawing, input, playing sounds, etc.
+Comfy's solution to the above is exposing most things you would want through global
+functions, and keeping the rest in an `EngineContext`, which is a single struct
+that can be passed around throughout your code and references all that you may want.
 
-The `EngineContext` provides direct access to things like
-[`egui`](https://docs.rs/egui/latest/egui/), lighting settings, ECS world and
-its related command buffer, cooldowns, and more.
+Since Comfy v0.2 almost everything can now be done without the `EngineContext`,
+specifically ECS world/commands access, cooldowns, mouse position, game config,
+egui and image loading are all available through global functions. This is in
+addition to all the drawing, sound playing and input functions that were
+available previously.
 
 We've found that it is _extremely_ common to be in the middle of writing
 gameplay logic and realize "oh crap I need to make an egui window to debug this
-better". Being able to just write `c.egui` saves the developer from breaking
+better". Being able to just write `egui()` saves the developer from breaking
 their thought process, and more importantly it makes cleanup significantly
 easier.
 
@@ -84,8 +86,8 @@ pub struct GameContext {
 
 The benefit is we don't have to write a lot of code, but the downside is now
 all our code will have to do `c.state.physics` or `c.state.spawn_timer`. This
-is not a huge deal, and some might prefer taking a small hit in ergonomics in game code
-to save a bit of writing.
+is not a huge deal, and some might prefer taking a small hit in ergonomics in
+game code to save a bit of writing.
 
 But we've found that the hardest part of making a game is _actually making the
 game_, that is having good gameplay code, fun features, lots of iteration on
@@ -112,7 +114,10 @@ only defined once per game.
 Note that we also added `delta`, which while being available on the
 `EngineContext` is something that almost every bit of game code will want to
 touch, and thus having a simple `c.delta` instead of `c.engine.delta` is a nice
-quality of life improvement, at the cost of a few extra lines of code.
+quality of life improvement, at the cost of a few extra lines of code. Since Comfy
+`v0.2` you can also call a global `delta()` function. Note that this does have a small
+amount of overhead, so it may be desirable to re-export this into your `GameContext`
+for use in tight loops.
 
 The next part could in theory be handled by a procedural macro, but comfy wants
 to remain simple. As such we'll have to write a function which actually creates
@@ -136,7 +141,6 @@ fn make_context<'a, 'b: 'a>(
         spawn_timer: &mut state.spawn_timer,
         delta: engine.delta,
         ball_spawning_speed: &mut state.ball_spawning_speed,
-        egui: engine.egui,
         physics: &mut state.physics,
         engine,
     }
