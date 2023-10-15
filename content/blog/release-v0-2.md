@@ -1,5 +1,5 @@
 +++
-title = "Release v0.2"
+title = "Release v0.2: More Globals = More Comfy"
 date = 2023-10-15
 +++
 
