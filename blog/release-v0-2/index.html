@@ -100,9 +100,8 @@
 <h1 class="title">Release v0.2: More Globals = More Comfy</h1>
 <p class="subtitle"><strong>2023-10-15</strong></p>
 <p>This is a second release of Comfy at version <code>v0.2.0</code>. In short it brings some
-API improvements, greatly improved default performance on integrated GPUs (by
-disabling some heavy features), and overall a lot of bugfixes &amp; small
-performance improvements.</p>
+API improvements, greatly improved default performance on integrated GPUs, and
+overall a lot of bugfixes &amp; small performance improvements.</p>
 <h2 id="changelog">CHANGELOG</h2>
 <p>The main change in this release is that <code>EngineContext</code> is not necessary to
 pass around anymore. This should simplify a lot of the confusion, as the #1
@@ -183,6 +182,31 @@ quite ugly we turned it off for now in <code>v0.2.0</code>. I don't think there'
 chance anyone actually used it, but if you did, it'll come back soon I promise.</p>
 <p>Post processing is one of the things that should improve after <code>v0.2.0</code> is out,
 and we'll be able to add more effects and make them easier to use.</p>
+<h2 id="asset-loading">Asset loading</h2>
+<p>Comfy does include a parallel asset asynchronous asset loader, although the API
+isn't currently great and is going to be improved/changed in some ways. Related
+issues <a href="https://github.com/darthdeus/comfy/pull/42">#42</a>,
+<a href="https://github.com/darthdeus/comfy/pull/30">#30</a>,
+<a href="https://github.com/darthdeus/comfy/issues/36">#36</a> for those that are curious.</p>
+<p>An example of how this works can be found in the <a href="https://github.com/darthdeus/comfy-benchmark/tree/master/comfy-asset-benchmark">Comfy Asset
+Benchmark</a>,
+but this issue remains relatively undocumented for the time being as there will
+be breaking changes around it.</p>
+<p>The functionality is there and it is being used in production already.</p>
+<h2 id="benchmarks">Benchmarks</h2>
+<p>While Comfy is not an engine that focuses on speed, that doesn't mean
+performance is not important and shouldn't be tracked. There's now a <a href="https://github.com/darthdeus/comfy-benchmark">WIP Comfy
+benchmark</a> that includes both an
+asset loading benchmark, as well as a small comparison between Comfy and the
+official Bevymark, and also links to a few other references (e.g. Kha).</p>
+<p><em><strong>TL;DR: On my machine Bevy does ~120k sprites at 60FPS, Comfy does 35k, and
+Kha in a similar benchmark does 300k. We'd like to be as fast if not faster
+than Bevy with the next release :) It's unlikely Comfy will get anywhere close Kha,
+but there is no reason we shouldn't want to be a little bit faster than we're right now.</strong></em></p>
+<p>Again, it's not the goal of Comfy to be the fastest renderer in the universe,
+but being able to not think about &quot;is this going to be slow&quot; while writing
+gameplay code is important, so the aim should be to at least be as fast as the
+slower engines out there.</p>
 <h2 id="minor-changes">Minor changes:</h2>
 <ul>
 <li><code>GameConfig</code> is no longer <code>Copy</code>. This shouldn't really affect anyone in
