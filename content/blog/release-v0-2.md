@@ -4,9 +4,8 @@ date = 2023-10-15
 +++
 
 This is a second release of Comfy at version `v0.2.0`. In short it brings some
-API improvements, greatly improved default performance on integrated GPUs (by
-disabling some heavy features), and overall a lot of bugfixes & small
-performance improvements.
+API improvements, greatly improved default performance on integrated GPUs, and
+overall a lot of bugfixes & small performance improvements.
 
 ## CHANGELOG
 
@@ -103,6 +102,39 @@ chance anyone actually used it, but if you did, it'll come back soon I promise.
 
 Post processing is one of the things that should improve after `v0.2.0` is out,
 and we'll be able to add more effects and make them easier to use.
+
+## Asset loading
+
+Comfy does include a parallel asset asynchronous asset loader, although the API
+isn't currently great and is going to be improved/changed in some ways. Related
+issues [#42](https://github.com/darthdeus/comfy/pull/42),
+[#30](https://github.com/darthdeus/comfy/pull/30),
+[#36](https://github.com/darthdeus/comfy/issues/36) for those that are curious.
+
+An example of how this works can be found in the [Comfy Asset
+Benchmark](https://github.com/darthdeus/comfy-benchmark/tree/master/comfy-asset-benchmark),
+but this issue remains relatively undocumented for the time being as there will
+be breaking changes around it.
+
+The functionality is there and it is being used in production already.
+
+## Benchmarks
+
+While Comfy is not an engine that focuses on speed, that doesn't mean
+performance is not important and shouldn't be tracked. There's now a [WIP Comfy
+benchmark](https://github.com/darthdeus/comfy-benchmark) that includes both an
+asset loading benchmark, as well as a small comparison between Comfy and the
+official Bevymark, and also links to a few other references (e.g. Kha).
+
+_**TL;DR: On my machine Bevy does ~120k sprites at 60FPS, Comfy does 35k, and
+Kha in a similar benchmark does 300k. We'd like to be as fast if not faster
+than Bevy with the next release :) It's unlikely Comfy will get anywhere close Kha,
+but there is no reason we shouldn't want to be a little bit faster than we're right now.**_
+
+Again, it's not the goal of Comfy to be the fastest renderer in the universe,
+but being able to not think about "is this going to be slow" while writing
+gameplay code is important, so the aim should be to at least be as fast as the
+slower engines out there.
 
 ## Minor changes:
 
