@@ -20,10 +20,27 @@
   </script>
 
   <script>
-      (function() {
-          const savedTheme = localStorage.getItem('data-bs-theme') || 'dark';  // default to 'dark' if not set
-          document.documentElement.setAttribute('data-bs-theme', savedTheme);
-      })();
+    const savedTheme = localStorage.getItem('data-bs-theme');
+    const preferredTheme = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+    const theme = savedTheme || preferredTheme;
+    document.documentElement.setAttribute('data-bs-theme', theme);
+
+    document.addEventListener('DOMContentLoaded', function () {
+      const themeSwitch = document.getElementById('comfySwitch');
+
+      // Set the checkbox state based on the current theme
+      themeSwitch.checked = theme === 'dark';
+
+      themeSwitch.addEventListener('change', function () {
+        if (themeSwitch.checked) {
+          document.documentElement.setAttribute('data-bs-theme', 'dark');
+          localStorage.setItem('data-bs-theme', 'dark');
+        } else {
+          document.documentElement.setAttribute('data-bs-theme', 'light');
+          localStorage.setItem('data-bs-theme', 'light');
+        }
+      });
+    });
   </script>
 
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fira+Sans:wght@400;700&display=swap" />
@@ -54,7 +71,7 @@
           <a href="/features" class="nav-link">Features</a>
         </li>
         <li class="nav-item"><a href="/examples" class="nav-link">Examples</a></li>
-        <li class="nav-item"><a href="/blog/first" class="nav-link">Blog</a></li>
+        <li class="nav-item"><a href="/blog" class="nav-link">Blog</a></li>
         <li class="nav-item">
           <a href="https://github.com/darthdeus/comfy" class="">
             <img class="light-github" width="40" height="40" src="/github-mark.svg" alt="Github repo" />
@@ -349,20 +366,22 @@ specify 10+ different parameters in order to read input from the keyboard,
 look at mouse position, and play a sound.</p>
 <p>This is a controversial topic, and many prefer as much decoupling as possible,
 but we've found that as far as building games goes, there is little value in
-such separation.</p>
-<p>Almost all game code will want to play some sounds, draw something, change
-animation state and run some game logic.</p>
-<p>Comfy's solution to the above is the <code>EngineContext</code>, a single struct which can
-be passed around throughout the game and that references everything you may
-want to use. <em>Almost</em> meaning that some functionality is exposed through global
-functions and does not even require using the context. These are things like
-drawing, input, playing sounds, etc.</p>
-<p>The <code>EngineContext</code> provides direct access to things like
-<a href="https://docs.rs/egui/latest/egui/"><code>egui</code></a>, lighting settings, ECS world and
-its related command buffer, cooldowns, and more.</p>
+such separation. Almost all game code will want to play some sounds, draw
+something, change animation state and run some game logic.</p>
+<p><em>Note: If you've read this section for Comfy <code>v0.1</code> a few things have moved
+from <code>EngineContext</code> into globals. See <a href="/blog/release-v0-2">v0.2 release announcement for more
+details</a>.</em></p>
+<p>Comfy's solution to the above is exposing most things you would want through global
+functions, and keeping the rest in an <code>EngineContext</code>, which is a single struct
+that can be passed around throughout your code and references all that you may want.</p>
+<p>Since Comfy v0.2 almost everything can now be done without the <code>EngineContext</code>,
+specifically ECS world/commands access, cooldowns, mouse position, game config,
+egui and image loading are all available through global functions. This is in
+addition to all the drawing, sound playing and input functions that were
+available previously.</p>
 <p>We've found that it is <em>extremely</em> common to be in the middle of writing
 gameplay logic and realize &quot;oh crap I need to make an egui window to debug this
-better&quot;. Being able to just write <code>c.egui</code> saves the developer from breaking
+better&quot;. Being able to just write <code>egui()</code> saves the developer from breaking
 their thought process, and more importantly it makes cleanup significantly
 easier.</p>
 <h2 id="game-specific-context">Game specific Context<a class="zola-anchor" href="#game-specific-context" aria-label="Anchor link for: game-specific-context">🔗</a></h2>
@@ -401,8 +420,8 @@ something along the lines of the following (lifetimes removed for now):</p>
 </span></code></pre>
 <p>The benefit is we don't have to write a lot of code, but the downside is now
 all our code will have to do <code>c.state.physics</code> or <code>c.state.spawn_timer</code>. This
-is not a huge deal, and some might prefer taking a small hit in ergonomics in game code
-to save a bit of writing.</p>
+is not a huge deal, and some might prefer taking a small hit in ergonomics in
+game code to save a bit of writing.</p>
 <p>But we've found that the hardest part of making a game is <em>actually making the
 game</em>, that is having good gameplay code, fun features, lots of iteration on
 the game itself, etc. This is why we prefer the significantly more verbose
@@ -424,7 +443,10 @@ only defined once per game.</p>
 <p>Note that we also added <code>delta</code>, which while being available on the
 <code>EngineContext</code> is something that almost every bit of game code will want to
 touch, and thus having a simple <code>c.delta</code> instead of <code>c.engine.delta</code> is a nice
-quality of life improvement, at the cost of a few extra lines of code.</p>
+quality of life improvement, at the cost of a few extra lines of code. Since Comfy
+<code>v0.2</code> you can also call a global <code>delta()</code> function. Note that this does have a small
+amount of overhead, so it may be desirable to re-export this into your <code>GameContext</code>
+for use in tight loops.</p>
 <p>The next part could in theory be handled by a procedural macro, but comfy wants
 to remain simple. As such we'll have to write a function which actually creates
 this context object, which means we have to specify each field <em>again</em>. If
@@ -444,7 +466,6 @@ our productivity.</p>
 </span><span>        spawn_timer: &amp;</span><span style="color:#b48ead;">mut</span><span> state.spawn_timer,
 </span><span>        delta: engine.delta,
 </span><span>        ball_spawning_speed: &amp;</span><span style="color:#b48ead;">mut</span><span> state.ball_spawning_speed,
-</span><span>        egui: engine.egui,
 </span><span>        physics: &amp;</span><span style="color:#b48ead;">mut</span><span> state.physics,
 </span><span>        engine,
 </span><span>    }
@@ -490,26 +511,6 @@ example to see what this actually does, but note there is no extra magic hidden 
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
       integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous">
-    </script>
-
-    <script>
-      document.addEventListener('DOMContentLoaded', function () {
-      const themeSwitch = document.getElementById('comfySwitch');
-      const currentTheme = document.documentElement.getAttribute('data-bs-theme') || 'dark'; // default to 'dark' if not set
-
-      // Set the checkbox state based on the current theme
-      themeSwitch.checked = currentTheme === 'dark';
-
-      themeSwitch.addEventListener('change', function () {
-          if (themeSwitch.checked && currentTheme !== 'dark') {
-              document.documentElement.setAttribute('data-bs-theme', 'dark');
-              localStorage.setItem('data-bs-theme', 'dark');
-          } else if (!themeSwitch.checked) {
-              document.documentElement.setAttribute('data-bs-theme', 'light');
-              localStorage.setItem('data-bs-theme', 'light');
-          }
-        });
-      });
     </script>
 </body>
 </html>

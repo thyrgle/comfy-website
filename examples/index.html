@@ -20,10 +20,27 @@
   </script>
 
   <script>
-      (function() {
-          const savedTheme = localStorage.getItem('data-bs-theme') || 'dark';  // default to 'dark' if not set
-          document.documentElement.setAttribute('data-bs-theme', savedTheme);
-      })();
+    const savedTheme = localStorage.getItem('data-bs-theme');
+    const preferredTheme = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+    const theme = savedTheme || preferredTheme;
+    document.documentElement.setAttribute('data-bs-theme', theme);
+
+    document.addEventListener('DOMContentLoaded', function () {
+      const themeSwitch = document.getElementById('comfySwitch');
+
+      // Set the checkbox state based on the current theme
+      themeSwitch.checked = theme === 'dark';
+
+      themeSwitch.addEventListener('change', function () {
+        if (themeSwitch.checked) {
+          document.documentElement.setAttribute('data-bs-theme', 'dark');
+          localStorage.setItem('data-bs-theme', 'dark');
+        } else {
+          document.documentElement.setAttribute('data-bs-theme', 'light');
+          localStorage.setItem('data-bs-theme', 'light');
+        }
+      });
+    });
   </script>
 
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fira+Sans:wght@400;700&display=swap" />
@@ -54,7 +71,7 @@
           <a href="/features" class="nav-link">Features</a>
         </li>
         <li class="nav-item"><a href="/examples" class="nav-link">Examples</a></li>
-        <li class="nav-item"><a href="/blog/first" class="nav-link">Blog</a></li>
+        <li class="nav-item"><a href="/blog" class="nav-link">Blog</a></li>
         <li class="nav-item">
           <a href="https://github.com/darthdeus/comfy" class="">
             <img class="light-github" width="40" height="40" src="/github-mark.svg" alt="Github repo" />
@@ -114,16 +131,12 @@
   <!-- <h1 class="title">Comfy Examples</h1> -->
 
   <div class="container text-center">
-    <div class="card-group grid gap-2">
+    <div class="d-flex flex-row flex-wrap justify-content-center gap-3">
       
-      <div class="col">
-        <div class="card border">
-          <div class="header card-header text-center border">animated_shapes</div>
-          <div class="content card-body example-card-body">
-            <a class="example-detail-link card-img-top" data-bs-toggle="modal" data-bs-target="#comfyModal" data-bs-title="animated_shapes"
-              data-bs-wasm-source="&#x2F;wasm&#x2F;animated_shapes&#x2F;index.html"
-              data-bs-github-href="&#x2F;&#x2F;github.com&#x2F;darthdeus&#x2F;comfy&#x2F;blob&#x2F;master&#x2F;comfy&#x2F;examples&#x2F;animated_shapes.rs"
-              data-bs-example-code="&lt;pre data-lang=&quot;rust&quot; style=&quot;background-color:#2b303b;color:#c0c5ce;&quot; class=&quot;language-rust &quot;&gt;&lt;code class=&quot;language-rust&quot; data-lang=&quot;rust&quot;&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;use &lt;&#x2F;span&gt;&lt;span&gt;comfy::*;
+
+      <a data-bs-toggle="modal" data-bs-target="#comfyModal" data-bs-title="animated_shapes"
+        data-bs-wasm-source="&#x2F;wasm&#x2F;animated_shapes&#x2F;index.html" data-bs-github-href="&#x2F;&#x2F;github.com&#x2F;darthdeus&#x2F;comfy&#x2F;blob&#x2F;master&#x2F;comfy&#x2F;examples&#x2F;animated_shapes.rs"
+        data-bs-example-code="&lt;pre data-lang=&quot;rust&quot; style=&quot;background-color:#2b303b;color:#c0c5ce;&quot; class=&quot;language-rust &quot;&gt;&lt;code class=&quot;language-rust&quot; data-lang=&quot;rust&quot;&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;use &lt;&#x2F;span&gt;&lt;span&gt;comfy::*;
 &lt;&#x2F;span&gt;&lt;span&gt;
 &lt;&#x2F;span&gt;&lt;span&gt;simple_game!(&amp;quot;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt;Animated Shapes Example&lt;&#x2F;span&gt;&lt;span&gt;&amp;quot;, update);
 &lt;&#x2F;span&gt;&lt;span&gt;
@@ -170,30 +183,26 @@
 &lt;&#x2F;span&gt;&lt;span&gt;    }
 &lt;&#x2F;span&gt;&lt;span&gt;}
 &lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
-"
-              style="cursor: pointer;">
-              <video src="&#x2F;videos&#x2F;animated_shapes.webm" autoplay loop width="408" style="border-radius: 5px" />
-            </a>
-
-            <!-- <div> -->
-            <!--   <a href="&#x2F;&#x2F;github.com&#x2F;darthdeus&#x2F;comfy&#x2F;blob&#x2F;master&#x2F;comfy&#x2F;examples&#x2F;animated_shapes.rs"> -->
-            <!--     <i class=""> -->
-            <!--       <img src="/github-mark-white.svg" width="22px" /> -->
-            <!--     </i> -->
-            <!--   </a> -->
-            <!-- </div> -->
-          </div>
+" style="cursor: pointer;">
+        <div class="card border width-fit-content">
+          <div class="header card-header text-center border">animated_shapes</div>
+          <video src="&#x2F;videos&#x2F;animated_shapes.webm" autoplay loop muted width="380" class="object-fit-cover rounded-bottom mw-100"></video>
         </div>
-      </div>
+      </a>
+
+      <!-- <div> -->
+      <!--   <a href="&#x2F;&#x2F;github.com&#x2F;darthdeus&#x2F;comfy&#x2F;blob&#x2F;master&#x2F;comfy&#x2F;examples&#x2F;animated_shapes.rs"> -->
+      <!--     <i class=""> -->
+      <!--       <img src="/github-mark-white.svg" width="22px" /> -->
+      <!--     </i> -->
+      <!--   </a> -->
+      <!-- </div> -->
+
       
-      <div class="col">
-        <div class="card border">
-          <div class="header card-header text-center border">animated_sprites</div>
-          <div class="content card-body example-card-body">
-            <a class="example-detail-link card-img-top" data-bs-toggle="modal" data-bs-target="#comfyModal" data-bs-title="animated_sprites"
-              data-bs-wasm-source="&#x2F;wasm&#x2F;animated_sprites&#x2F;index.html"
-              data-bs-github-href="&#x2F;&#x2F;github.com&#x2F;darthdeus&#x2F;comfy&#x2F;blob&#x2F;master&#x2F;comfy&#x2F;examples&#x2F;animated_sprites.rs"
-              data-bs-example-code="&lt;pre data-lang=&quot;rust&quot; style=&quot;background-color:#2b303b;color:#c0c5ce;&quot; class=&quot;language-rust &quot;&gt;&lt;code class=&quot;language-rust&quot; data-lang=&quot;rust&quot;&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;use &lt;&#x2F;span&gt;&lt;span&gt;comfy::*;
+
+      <a data-bs-toggle="modal" data-bs-target="#comfyModal" data-bs-title="animated_sprites"
+        data-bs-wasm-source="&#x2F;wasm&#x2F;animated_sprites&#x2F;index.html" data-bs-github-href="&#x2F;&#x2F;github.com&#x2F;darthdeus&#x2F;comfy&#x2F;blob&#x2F;master&#x2F;comfy&#x2F;examples&#x2F;animated_sprites.rs"
+        data-bs-example-code="&lt;pre data-lang=&quot;rust&quot; style=&quot;background-color:#2b303b;color:#c0c5ce;&quot; class=&quot;language-rust &quot;&gt;&lt;code class=&quot;language-rust&quot; data-lang=&quot;rust&quot;&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;use &lt;&#x2F;span&gt;&lt;span&gt;comfy::*;
 &lt;&#x2F;span&gt;&lt;span&gt;
 &lt;&#x2F;span&gt;&lt;span&gt;simple_game!(&amp;quot;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt;Sprite Example&lt;&#x2F;span&gt;&lt;span&gt;&amp;quot;, setup, update);
 &lt;&#x2F;span&gt;&lt;span&gt;
@@ -283,30 +292,26 @@
 &lt;&#x2F;span&gt;&lt;span&gt;    }
 &lt;&#x2F;span&gt;&lt;span&gt;}
 &lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
-"
-              style="cursor: pointer;">
-              <video src="&#x2F;videos&#x2F;animated_sprites.webm" autoplay loop width="408" style="border-radius: 5px" />
-            </a>
-
-            <!-- <div> -->
-            <!--   <a href="&#x2F;&#x2F;github.com&#x2F;darthdeus&#x2F;comfy&#x2F;blob&#x2F;master&#x2F;comfy&#x2F;examples&#x2F;animated_sprites.rs"> -->
-            <!--     <i class=""> -->
-            <!--       <img src="/github-mark-white.svg" width="22px" /> -->
-            <!--     </i> -->
-            <!--   </a> -->
-            <!-- </div> -->
-          </div>
+" style="cursor: pointer;">
+        <div class="card border width-fit-content">
+          <div class="header card-header text-center border">animated_sprites</div>
+          <video src="&#x2F;videos&#x2F;animated_sprites.webm" autoplay loop muted width="380" class="object-fit-cover rounded-bottom mw-100"></video>
         </div>
-      </div>
+      </a>
+
+      <!-- <div> -->
+      <!--   <a href="&#x2F;&#x2F;github.com&#x2F;darthdeus&#x2F;comfy&#x2F;blob&#x2F;master&#x2F;comfy&#x2F;examples&#x2F;animated_sprites.rs"> -->
+      <!--     <i class=""> -->
+      <!--       <img src="/github-mark-white.svg" width="22px" /> -->
+      <!--     </i> -->
+      <!--   </a> -->
+      <!-- </div> -->
+
       
-      <div class="col">
-        <div class="card border">
-          <div class="header card-header text-center border">animated_text</div>
-          <div class="content card-body example-card-body">
-            <a class="example-detail-link card-img-top" data-bs-toggle="modal" data-bs-target="#comfyModal" data-bs-title="animated_text"
-              data-bs-wasm-source="&#x2F;wasm&#x2F;animated_text&#x2F;index.html"
-              data-bs-github-href="&#x2F;&#x2F;github.com&#x2F;darthdeus&#x2F;comfy&#x2F;blob&#x2F;master&#x2F;comfy&#x2F;examples&#x2F;animated_text.rs"
-              data-bs-example-code="&lt;pre data-lang=&quot;rust&quot; style=&quot;background-color:#2b303b;color:#c0c5ce;&quot; class=&quot;language-rust &quot;&gt;&lt;code class=&quot;language-rust&quot; data-lang=&quot;rust&quot;&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;use &lt;&#x2F;span&gt;&lt;span&gt;comfy::*;
+
+      <a data-bs-toggle="modal" data-bs-target="#comfyModal" data-bs-title="animated_text"
+        data-bs-wasm-source="&#x2F;wasm&#x2F;animated_text&#x2F;index.html" data-bs-github-href="&#x2F;&#x2F;github.com&#x2F;darthdeus&#x2F;comfy&#x2F;blob&#x2F;master&#x2F;comfy&#x2F;examples&#x2F;animated_text.rs"
+        data-bs-example-code="&lt;pre data-lang=&quot;rust&quot; style=&quot;background-color:#2b303b;color:#c0c5ce;&quot; class=&quot;language-rust &quot;&gt;&lt;code class=&quot;language-rust&quot; data-lang=&quot;rust&quot;&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;use &lt;&#x2F;span&gt;&lt;span&gt;comfy::*;
 &lt;&#x2F;span&gt;&lt;span&gt;
 &lt;&#x2F;span&gt;&lt;span&gt;simple_game!(&amp;quot;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt;Animated Text Example&lt;&#x2F;span&gt;&lt;span&gt;&amp;quot;, update);
 &lt;&#x2F;span&gt;&lt;span&gt;
@@ -352,30 +357,152 @@
 &lt;&#x2F;span&gt;&lt;span&gt;    );
 &lt;&#x2F;span&gt;&lt;span&gt;}
 &lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
-"
-              style="cursor: pointer;">
-              <video src="&#x2F;videos&#x2F;animated_text.webm" autoplay loop width="408" style="border-radius: 5px" />
-            </a>
-
-            <!-- <div> -->
-            <!--   <a href="&#x2F;&#x2F;github.com&#x2F;darthdeus&#x2F;comfy&#x2F;blob&#x2F;master&#x2F;comfy&#x2F;examples&#x2F;animated_text.rs"> -->
-            <!--     <i class=""> -->
-            <!--       <img src="/github-mark-white.svg" width="22px" /> -->
-            <!--     </i> -->
-            <!--   </a> -->
-            <!-- </div> -->
-          </div>
+" style="cursor: pointer;">
+        <div class="card border width-fit-content">
+          <div class="header card-header text-center border">animated_text</div>
+          <video src="&#x2F;videos&#x2F;animated_text.webm" autoplay loop muted width="380" class="object-fit-cover rounded-bottom mw-100"></video>
         </div>
-      </div>
+      </a>
+
+      <!-- <div> -->
+      <!--   <a href="&#x2F;&#x2F;github.com&#x2F;darthdeus&#x2F;comfy&#x2F;blob&#x2F;master&#x2F;comfy&#x2F;examples&#x2F;animated_text.rs"> -->
+      <!--     <i class=""> -->
+      <!--       <img src="/github-mark-white.svg" width="22px" /> -->
+      <!--     </i> -->
+      <!--   </a> -->
+      <!-- </div> -->
+
       
-      <div class="col">
-        <div class="card border">
-          <div class="header card-header text-center border">cooldowns</div>
-          <div class="content card-body example-card-body">
-            <a class="example-detail-link card-img-top" data-bs-toggle="modal" data-bs-target="#comfyModal" data-bs-title="cooldowns"
-              data-bs-wasm-source="&#x2F;wasm&#x2F;cooldowns&#x2F;index.html"
-              data-bs-github-href="&#x2F;&#x2F;github.com&#x2F;darthdeus&#x2F;comfy&#x2F;blob&#x2F;master&#x2F;comfy&#x2F;examples&#x2F;cooldowns.rs"
-              data-bs-example-code="&lt;pre data-lang=&quot;rust&quot; style=&quot;background-color:#2b303b;color:#c0c5ce;&quot; class=&quot;language-rust &quot;&gt;&lt;code class=&quot;language-rust&quot; data-lang=&quot;rust&quot;&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;use &lt;&#x2F;span&gt;&lt;span&gt;comfy::*;
+
+      <a data-bs-toggle="modal" data-bs-target="#comfyModal" data-bs-title="blood_canvas"
+        data-bs-wasm-source="&#x2F;wasm&#x2F;blood_canvas&#x2F;index.html" data-bs-github-href="&#x2F;&#x2F;github.com&#x2F;darthdeus&#x2F;comfy&#x2F;blob&#x2F;master&#x2F;comfy&#x2F;examples&#x2F;blood_canvas.rs"
+        data-bs-example-code="&lt;pre data-lang=&quot;rust&quot; style=&quot;background-color:#2b303b;color:#c0c5ce;&quot; class=&quot;language-rust &quot;&gt;&lt;code class=&quot;language-rust&quot; data-lang=&quot;rust&quot;&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;use &lt;&#x2F;span&gt;&lt;span&gt;comfy::*;
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#65737e;&quot;&gt;&#x2F;&#x2F; This example might seem quite random, especially given the name.
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#65737e;&quot;&gt;&#x2F;&#x2F;
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#65737e;&quot;&gt;&#x2F;&#x2F; The blood canvas is actually something that comes from BITGUN,
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#65737e;&quot;&gt;&#x2F;&#x2F; our first Rust game, and something we&amp;#39;ve ported over between many
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#65737e;&quot;&gt;&#x2F;&#x2F; engines (Godot, Unity, Bevy, Macroquad, Comfy).
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#65737e;&quot;&gt;&#x2F;&#x2F;
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#65737e;&quot;&gt;&#x2F;&#x2F; The way it works is that blood and other debris or permanent &amp;quot;decals&amp;quot;
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#65737e;&quot;&gt;&#x2F;&#x2F; can be written to a texture on CPU, and then drawn on top of the level
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#65737e;&quot;&gt;&#x2F;&#x2F; as a single sprite at Z_BLOOD_CANVAS.
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#65737e;&quot;&gt;&#x2F;&#x2F;
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#65737e;&quot;&gt;&#x2F;&#x2F; This is of course not incredibly flexible, but we&amp;#39;ve used it in a few games
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#65737e;&quot;&gt;&#x2F;&#x2F; so far and found it very nice.
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#65737e;&quot;&gt;&#x2F;&#x2F;
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#65737e;&quot;&gt;&#x2F;&#x2F; The actual &amp;quot;canvas&amp;quot; is not just a single texture, but a grid of textures
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#65737e;&quot;&gt;&#x2F;&#x2F; that only get allocated on a need-to basis. Basically, once a pixel is written to
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#65737e;&quot;&gt;&#x2F;&#x2F; a texture 1024x1024 in that grid area gets allocated (and later reused).
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#65737e;&quot;&gt;&#x2F;&#x2F;
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#65737e;&quot;&gt;&#x2F;&#x2F; The implementation is relatively simple right now, but it is something we
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#65737e;&quot;&gt;&#x2F;&#x2F; want to expand on, as &amp;quot;permanent debris&amp;quot; is something we enjoy in games,
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#65737e;&quot;&gt;&#x2F;&#x2F; as it adds more immersion compared to usual &amp;quot;disappearing particles&amp;quot;.
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#65737e;&quot;&gt;&#x2F;&#x2F;
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#65737e;&quot;&gt;&#x2F;&#x2F; While writing to a CPU texture is not the fastest thing in the world,
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#65737e;&quot;&gt;&#x2F;&#x2F; _do not be afraid to call these functions_. In both BITGUN and BITGUN Survivors
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#65737e;&quot;&gt;&#x2F;&#x2F; we have &amp;quot;meat particles&amp;quot; which are simple objects that write a blood trail as they fly
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#65737e;&quot;&gt;&#x2F;&#x2F; on every frame, and it works just fine.
+&lt;&#x2F;span&gt;&lt;span&gt;simple_game!(&amp;quot;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt;Blood Canvas&lt;&#x2F;span&gt;&lt;span&gt;&amp;quot;, update);
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;fn &lt;&#x2F;span&gt;&lt;span style=&quot;color:#8fa1b3;&quot;&gt;random_blood&lt;&#x2F;span&gt;&lt;span&gt;() -&amp;gt; Color {
+&lt;&#x2F;span&gt;&lt;span&gt;    &lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;static &lt;&#x2F;span&gt;&lt;span style=&quot;color:#d08770;&quot;&gt;BLOOD_COLOR&lt;&#x2F;span&gt;&lt;span&gt;: Color = Color { r: &lt;&#x2F;span&gt;&lt;span style=&quot;color:#d08770;&quot;&gt;0.454&lt;&#x2F;span&gt;&lt;span&gt;, g: &lt;&#x2F;span&gt;&lt;span style=&quot;color:#d08770;&quot;&gt;0.113&lt;&#x2F;span&gt;&lt;span&gt;, b: &lt;&#x2F;span&gt;&lt;span style=&quot;color:#d08770;&quot;&gt;0.19&lt;&#x2F;span&gt;&lt;span&gt;, a: &lt;&#x2F;span&gt;&lt;span style=&quot;color:#d08770;&quot;&gt;1.0 &lt;&#x2F;span&gt;&lt;span&gt;}; &lt;&#x2F;span&gt;&lt;span style=&quot;color:#65737e;&quot;&gt;&#x2F;&#x2F; &amp;quot;#411d31&amp;quot;
+&lt;&#x2F;span&gt;&lt;span&gt;    &lt;&#x2F;span&gt;&lt;span style=&quot;color:#d08770;&quot;&gt;BLOOD_COLOR&lt;&#x2F;span&gt;&lt;span&gt;.&lt;&#x2F;span&gt;&lt;span style=&quot;color:#96b5b4;&quot;&gt;darken&lt;&#x2F;span&gt;&lt;span&gt;(&lt;&#x2F;span&gt;&lt;span style=&quot;color:#96b5b4;&quot;&gt;random&lt;&#x2F;span&gt;&lt;span&gt;() * &lt;&#x2F;span&gt;&lt;span style=&quot;color:#d08770;&quot;&gt;0.2&lt;&#x2F;span&gt;&lt;span&gt;)
+&lt;&#x2F;span&gt;&lt;span&gt;}
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;fn &lt;&#x2F;span&gt;&lt;span style=&quot;color:#8fa1b3;&quot;&gt;update&lt;&#x2F;span&gt;&lt;span&gt;(&lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;_c&lt;&#x2F;span&gt;&lt;span&gt;: &amp;amp;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;mut&lt;&#x2F;span&gt;&lt;span&gt; EngineContext) {
+&lt;&#x2F;span&gt;&lt;span&gt;    &lt;&#x2F;span&gt;&lt;span style=&quot;color:#96b5b4;&quot;&gt;draw_text&lt;&#x2F;span&gt;&lt;span&gt;(
+&lt;&#x2F;span&gt;&lt;span&gt;        &amp;quot;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt;Click anywhere for blooooooooood!&lt;&#x2F;span&gt;&lt;span&gt;&amp;quot;,
+&lt;&#x2F;span&gt;&lt;span&gt;        Vec2::&lt;&#x2F;span&gt;&lt;span style=&quot;color:#d08770;&quot;&gt;ZERO&lt;&#x2F;span&gt;&lt;span&gt;,
+&lt;&#x2F;span&gt;&lt;span&gt;        &lt;&#x2F;span&gt;&lt;span style=&quot;color:#d08770;&quot;&gt;WHITE&lt;&#x2F;span&gt;&lt;span&gt;,
+&lt;&#x2F;span&gt;&lt;span&gt;        TextAlign::Center,
+&lt;&#x2F;span&gt;&lt;span&gt;    );
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span&gt;    &lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;if &lt;&#x2F;span&gt;&lt;span style=&quot;color:#96b5b4;&quot;&gt;is_mouse_button_pressed&lt;&#x2F;span&gt;&lt;span&gt;(MouseButton::Left) {
+&lt;&#x2F;span&gt;&lt;span&gt;        &lt;&#x2F;span&gt;&lt;span style=&quot;color:#96b5b4;&quot;&gt;blood_circle_at&lt;&#x2F;span&gt;&lt;span&gt;(&lt;&#x2F;span&gt;&lt;span style=&quot;color:#96b5b4;&quot;&gt;mouse_world&lt;&#x2F;span&gt;&lt;span&gt;(), &lt;&#x2F;span&gt;&lt;span style=&quot;color:#d08770;&quot;&gt;4&lt;&#x2F;span&gt;&lt;span&gt;, &lt;&#x2F;span&gt;&lt;span style=&quot;color:#d08770;&quot;&gt;0.6&lt;&#x2F;span&gt;&lt;span&gt;, random_blood);
+&lt;&#x2F;span&gt;&lt;span&gt;    }
+&lt;&#x2F;span&gt;&lt;span&gt;}
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+" style="cursor: pointer;">
+        <div class="card border width-fit-content">
+          <div class="header card-header text-center border">blood_canvas</div>
+          <video src="&#x2F;videos&#x2F;blood_canvas.webm" autoplay loop muted width="380" class="object-fit-cover rounded-bottom mw-100"></video>
+        </div>
+      </a>
+
+      <!-- <div> -->
+      <!--   <a href="&#x2F;&#x2F;github.com&#x2F;darthdeus&#x2F;comfy&#x2F;blob&#x2F;master&#x2F;comfy&#x2F;examples&#x2F;blood_canvas.rs"> -->
+      <!--     <i class=""> -->
+      <!--       <img src="/github-mark-white.svg" width="22px" /> -->
+      <!--     </i> -->
+      <!--   </a> -->
+      <!-- </div> -->
+
+      
+
+      <a data-bs-toggle="modal" data-bs-target="#comfyModal" data-bs-title="bloom"
+        data-bs-wasm-source="&#x2F;wasm&#x2F;bloom&#x2F;index.html" data-bs-github-href="&#x2F;&#x2F;github.com&#x2F;darthdeus&#x2F;comfy&#x2F;blob&#x2F;master&#x2F;comfy&#x2F;examples&#x2F;bloom.rs"
+        data-bs-example-code="&lt;pre data-lang=&quot;rust&quot; style=&quot;background-color:#2b303b;color:#c0c5ce;&quot; class=&quot;language-rust &quot;&gt;&lt;code class=&quot;language-rust&quot; data-lang=&quot;rust&quot;&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;use &lt;&#x2F;span&gt;&lt;span&gt;comfy::*;
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span&gt;simple_game!(&amp;quot;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt;Nice red circle&lt;&#x2F;span&gt;&lt;span&gt;&amp;quot;, update);
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;fn &lt;&#x2F;span&gt;&lt;span style=&quot;color:#8fa1b3;&quot;&gt;update&lt;&#x2F;span&gt;&lt;span&gt;(&lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;_c&lt;&#x2F;span&gt;&lt;span&gt;: &amp;amp;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;mut&lt;&#x2F;span&gt;&lt;span&gt; EngineContext) {
+&lt;&#x2F;span&gt;&lt;span&gt;    &lt;&#x2F;span&gt;&lt;span style=&quot;color:#96b5b4;&quot;&gt;draw_circle&lt;&#x2F;span&gt;&lt;span&gt;(&lt;&#x2F;span&gt;&lt;span style=&quot;color:#96b5b4;&quot;&gt;vec2&lt;&#x2F;span&gt;&lt;span&gt;(&lt;&#x2F;span&gt;&lt;span style=&quot;color:#d08770;&quot;&gt;0.0&lt;&#x2F;span&gt;&lt;span&gt;, &lt;&#x2F;span&gt;&lt;span style=&quot;color:#d08770;&quot;&gt;0.0&lt;&#x2F;span&gt;&lt;span&gt;), &lt;&#x2F;span&gt;&lt;span style=&quot;color:#d08770;&quot;&gt;0.5&lt;&#x2F;span&gt;&lt;span&gt;, &lt;&#x2F;span&gt;&lt;span style=&quot;color:#d08770;&quot;&gt;RED&lt;&#x2F;span&gt;&lt;span&gt;, &lt;&#x2F;span&gt;&lt;span style=&quot;color:#d08770;&quot;&gt;0&lt;&#x2F;span&gt;&lt;span&gt;);
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span&gt;    egui::Window::new(&amp;quot;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt;Bloom Config&lt;&#x2F;span&gt;&lt;span&gt;&amp;quot;)
+&lt;&#x2F;span&gt;&lt;span&gt;        .&lt;&#x2F;span&gt;&lt;span style=&quot;color:#96b5b4;&quot;&gt;anchor&lt;&#x2F;span&gt;&lt;span&gt;(egui::Align2::&lt;&#x2F;span&gt;&lt;span style=&quot;color:#d08770;&quot;&gt;CENTER_CENTER&lt;&#x2F;span&gt;&lt;span&gt;, egui::vec2(&lt;&#x2F;span&gt;&lt;span style=&quot;color:#d08770;&quot;&gt;0.0&lt;&#x2F;span&gt;&lt;span&gt;, -&lt;&#x2F;span&gt;&lt;span style=&quot;color:#d08770;&quot;&gt;100.0&lt;&#x2F;span&gt;&lt;span&gt;))
+&lt;&#x2F;span&gt;&lt;span&gt;        .&lt;&#x2F;span&gt;&lt;span style=&quot;color:#96b5b4;&quot;&gt;show&lt;&#x2F;span&gt;&lt;span&gt;(&lt;&#x2F;span&gt;&lt;span style=&quot;color:#96b5b4;&quot;&gt;egui&lt;&#x2F;span&gt;&lt;span&gt;(), |&lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;ui&lt;&#x2F;span&gt;&lt;span&gt;| {
+&lt;&#x2F;span&gt;&lt;span&gt;            ui.&lt;&#x2F;span&gt;&lt;span style=&quot;color:#96b5b4;&quot;&gt;checkbox&lt;&#x2F;span&gt;&lt;span&gt;(&amp;amp;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;mut &lt;&#x2F;span&gt;&lt;span style=&quot;color:#96b5b4;&quot;&gt;game_config_mut&lt;&#x2F;span&gt;&lt;span&gt;().bloom_enabled, &amp;quot;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt;Bloom Enabled&lt;&#x2F;span&gt;&lt;span&gt;&amp;quot;);
+&lt;&#x2F;span&gt;&lt;span&gt;        });
+&lt;&#x2F;span&gt;&lt;span&gt;}
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+" style="cursor: pointer;">
+        <div class="card border width-fit-content">
+          <div class="header card-header text-center border">bloom</div>
+          <video src="&#x2F;videos&#x2F;bloom.webm" autoplay loop muted width="380" class="object-fit-cover rounded-bottom mw-100"></video>
+        </div>
+      </a>
+
+      <!-- <div> -->
+      <!--   <a href="&#x2F;&#x2F;github.com&#x2F;darthdeus&#x2F;comfy&#x2F;blob&#x2F;master&#x2F;comfy&#x2F;examples&#x2F;bloom.rs"> -->
+      <!--     <i class=""> -->
+      <!--       <img src="/github-mark-white.svg" width="22px" /> -->
+      <!--     </i> -->
+      <!--   </a> -->
+      <!-- </div> -->
+
+      
+
+      <a data-bs-toggle="modal" data-bs-target="#comfyModal" data-bs-title="circle"
+        data-bs-wasm-source="&#x2F;wasm&#x2F;circle&#x2F;index.html" data-bs-github-href="&#x2F;&#x2F;github.com&#x2F;darthdeus&#x2F;comfy&#x2F;blob&#x2F;master&#x2F;comfy&#x2F;examples&#x2F;circle.rs"
+        data-bs-example-code="&lt;pre data-lang=&quot;rust&quot; style=&quot;background-color:#2b303b;color:#c0c5ce;&quot; class=&quot;language-rust &quot;&gt;&lt;code class=&quot;language-rust&quot; data-lang=&quot;rust&quot;&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;use &lt;&#x2F;span&gt;&lt;span&gt;comfy::{draw_circle, simple_game, vec2, EngineContext, &lt;&#x2F;span&gt;&lt;span style=&quot;color:#d08770;&quot;&gt;RED&lt;&#x2F;span&gt;&lt;span&gt;};
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span&gt;simple_game!(&amp;quot;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt;Nice red circle&lt;&#x2F;span&gt;&lt;span&gt;&amp;quot;, update);
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;fn &lt;&#x2F;span&gt;&lt;span style=&quot;color:#8fa1b3;&quot;&gt;update&lt;&#x2F;span&gt;&lt;span&gt;(&lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;_c&lt;&#x2F;span&gt;&lt;span&gt;: &amp;amp;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;mut&lt;&#x2F;span&gt;&lt;span&gt; EngineContext) {
+&lt;&#x2F;span&gt;&lt;span&gt;    &lt;&#x2F;span&gt;&lt;span style=&quot;color:#96b5b4;&quot;&gt;draw_circle&lt;&#x2F;span&gt;&lt;span&gt;(&lt;&#x2F;span&gt;&lt;span style=&quot;color:#96b5b4;&quot;&gt;vec2&lt;&#x2F;span&gt;&lt;span&gt;(&lt;&#x2F;span&gt;&lt;span style=&quot;color:#d08770;&quot;&gt;0.0&lt;&#x2F;span&gt;&lt;span&gt;, &lt;&#x2F;span&gt;&lt;span style=&quot;color:#d08770;&quot;&gt;0.0&lt;&#x2F;span&gt;&lt;span&gt;), &lt;&#x2F;span&gt;&lt;span style=&quot;color:#d08770;&quot;&gt;0.5&lt;&#x2F;span&gt;&lt;span&gt;, &lt;&#x2F;span&gt;&lt;span style=&quot;color:#d08770;&quot;&gt;RED&lt;&#x2F;span&gt;&lt;span&gt;, &lt;&#x2F;span&gt;&lt;span style=&quot;color:#d08770;&quot;&gt;0&lt;&#x2F;span&gt;&lt;span&gt;);
+&lt;&#x2F;span&gt;&lt;span&gt;}
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+" style="cursor: pointer;">
+        <div class="card border width-fit-content">
+          <div class="header card-header text-center border">circle</div>
+          <video src="&#x2F;videos&#x2F;circle.webm" autoplay loop muted width="380" class="object-fit-cover rounded-bottom mw-100"></video>
+        </div>
+      </a>
+
+      <!-- <div> -->
+      <!--   <a href="&#x2F;&#x2F;github.com&#x2F;darthdeus&#x2F;comfy&#x2F;blob&#x2F;master&#x2F;comfy&#x2F;examples&#x2F;circle.rs"> -->
+      <!--     <i class=""> -->
+      <!--       <img src="/github-mark-white.svg" width="22px" /> -->
+      <!--     </i> -->
+      <!--   </a> -->
+      <!-- </div> -->
+
+      
+
+      <a data-bs-toggle="modal" data-bs-target="#comfyModal" data-bs-title="cooldowns"
+        data-bs-wasm-source="&#x2F;wasm&#x2F;cooldowns&#x2F;index.html" data-bs-github-href="&#x2F;&#x2F;github.com&#x2F;darthdeus&#x2F;comfy&#x2F;blob&#x2F;master&#x2F;comfy&#x2F;examples&#x2F;cooldowns.rs"
+        data-bs-example-code="&lt;pre data-lang=&quot;rust&quot; style=&quot;background-color:#2b303b;color:#c0c5ce;&quot; class=&quot;language-rust &quot;&gt;&lt;code class=&quot;language-rust&quot; data-lang=&quot;rust&quot;&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;use &lt;&#x2F;span&gt;&lt;span&gt;comfy::*;
 &lt;&#x2F;span&gt;&lt;span&gt;
 &lt;&#x2F;span&gt;&lt;span&gt;simple_game!(&amp;quot;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt;Cooldowns example&lt;&#x2F;span&gt;&lt;span&gt;&amp;quot;, setup, update);
 &lt;&#x2F;span&gt;&lt;span&gt;
@@ -409,7 +536,7 @@
 &lt;&#x2F;span&gt;&lt;span style=&quot;color:#65737e;&quot;&gt;&#x2F;&#x2F; decide you don&amp;#39;t want a global state, you can safely move it elsewhere.
 &lt;&#x2F;span&gt;&lt;span style=&quot;color:#65737e;&quot;&gt;&#x2F;&#x2F;
 &lt;&#x2F;span&gt;&lt;span style=&quot;color:#65737e;&quot;&gt;&#x2F;&#x2F; That being said, _don&amp;#39;t be ashamed to focus on your game first_, even if
-&lt;&#x2F;span&gt;&lt;span style=&quot;color:#65737e;&quot;&gt;&#x2F;&#x2F; it means having a few global varaibles :)
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#65737e;&quot;&gt;&#x2F;&#x2F; it means having a few global variables :)
 &lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;static &lt;&#x2F;span&gt;&lt;span style=&quot;color:#d08770;&quot;&gt;STATE&lt;&#x2F;span&gt;&lt;span&gt;: Lazy&amp;lt;AtomicRefCell&amp;lt;SmallGlobalState&amp;gt;&amp;gt; = Lazy::new(|| {
 &lt;&#x2F;span&gt;&lt;span&gt;    AtomicRefCell::new(SmallGlobalState { color: &lt;&#x2F;span&gt;&lt;span style=&quot;color:#d08770;&quot;&gt;WHITE&lt;&#x2F;span&gt;&lt;span&gt;, revert_timer: &lt;&#x2F;span&gt;&lt;span style=&quot;color:#d08770;&quot;&gt;0.0 &lt;&#x2F;span&gt;&lt;span&gt;})
 &lt;&#x2F;span&gt;&lt;span&gt;});
@@ -456,78 +583,26 @@
 &lt;&#x2F;span&gt;&lt;span&gt;    );
 &lt;&#x2F;span&gt;&lt;span&gt;}
 &lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
-"
-              style="cursor: pointer;">
-              <video src="&#x2F;videos&#x2F;cooldowns.webm" autoplay loop width="408" style="border-radius: 5px" />
-            </a>
-
-            <!-- <div> -->
-            <!--   <a href="&#x2F;&#x2F;github.com&#x2F;darthdeus&#x2F;comfy&#x2F;blob&#x2F;master&#x2F;comfy&#x2F;examples&#x2F;cooldowns.rs"> -->
-            <!--     <i class=""> -->
-            <!--       <img src="/github-mark-white.svg" width="22px" /> -->
-            <!--     </i> -->
-            <!--   </a> -->
-            <!-- </div> -->
-          </div>
+" style="cursor: pointer;">
+        <div class="card border width-fit-content">
+          <div class="header card-header text-center border">cooldowns</div>
+          <video src="&#x2F;videos&#x2F;cooldowns.webm" autoplay loop muted width="380" class="object-fit-cover rounded-bottom mw-100"></video>
         </div>
-      </div>
-      
-      <div class="col">
-        <div class="card border">
-          <div class="header card-header text-center border">custom_config</div>
-          <div class="content card-body example-card-body">
-            <a class="example-detail-link card-img-top" data-bs-toggle="modal" data-bs-target="#comfyModal" data-bs-title="custom_config"
-              data-bs-wasm-source="&#x2F;wasm&#x2F;custom_config&#x2F;index.html"
-              data-bs-github-href="&#x2F;&#x2F;github.com&#x2F;darthdeus&#x2F;comfy&#x2F;blob&#x2F;master&#x2F;comfy&#x2F;examples&#x2F;custom_config.rs"
-              data-bs-example-code="&lt;pre data-lang=&quot;rust&quot; style=&quot;background-color:#2b303b;color:#c0c5ce;&quot; class=&quot;language-rust &quot;&gt;&lt;code class=&quot;language-rust&quot; data-lang=&quot;rust&quot;&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;use &lt;&#x2F;span&gt;&lt;span&gt;comfy::*;
-&lt;&#x2F;span&gt;&lt;span&gt;
-&lt;&#x2F;span&gt;&lt;span&gt;simple_game!(&amp;quot;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt;Portrait mode&lt;&#x2F;span&gt;&lt;span&gt;&amp;quot;, GameState, config, setup, update);
-&lt;&#x2F;span&gt;&lt;span&gt;
-&lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;fn &lt;&#x2F;span&gt;&lt;span style=&quot;color:#8fa1b3;&quot;&gt;config&lt;&#x2F;span&gt;&lt;span&gt;(&lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;config&lt;&#x2F;span&gt;&lt;span&gt;: GameConfig) -&amp;gt; GameConfig {
-&lt;&#x2F;span&gt;&lt;span&gt;    GameConfig {
-&lt;&#x2F;span&gt;&lt;span&gt;        resolution: ResolutionConfig::Physical(&lt;&#x2F;span&gt;&lt;span style=&quot;color:#d08770;&quot;&gt;600&lt;&#x2F;span&gt;&lt;span&gt;, &lt;&#x2F;span&gt;&lt;span style=&quot;color:#d08770;&quot;&gt;600 &lt;&#x2F;span&gt;&lt;span&gt;* &lt;&#x2F;span&gt;&lt;span style=&quot;color:#d08770;&quot;&gt;16 &lt;&#x2F;span&gt;&lt;span&gt;&#x2F; &lt;&#x2F;span&gt;&lt;span style=&quot;color:#d08770;&quot;&gt;9&lt;&#x2F;span&gt;&lt;span&gt;),
-&lt;&#x2F;span&gt;&lt;span&gt;        ..config
-&lt;&#x2F;span&gt;&lt;span&gt;    }
-&lt;&#x2F;span&gt;&lt;span&gt;}
-&lt;&#x2F;span&gt;&lt;span&gt;
-&lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;pub struct &lt;&#x2F;span&gt;&lt;span&gt;GameState {}
-&lt;&#x2F;span&gt;&lt;span&gt;
-&lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;impl &lt;&#x2F;span&gt;&lt;span&gt;GameState {
-&lt;&#x2F;span&gt;&lt;span&gt;    &lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;pub fn &lt;&#x2F;span&gt;&lt;span style=&quot;color:#8fa1b3;&quot;&gt;new&lt;&#x2F;span&gt;&lt;span&gt;(&lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;_c&lt;&#x2F;span&gt;&lt;span&gt;: &amp;amp;EngineContext) -&amp;gt; &lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;Self &lt;&#x2F;span&gt;&lt;span&gt;{
-&lt;&#x2F;span&gt;&lt;span&gt;        &lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;Self &lt;&#x2F;span&gt;&lt;span&gt;{}
-&lt;&#x2F;span&gt;&lt;span&gt;    }
-&lt;&#x2F;span&gt;&lt;span&gt;}
-&lt;&#x2F;span&gt;&lt;span&gt;
-&lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;fn &lt;&#x2F;span&gt;&lt;span style=&quot;color:#8fa1b3;&quot;&gt;setup&lt;&#x2F;span&gt;&lt;span&gt;(&lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;_state&lt;&#x2F;span&gt;&lt;span&gt;: &amp;amp;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;mut&lt;&#x2F;span&gt;&lt;span&gt; GameState, &lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;_c&lt;&#x2F;span&gt;&lt;span&gt;: &amp;amp;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;mut&lt;&#x2F;span&gt;&lt;span&gt; EngineContext) {}
-&lt;&#x2F;span&gt;&lt;span&gt;
-&lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;fn &lt;&#x2F;span&gt;&lt;span style=&quot;color:#8fa1b3;&quot;&gt;update&lt;&#x2F;span&gt;&lt;span&gt;(&lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;_state&lt;&#x2F;span&gt;&lt;span&gt;: &amp;amp;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;mut&lt;&#x2F;span&gt;&lt;span&gt; GameState, &lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;_c&lt;&#x2F;span&gt;&lt;span&gt;: &amp;amp;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;mut&lt;&#x2F;span&gt;&lt;span&gt; EngineContext) {
-&lt;&#x2F;span&gt;&lt;span&gt;    &lt;&#x2F;span&gt;&lt;span style=&quot;color:#96b5b4;&quot;&gt;draw_text&lt;&#x2F;span&gt;&lt;span&gt;(&amp;quot;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt;Comfy likes portrait mode&lt;&#x2F;span&gt;&lt;span&gt;&amp;quot;, Vec2::&lt;&#x2F;span&gt;&lt;span style=&quot;color:#d08770;&quot;&gt;ZERO&lt;&#x2F;span&gt;&lt;span&gt;, &lt;&#x2F;span&gt;&lt;span style=&quot;color:#d08770;&quot;&gt;PINK&lt;&#x2F;span&gt;&lt;span&gt;, TextAlign::Center);
-&lt;&#x2F;span&gt;&lt;span&gt;}
-&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
-"
-              style="cursor: pointer;">
-              <video src="&#x2F;videos&#x2F;custom_config.webm" autoplay loop width="408" style="border-radius: 5px" />
-            </a>
+      </a>
 
-            <!-- <div> -->
-            <!--   <a href="&#x2F;&#x2F;github.com&#x2F;darthdeus&#x2F;comfy&#x2F;blob&#x2F;master&#x2F;comfy&#x2F;examples&#x2F;custom_config.rs"> -->
-            <!--     <i class=""> -->
-            <!--       <img src="/github-mark-white.svg" width="22px" /> -->
-            <!--     </i> -->
-            <!--   </a> -->
-            <!-- </div> -->
-          </div>
-        </div>
-      </div>
+      <!-- <div> -->
+      <!--   <a href="&#x2F;&#x2F;github.com&#x2F;darthdeus&#x2F;comfy&#x2F;blob&#x2F;master&#x2F;comfy&#x2F;examples&#x2F;cooldowns.rs"> -->
+      <!--     <i class=""> -->
+      <!--       <img src="/github-mark-white.svg" width="22px" /> -->
+      <!--     </i> -->
+      <!--   </a> -->
+      <!-- </div> -->
+
       
-      <div class="col">
-        <div class="card border">
-          <div class="header card-header text-center border">custom_fonts</div>
-          <div class="content card-body example-card-body">
-            <a class="example-detail-link card-img-top" data-bs-toggle="modal" data-bs-target="#comfyModal" data-bs-title="custom_fonts"
-              data-bs-wasm-source="&#x2F;wasm&#x2F;custom_fonts&#x2F;index.html"
-              data-bs-github-href="&#x2F;&#x2F;github.com&#x2F;darthdeus&#x2F;comfy&#x2F;blob&#x2F;master&#x2F;comfy&#x2F;examples&#x2F;custom_fonts.rs"
-              data-bs-example-code="&lt;pre data-lang=&quot;rust&quot; style=&quot;background-color:#2b303b;color:#c0c5ce;&quot; class=&quot;language-rust &quot;&gt;&lt;code class=&quot;language-rust&quot; data-lang=&quot;rust&quot;&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;use &lt;&#x2F;span&gt;&lt;span&gt;comfy::*;
+
+      <a data-bs-toggle="modal" data-bs-target="#comfyModal" data-bs-title="custom_fonts"
+        data-bs-wasm-source="&#x2F;wasm&#x2F;custom_fonts&#x2F;index.html" data-bs-github-href="&#x2F;&#x2F;github.com&#x2F;darthdeus&#x2F;comfy&#x2F;blob&#x2F;master&#x2F;comfy&#x2F;examples&#x2F;custom_fonts.rs"
+        data-bs-example-code="&lt;pre data-lang=&quot;rust&quot; style=&quot;background-color:#2b303b;color:#c0c5ce;&quot; class=&quot;language-rust &quot;&gt;&lt;code class=&quot;language-rust&quot; data-lang=&quot;rust&quot;&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;use &lt;&#x2F;span&gt;&lt;span&gt;comfy::*;
 &lt;&#x2F;span&gt;&lt;span&gt;
 &lt;&#x2F;span&gt;&lt;span&gt;simple_game!(&amp;quot;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt;Custom Fonts Example&lt;&#x2F;span&gt;&lt;span&gt;&amp;quot;, setup, update);
 &lt;&#x2F;span&gt;&lt;span&gt;
@@ -562,30 +637,26 @@
 &lt;&#x2F;span&gt;&lt;span&gt;    );
 &lt;&#x2F;span&gt;&lt;span&gt;}
 &lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
-"
-              style="cursor: pointer;">
-              <video src="&#x2F;videos&#x2F;custom_fonts.webm" autoplay loop width="408" style="border-radius: 5px" />
-            </a>
-
-            <!-- <div> -->
-            <!--   <a href="&#x2F;&#x2F;github.com&#x2F;darthdeus&#x2F;comfy&#x2F;blob&#x2F;master&#x2F;comfy&#x2F;examples&#x2F;custom_fonts.rs"> -->
-            <!--     <i class=""> -->
-            <!--       <img src="/github-mark-white.svg" width="22px" /> -->
-            <!--     </i> -->
-            <!--   </a> -->
-            <!-- </div> -->
-          </div>
+" style="cursor: pointer;">
+        <div class="card border width-fit-content">
+          <div class="header card-header text-center border">custom_fonts</div>
+          <video src="&#x2F;videos&#x2F;custom_fonts.webm" autoplay loop muted width="380" class="object-fit-cover rounded-bottom mw-100"></video>
         </div>
-      </div>
+      </a>
+
+      <!-- <div> -->
+      <!--   <a href="&#x2F;&#x2F;github.com&#x2F;darthdeus&#x2F;comfy&#x2F;blob&#x2F;master&#x2F;comfy&#x2F;examples&#x2F;custom_fonts.rs"> -->
+      <!--     <i class=""> -->
+      <!--       <img src="/github-mark-white.svg" width="22px" /> -->
+      <!--     </i> -->
+      <!--   </a> -->
+      <!-- </div> -->
+
       
-      <div class="col">
-        <div class="card border">
-          <div class="header card-header text-center border">ecs_sprite</div>
-          <div class="content card-body example-card-body">
-            <a class="example-detail-link card-img-top" data-bs-toggle="modal" data-bs-target="#comfyModal" data-bs-title="ecs_sprite"
-              data-bs-wasm-source="&#x2F;wasm&#x2F;ecs_sprite&#x2F;index.html"
-              data-bs-github-href="&#x2F;&#x2F;github.com&#x2F;darthdeus&#x2F;comfy&#x2F;blob&#x2F;master&#x2F;comfy&#x2F;examples&#x2F;ecs_sprite.rs"
-              data-bs-example-code="&lt;pre data-lang=&quot;rust&quot; style=&quot;background-color:#2b303b;color:#c0c5ce;&quot; class=&quot;language-rust &quot;&gt;&lt;code class=&quot;language-rust&quot; data-lang=&quot;rust&quot;&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;use &lt;&#x2F;span&gt;&lt;span&gt;comfy::*;
+
+      <a data-bs-toggle="modal" data-bs-target="#comfyModal" data-bs-title="ecs_sprite"
+        data-bs-wasm-source="&#x2F;wasm&#x2F;ecs_sprite&#x2F;index.html" data-bs-github-href="&#x2F;&#x2F;github.com&#x2F;darthdeus&#x2F;comfy&#x2F;blob&#x2F;master&#x2F;comfy&#x2F;examples&#x2F;ecs_sprite.rs"
+        data-bs-example-code="&lt;pre data-lang=&quot;rust&quot; style=&quot;background-color:#2b303b;color:#c0c5ce;&quot; class=&quot;language-rust &quot;&gt;&lt;code class=&quot;language-rust&quot; data-lang=&quot;rust&quot;&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;use &lt;&#x2F;span&gt;&lt;span&gt;comfy::*;
 &lt;&#x2F;span&gt;&lt;span&gt;
 &lt;&#x2F;span&gt;&lt;span&gt;simple_game!(&amp;quot;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt;ECS Sprite Example&lt;&#x2F;span&gt;&lt;span&gt;&amp;quot;, setup, update);
 &lt;&#x2F;span&gt;&lt;span&gt;
@@ -619,30 +690,26 @@
 &lt;&#x2F;span&gt;&lt;span&gt;    }
 &lt;&#x2F;span&gt;&lt;span&gt;}
 &lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
-"
-              style="cursor: pointer;">
-              <video src="&#x2F;videos&#x2F;ecs_sprite.webm" autoplay loop width="408" style="border-radius: 5px" />
-            </a>
-
-            <!-- <div> -->
-            <!--   <a href="&#x2F;&#x2F;github.com&#x2F;darthdeus&#x2F;comfy&#x2F;blob&#x2F;master&#x2F;comfy&#x2F;examples&#x2F;ecs_sprite.rs"> -->
-            <!--     <i class=""> -->
-            <!--       <img src="/github-mark-white.svg" width="22px" /> -->
-            <!--     </i> -->
-            <!--   </a> -->
-            <!-- </div> -->
-          </div>
+" style="cursor: pointer;">
+        <div class="card border width-fit-content">
+          <div class="header card-header text-center border">ecs_sprite</div>
+          <video src="&#x2F;videos&#x2F;ecs_sprite.webm" autoplay loop muted width="380" class="object-fit-cover rounded-bottom mw-100"></video>
         </div>
-      </div>
+      </a>
+
+      <!-- <div> -->
+      <!--   <a href="&#x2F;&#x2F;github.com&#x2F;darthdeus&#x2F;comfy&#x2F;blob&#x2F;master&#x2F;comfy&#x2F;examples&#x2F;ecs_sprite.rs"> -->
+      <!--     <i class=""> -->
+      <!--       <img src="/github-mark-white.svg" width="22px" /> -->
+      <!--     </i> -->
+      <!--   </a> -->
+      <!-- </div> -->
+
       
-      <div class="col">
-        <div class="card border">
-          <div class="header card-header text-center border">ecs_topdown_game</div>
-          <div class="content card-body example-card-body">
-            <a class="example-detail-link card-img-top" data-bs-toggle="modal" data-bs-target="#comfyModal" data-bs-title="ecs_topdown_game"
-              data-bs-wasm-source="&#x2F;wasm&#x2F;ecs_topdown_game&#x2F;index.html"
-              data-bs-github-href="&#x2F;&#x2F;github.com&#x2F;darthdeus&#x2F;comfy&#x2F;blob&#x2F;master&#x2F;comfy&#x2F;examples&#x2F;ecs_topdown_game.rs"
-              data-bs-example-code="&lt;pre data-lang=&quot;rust&quot; style=&quot;background-color:#2b303b;color:#c0c5ce;&quot; class=&quot;language-rust &quot;&gt;&lt;code class=&quot;language-rust&quot; data-lang=&quot;rust&quot;&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;use &lt;&#x2F;span&gt;&lt;span&gt;comfy::*;
+
+      <a data-bs-toggle="modal" data-bs-target="#comfyModal" data-bs-title="ecs_topdown_game"
+        data-bs-wasm-source="&#x2F;wasm&#x2F;ecs_topdown_game&#x2F;index.html" data-bs-github-href="&#x2F;&#x2F;github.com&#x2F;darthdeus&#x2F;comfy&#x2F;blob&#x2F;master&#x2F;comfy&#x2F;examples&#x2F;ecs_topdown_game.rs"
+        data-bs-example-code="&lt;pre data-lang=&quot;rust&quot; style=&quot;background-color:#2b303b;color:#c0c5ce;&quot; class=&quot;language-rust &quot;&gt;&lt;code class=&quot;language-rust&quot; data-lang=&quot;rust&quot;&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;use &lt;&#x2F;span&gt;&lt;span&gt;comfy::*;
 &lt;&#x2F;span&gt;&lt;span&gt;
 &lt;&#x2F;span&gt;&lt;span&gt;simple_game!(&amp;quot;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt;ECS Topdown Game&lt;&#x2F;span&gt;&lt;span&gt;&amp;quot;, setup, update);
 &lt;&#x2F;span&gt;&lt;span&gt;
@@ -687,30 +754,20 @@
 &lt;&#x2F;span&gt;&lt;span&gt;        Player,
 &lt;&#x2F;span&gt;&lt;span&gt;        AnimatedSpriteBuilder::new()
 &lt;&#x2F;span&gt;&lt;span&gt;            .&lt;&#x2F;span&gt;&lt;span style=&quot;color:#96b5b4;&quot;&gt;z_index&lt;&#x2F;span&gt;&lt;span&gt;(&lt;&#x2F;span&gt;&lt;span style=&quot;color:#d08770;&quot;&gt;10&lt;&#x2F;span&gt;&lt;span&gt;)
-&lt;&#x2F;span&gt;&lt;span&gt;            .&lt;&#x2F;span&gt;&lt;span style=&quot;color:#96b5b4;&quot;&gt;add_animation&lt;&#x2F;span&gt;&lt;span&gt;(
-&lt;&#x2F;span&gt;&lt;span&gt;                &amp;quot;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt;idle&lt;&#x2F;span&gt;&lt;span&gt;&amp;quot;,
-&lt;&#x2F;span&gt;&lt;span&gt;                &lt;&#x2F;span&gt;&lt;span style=&quot;color:#d08770;&quot;&gt;0.1&lt;&#x2F;span&gt;&lt;span&gt;,
-&lt;&#x2F;span&gt;&lt;span&gt;                &lt;&#x2F;span&gt;&lt;span style=&quot;color:#d08770;&quot;&gt;true&lt;&#x2F;span&gt;&lt;span&gt;,
-&lt;&#x2F;span&gt;&lt;span&gt;                AnimationSource::Atlas {
-&lt;&#x2F;span&gt;&lt;span&gt;                    name: &amp;quot;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt;player&lt;&#x2F;span&gt;&lt;span&gt;&amp;quot;.&lt;&#x2F;span&gt;&lt;span style=&quot;color:#96b5b4;&quot;&gt;into&lt;&#x2F;span&gt;&lt;span&gt;(),
-&lt;&#x2F;span&gt;&lt;span&gt;                    offset: &lt;&#x2F;span&gt;&lt;span style=&quot;color:#96b5b4;&quot;&gt;ivec2&lt;&#x2F;span&gt;&lt;span&gt;(&lt;&#x2F;span&gt;&lt;span style=&quot;color:#d08770;&quot;&gt;0&lt;&#x2F;span&gt;&lt;span&gt;, &lt;&#x2F;span&gt;&lt;span style=&quot;color:#d08770;&quot;&gt;0&lt;&#x2F;span&gt;&lt;span&gt;),
-&lt;&#x2F;span&gt;&lt;span&gt;                    step: &lt;&#x2F;span&gt;&lt;span style=&quot;color:#96b5b4;&quot;&gt;ivec2&lt;&#x2F;span&gt;&lt;span&gt;(&lt;&#x2F;span&gt;&lt;span style=&quot;color:#d08770;&quot;&gt;16&lt;&#x2F;span&gt;&lt;span&gt;, &lt;&#x2F;span&gt;&lt;span style=&quot;color:#d08770;&quot;&gt;0&lt;&#x2F;span&gt;&lt;span&gt;),
-&lt;&#x2F;span&gt;&lt;span&gt;                    size: &lt;&#x2F;span&gt;&lt;span style=&quot;color:#96b5b4;&quot;&gt;isplat&lt;&#x2F;span&gt;&lt;span&gt;(&lt;&#x2F;span&gt;&lt;span style=&quot;color:#d08770;&quot;&gt;16&lt;&#x2F;span&gt;&lt;span&gt;),
-&lt;&#x2F;span&gt;&lt;span&gt;                    frames: &lt;&#x2F;span&gt;&lt;span style=&quot;color:#d08770;&quot;&gt;1&lt;&#x2F;span&gt;&lt;span&gt;,
-&lt;&#x2F;span&gt;&lt;span&gt;                },
-&lt;&#x2F;span&gt;&lt;span&gt;            )
-&lt;&#x2F;span&gt;&lt;span&gt;            .&lt;&#x2F;span&gt;&lt;span style=&quot;color:#96b5b4;&quot;&gt;add_animation&lt;&#x2F;span&gt;&lt;span&gt;(
-&lt;&#x2F;span&gt;&lt;span&gt;                &amp;quot;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt;walk&lt;&#x2F;span&gt;&lt;span&gt;&amp;quot;,
-&lt;&#x2F;span&gt;&lt;span&gt;                &lt;&#x2F;span&gt;&lt;span style=&quot;color:#d08770;&quot;&gt;0.05&lt;&#x2F;span&gt;&lt;span&gt;,
-&lt;&#x2F;span&gt;&lt;span&gt;                &lt;&#x2F;span&gt;&lt;span style=&quot;color:#d08770;&quot;&gt;true&lt;&#x2F;span&gt;&lt;span&gt;,
-&lt;&#x2F;span&gt;&lt;span&gt;                AnimationSource::Atlas {
-&lt;&#x2F;span&gt;&lt;span&gt;                    name: &amp;quot;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt;player&lt;&#x2F;span&gt;&lt;span&gt;&amp;quot;.&lt;&#x2F;span&gt;&lt;span style=&quot;color:#96b5b4;&quot;&gt;into&lt;&#x2F;span&gt;&lt;span&gt;(),
-&lt;&#x2F;span&gt;&lt;span&gt;                    offset: &lt;&#x2F;span&gt;&lt;span style=&quot;color:#96b5b4;&quot;&gt;ivec2&lt;&#x2F;span&gt;&lt;span&gt;(&lt;&#x2F;span&gt;&lt;span style=&quot;color:#d08770;&quot;&gt;16&lt;&#x2F;span&gt;&lt;span&gt;, &lt;&#x2F;span&gt;&lt;span style=&quot;color:#d08770;&quot;&gt;0&lt;&#x2F;span&gt;&lt;span&gt;),
-&lt;&#x2F;span&gt;&lt;span&gt;                    step: &lt;&#x2F;span&gt;&lt;span style=&quot;color:#96b5b4;&quot;&gt;ivec2&lt;&#x2F;span&gt;&lt;span&gt;(&lt;&#x2F;span&gt;&lt;span style=&quot;color:#d08770;&quot;&gt;16&lt;&#x2F;span&gt;&lt;span&gt;, &lt;&#x2F;span&gt;&lt;span style=&quot;color:#d08770;&quot;&gt;0&lt;&#x2F;span&gt;&lt;span&gt;),
-&lt;&#x2F;span&gt;&lt;span&gt;                    size: &lt;&#x2F;span&gt;&lt;span style=&quot;color:#96b5b4;&quot;&gt;isplat&lt;&#x2F;span&gt;&lt;span&gt;(&lt;&#x2F;span&gt;&lt;span style=&quot;color:#d08770;&quot;&gt;16&lt;&#x2F;span&gt;&lt;span&gt;),
-&lt;&#x2F;span&gt;&lt;span&gt;                    frames: &lt;&#x2F;span&gt;&lt;span style=&quot;color:#d08770;&quot;&gt;6&lt;&#x2F;span&gt;&lt;span&gt;,
-&lt;&#x2F;span&gt;&lt;span&gt;                },
-&lt;&#x2F;span&gt;&lt;span&gt;            )
+&lt;&#x2F;span&gt;&lt;span&gt;            .&lt;&#x2F;span&gt;&lt;span style=&quot;color:#96b5b4;&quot;&gt;add_animation&lt;&#x2F;span&gt;&lt;span&gt;(&amp;quot;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt;idle&lt;&#x2F;span&gt;&lt;span&gt;&amp;quot;, &lt;&#x2F;span&gt;&lt;span style=&quot;color:#d08770;&quot;&gt;0.1&lt;&#x2F;span&gt;&lt;span&gt;, &lt;&#x2F;span&gt;&lt;span style=&quot;color:#d08770;&quot;&gt;true&lt;&#x2F;span&gt;&lt;span&gt;, AnimationSource::Atlas {
+&lt;&#x2F;span&gt;&lt;span&gt;                name: &amp;quot;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt;player&lt;&#x2F;span&gt;&lt;span&gt;&amp;quot;.&lt;&#x2F;span&gt;&lt;span style=&quot;color:#96b5b4;&quot;&gt;into&lt;&#x2F;span&gt;&lt;span&gt;(),
+&lt;&#x2F;span&gt;&lt;span&gt;                offset: &lt;&#x2F;span&gt;&lt;span style=&quot;color:#96b5b4;&quot;&gt;ivec2&lt;&#x2F;span&gt;&lt;span&gt;(&lt;&#x2F;span&gt;&lt;span style=&quot;color:#d08770;&quot;&gt;0&lt;&#x2F;span&gt;&lt;span&gt;, &lt;&#x2F;span&gt;&lt;span style=&quot;color:#d08770;&quot;&gt;0&lt;&#x2F;span&gt;&lt;span&gt;),
+&lt;&#x2F;span&gt;&lt;span&gt;                step: &lt;&#x2F;span&gt;&lt;span style=&quot;color:#96b5b4;&quot;&gt;ivec2&lt;&#x2F;span&gt;&lt;span&gt;(&lt;&#x2F;span&gt;&lt;span style=&quot;color:#d08770;&quot;&gt;16&lt;&#x2F;span&gt;&lt;span&gt;, &lt;&#x2F;span&gt;&lt;span style=&quot;color:#d08770;&quot;&gt;0&lt;&#x2F;span&gt;&lt;span&gt;),
+&lt;&#x2F;span&gt;&lt;span&gt;                size: &lt;&#x2F;span&gt;&lt;span style=&quot;color:#96b5b4;&quot;&gt;isplat&lt;&#x2F;span&gt;&lt;span&gt;(&lt;&#x2F;span&gt;&lt;span style=&quot;color:#d08770;&quot;&gt;16&lt;&#x2F;span&gt;&lt;span&gt;),
+&lt;&#x2F;span&gt;&lt;span&gt;                frames: &lt;&#x2F;span&gt;&lt;span style=&quot;color:#d08770;&quot;&gt;1&lt;&#x2F;span&gt;&lt;span&gt;,
+&lt;&#x2F;span&gt;&lt;span&gt;            })
+&lt;&#x2F;span&gt;&lt;span&gt;            .&lt;&#x2F;span&gt;&lt;span style=&quot;color:#96b5b4;&quot;&gt;add_animation&lt;&#x2F;span&gt;&lt;span&gt;(&amp;quot;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt;walk&lt;&#x2F;span&gt;&lt;span&gt;&amp;quot;, &lt;&#x2F;span&gt;&lt;span style=&quot;color:#d08770;&quot;&gt;0.05&lt;&#x2F;span&gt;&lt;span&gt;, &lt;&#x2F;span&gt;&lt;span style=&quot;color:#d08770;&quot;&gt;true&lt;&#x2F;span&gt;&lt;span&gt;, AnimationSource::Atlas {
+&lt;&#x2F;span&gt;&lt;span&gt;                name: &amp;quot;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt;player&lt;&#x2F;span&gt;&lt;span&gt;&amp;quot;.&lt;&#x2F;span&gt;&lt;span style=&quot;color:#96b5b4;&quot;&gt;into&lt;&#x2F;span&gt;&lt;span&gt;(),
+&lt;&#x2F;span&gt;&lt;span&gt;                offset: &lt;&#x2F;span&gt;&lt;span style=&quot;color:#96b5b4;&quot;&gt;ivec2&lt;&#x2F;span&gt;&lt;span&gt;(&lt;&#x2F;span&gt;&lt;span style=&quot;color:#d08770;&quot;&gt;16&lt;&#x2F;span&gt;&lt;span&gt;, &lt;&#x2F;span&gt;&lt;span style=&quot;color:#d08770;&quot;&gt;0&lt;&#x2F;span&gt;&lt;span&gt;),
+&lt;&#x2F;span&gt;&lt;span&gt;                step: &lt;&#x2F;span&gt;&lt;span style=&quot;color:#96b5b4;&quot;&gt;ivec2&lt;&#x2F;span&gt;&lt;span&gt;(&lt;&#x2F;span&gt;&lt;span style=&quot;color:#d08770;&quot;&gt;16&lt;&#x2F;span&gt;&lt;span&gt;, &lt;&#x2F;span&gt;&lt;span style=&quot;color:#d08770;&quot;&gt;0&lt;&#x2F;span&gt;&lt;span&gt;),
+&lt;&#x2F;span&gt;&lt;span&gt;                size: &lt;&#x2F;span&gt;&lt;span style=&quot;color:#96b5b4;&quot;&gt;isplat&lt;&#x2F;span&gt;&lt;span&gt;(&lt;&#x2F;span&gt;&lt;span style=&quot;color:#d08770;&quot;&gt;16&lt;&#x2F;span&gt;&lt;span&gt;),
+&lt;&#x2F;span&gt;&lt;span&gt;                frames: &lt;&#x2F;span&gt;&lt;span style=&quot;color:#d08770;&quot;&gt;6&lt;&#x2F;span&gt;&lt;span&gt;,
+&lt;&#x2F;span&gt;&lt;span&gt;            })
 &lt;&#x2F;span&gt;&lt;span&gt;            .&lt;&#x2F;span&gt;&lt;span style=&quot;color:#96b5b4;&quot;&gt;build&lt;&#x2F;span&gt;&lt;span&gt;(),
 &lt;&#x2F;span&gt;&lt;span&gt;    ));
 &lt;&#x2F;span&gt;&lt;span&gt;}
@@ -757,30 +814,26 @@
 &lt;&#x2F;span&gt;&lt;span&gt;    }
 &lt;&#x2F;span&gt;&lt;span&gt;}
 &lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
-"
-              style="cursor: pointer;">
-              <video src="&#x2F;videos&#x2F;ecs_topdown_game.webm" autoplay loop width="408" style="border-radius: 5px" />
-            </a>
-
-            <!-- <div> -->
-            <!--   <a href="&#x2F;&#x2F;github.com&#x2F;darthdeus&#x2F;comfy&#x2F;blob&#x2F;master&#x2F;comfy&#x2F;examples&#x2F;ecs_topdown_game.rs"> -->
-            <!--     <i class=""> -->
-            <!--       <img src="/github-mark-white.svg" width="22px" /> -->
-            <!--     </i> -->
-            <!--   </a> -->
-            <!-- </div> -->
-          </div>
+" style="cursor: pointer;">
+        <div class="card border width-fit-content">
+          <div class="header card-header text-center border">ecs_topdown_game</div>
+          <video src="&#x2F;videos&#x2F;ecs_topdown_game.webm" autoplay loop muted width="380" class="object-fit-cover rounded-bottom mw-100"></video>
         </div>
-      </div>
+      </a>
+
+      <!-- <div> -->
+      <!--   <a href="&#x2F;&#x2F;github.com&#x2F;darthdeus&#x2F;comfy&#x2F;blob&#x2F;master&#x2F;comfy&#x2F;examples&#x2F;ecs_topdown_game.rs"> -->
+      <!--     <i class=""> -->
+      <!--       <img src="/github-mark-white.svg" width="22px" /> -->
+      <!--     </i> -->
+      <!--   </a> -->
+      <!-- </div> -->
+
       
-      <div class="col">
-        <div class="card border">
-          <div class="header card-header text-center border">full_game_loop</div>
-          <div class="content card-body example-card-body">
-            <a class="example-detail-link card-img-top" data-bs-toggle="modal" data-bs-target="#comfyModal" data-bs-title="full_game_loop"
-              data-bs-wasm-source="&#x2F;wasm&#x2F;full_game_loop&#x2F;index.html"
-              data-bs-github-href="&#x2F;&#x2F;github.com&#x2F;darthdeus&#x2F;comfy&#x2F;blob&#x2F;master&#x2F;comfy&#x2F;examples&#x2F;full_game_loop.rs"
-              data-bs-example-code="&lt;pre data-lang=&quot;rust&quot; style=&quot;background-color:#2b303b;color:#c0c5ce;&quot; class=&quot;language-rust &quot;&gt;&lt;code class=&quot;language-rust&quot; data-lang=&quot;rust&quot;&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;use &lt;&#x2F;span&gt;&lt;span&gt;comfy::*;
+
+      <a data-bs-toggle="modal" data-bs-target="#comfyModal" data-bs-title="full_game_loop"
+        data-bs-wasm-source="&#x2F;wasm&#x2F;full_game_loop&#x2F;index.html" data-bs-github-href="&#x2F;&#x2F;github.com&#x2F;darthdeus&#x2F;comfy&#x2F;blob&#x2F;master&#x2F;comfy&#x2F;examples&#x2F;full_game_loop.rs"
+        data-bs-example-code="&lt;pre data-lang=&quot;rust&quot; style=&quot;background-color:#2b303b;color:#c0c5ce;&quot; class=&quot;language-rust &quot;&gt;&lt;code class=&quot;language-rust&quot; data-lang=&quot;rust&quot;&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;use &lt;&#x2F;span&gt;&lt;span&gt;comfy::*;
 &lt;&#x2F;span&gt;&lt;span&gt;
 &lt;&#x2F;span&gt;&lt;span style=&quot;color:#65737e;&quot;&gt;&#x2F;&#x2F; As in other state-based example we define a global state object
 &lt;&#x2F;span&gt;&lt;span style=&quot;color:#65737e;&quot;&gt;&#x2F;&#x2F; for our game.
@@ -899,16 +952,20 @@
 &lt;&#x2F;span&gt;&lt;span style=&quot;color:#65737e;&quot;&gt;&#x2F;&#x2F; on winit, which ends up blocking forever.
 &lt;&#x2F;span&gt;&lt;span style=&quot;color:#65737e;&quot;&gt;&#x2F;&#x2F; -------------------------------------------------------------------
 &lt;&#x2F;span&gt;&lt;span&gt;
-&lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;pub&lt;&#x2F;span&gt;&lt;span&gt; async &lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;fn &lt;&#x2F;span&gt;&lt;span style=&quot;color:#8fa1b3;&quot;&gt;run&lt;&#x2F;span&gt;&lt;span&gt;() {
-&lt;&#x2F;span&gt;&lt;span&gt;    &lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;let&lt;&#x2F;span&gt;&lt;span&gt; config = GameConfig {
-&lt;&#x2F;span&gt;&lt;span&gt;        game_name: &amp;quot;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt;Full Game Loop Example&lt;&#x2F;span&gt;&lt;span&gt;&amp;quot;,
-&lt;&#x2F;span&gt;&lt;span&gt;        &lt;&#x2F;span&gt;&lt;span style=&quot;color:#65737e;&quot;&gt;&#x2F;&#x2F; comfy includes a `define_versions!()` macro that creates a `version_str()`
-&lt;&#x2F;span&gt;&lt;span&gt;        &lt;&#x2F;span&gt;&lt;span style=&quot;color:#65737e;&quot;&gt;&#x2F;&#x2F; function that returns a version from cargo &amp;amp; git.
-&lt;&#x2F;span&gt;&lt;span&gt;        version: &amp;quot;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt;v0.0.1&lt;&#x2F;span&gt;&lt;span&gt;&amp;quot;,
-&lt;&#x2F;span&gt;&lt;span&gt;        ..Default::default()
-&lt;&#x2F;span&gt;&lt;span&gt;    };
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;pub fn &lt;&#x2F;span&gt;&lt;span style=&quot;color:#8fa1b3;&quot;&gt;_comfy_default_config&lt;&#x2F;span&gt;&lt;span&gt;(&lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;config&lt;&#x2F;span&gt;&lt;span&gt;: GameConfig) -&amp;gt; GameConfig {
+&lt;&#x2F;span&gt;&lt;span&gt;    config
+&lt;&#x2F;span&gt;&lt;span&gt;}
 &lt;&#x2F;span&gt;&lt;span&gt;
-&lt;&#x2F;span&gt;&lt;span&gt;    &lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;let&lt;&#x2F;span&gt;&lt;span&gt; engine = EngineState::new(config);
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;pub&lt;&#x2F;span&gt;&lt;span&gt; async &lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;fn &lt;&#x2F;span&gt;&lt;span style=&quot;color:#8fa1b3;&quot;&gt;run&lt;&#x2F;span&gt;&lt;span&gt;() {
+&lt;&#x2F;span&gt;&lt;span&gt;    &lt;&#x2F;span&gt;&lt;span style=&quot;color:#65737e;&quot;&gt;&#x2F;&#x2F; comfy includes a `define_versions!()` macro that creates a `version_str()`
+&lt;&#x2F;span&gt;&lt;span&gt;    &lt;&#x2F;span&gt;&lt;span style=&quot;color:#65737e;&quot;&gt;&#x2F;&#x2F; function that returns a version from cargo &amp;amp; git.
+&lt;&#x2F;span&gt;&lt;span&gt;    &lt;&#x2F;span&gt;&lt;span style=&quot;color:#96b5b4;&quot;&gt;init_game_config&lt;&#x2F;span&gt;&lt;span&gt;(
+&lt;&#x2F;span&gt;&lt;span&gt;        &amp;quot;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt;Full Game Loop Example&lt;&#x2F;span&gt;&lt;span&gt;&amp;quot;.&lt;&#x2F;span&gt;&lt;span style=&quot;color:#96b5b4;&quot;&gt;to_string&lt;&#x2F;span&gt;&lt;span&gt;(),
+&lt;&#x2F;span&gt;&lt;span&gt;        &amp;quot;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt;v0.0.1&lt;&#x2F;span&gt;&lt;span&gt;&amp;quot;,
+&lt;&#x2F;span&gt;&lt;span&gt;        _comfy_default_config,
+&lt;&#x2F;span&gt;&lt;span&gt;    );
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span&gt;    &lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;let&lt;&#x2F;span&gt;&lt;span&gt; engine = EngineState::new();
 &lt;&#x2F;span&gt;&lt;span&gt;    &lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;let&lt;&#x2F;span&gt;&lt;span&gt; game = ComfyGame::new(engine);
 &lt;&#x2F;span&gt;&lt;span&gt;
 &lt;&#x2F;span&gt;&lt;span&gt;    &lt;&#x2F;span&gt;&lt;span style=&quot;color:#96b5b4;&quot;&gt;run_comfy_main_async&lt;&#x2F;span&gt;&lt;span&gt;(game).await;
@@ -929,30 +986,26 @@
 &lt;&#x2F;span&gt;&lt;span&gt;    }
 &lt;&#x2F;span&gt;&lt;span&gt;}
 &lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
-"
-              style="cursor: pointer;">
-              <video src="&#x2F;videos&#x2F;full_game_loop.webm" autoplay loop width="408" style="border-radius: 5px" />
-            </a>
-
-            <!-- <div> -->
-            <!--   <a href="&#x2F;&#x2F;github.com&#x2F;darthdeus&#x2F;comfy&#x2F;blob&#x2F;master&#x2F;comfy&#x2F;examples&#x2F;full_game_loop.rs"> -->
-            <!--     <i class=""> -->
-            <!--       <img src="/github-mark-white.svg" width="22px" /> -->
-            <!--     </i> -->
-            <!--   </a> -->
-            <!-- </div> -->
-          </div>
+" style="cursor: pointer;">
+        <div class="card border width-fit-content">
+          <div class="header card-header text-center border">full_game_loop</div>
+          <video src="&#x2F;videos&#x2F;full_game_loop.webm" autoplay loop muted width="380" class="object-fit-cover rounded-bottom mw-100"></video>
         </div>
-      </div>
+      </a>
+
+      <!-- <div> -->
+      <!--   <a href="&#x2F;&#x2F;github.com&#x2F;darthdeus&#x2F;comfy&#x2F;blob&#x2F;master&#x2F;comfy&#x2F;examples&#x2F;full_game_loop.rs"> -->
+      <!--     <i class=""> -->
+      <!--       <img src="/github-mark-white.svg" width="22px" /> -->
+      <!--     </i> -->
+      <!--   </a> -->
+      <!-- </div> -->
+
       
-      <div class="col">
-        <div class="card border">
-          <div class="header card-header text-center border">lighting</div>
-          <div class="content card-body example-card-body">
-            <a class="example-detail-link card-img-top" data-bs-toggle="modal" data-bs-target="#comfyModal" data-bs-title="lighting"
-              data-bs-wasm-source="&#x2F;wasm&#x2F;lighting&#x2F;index.html"
-              data-bs-github-href="&#x2F;&#x2F;github.com&#x2F;darthdeus&#x2F;comfy&#x2F;blob&#x2F;master&#x2F;comfy&#x2F;examples&#x2F;lighting.rs"
-              data-bs-example-code="&lt;pre data-lang=&quot;rust&quot; style=&quot;background-color:#2b303b;color:#c0c5ce;&quot; class=&quot;language-rust &quot;&gt;&lt;code class=&quot;language-rust&quot; data-lang=&quot;rust&quot;&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;use &lt;&#x2F;span&gt;&lt;span&gt;comfy::*;
+
+      <a data-bs-toggle="modal" data-bs-target="#comfyModal" data-bs-title="lighting"
+        data-bs-wasm-source="&#x2F;wasm&#x2F;lighting&#x2F;index.html" data-bs-github-href="&#x2F;&#x2F;github.com&#x2F;darthdeus&#x2F;comfy&#x2F;blob&#x2F;master&#x2F;comfy&#x2F;examples&#x2F;lighting.rs"
+        data-bs-example-code="&lt;pre data-lang=&quot;rust&quot; style=&quot;background-color:#2b303b;color:#c0c5ce;&quot; class=&quot;language-rust &quot;&gt;&lt;code class=&quot;language-rust&quot; data-lang=&quot;rust&quot;&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;use &lt;&#x2F;span&gt;&lt;span&gt;comfy::*;
 &lt;&#x2F;span&gt;&lt;span&gt;
 &lt;&#x2F;span&gt;&lt;span&gt;simple_game!(&amp;quot;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt;Lighting Example&lt;&#x2F;span&gt;&lt;span&gt;&amp;quot;, setup, update);
 &lt;&#x2F;span&gt;&lt;span&gt;
@@ -966,7 +1019,7 @@
 &lt;&#x2F;span&gt;&lt;span&gt;        )),
 &lt;&#x2F;span&gt;&lt;span&gt;    );
 &lt;&#x2F;span&gt;&lt;span&gt;
-&lt;&#x2F;span&gt;&lt;span&gt;    c.lighting.ambient_light_intensity = &lt;&#x2F;span&gt;&lt;span style=&quot;color:#d08770;&quot;&gt;0.1&lt;&#x2F;span&gt;&lt;span&gt;;
+&lt;&#x2F;span&gt;&lt;span&gt;    &lt;&#x2F;span&gt;&lt;span style=&quot;color:#96b5b4;&quot;&gt;game_config_mut&lt;&#x2F;span&gt;&lt;span&gt;().lighting.ambient_light_intensity = &lt;&#x2F;span&gt;&lt;span style=&quot;color:#d08770;&quot;&gt;0.1&lt;&#x2F;span&gt;&lt;span&gt;;
 &lt;&#x2F;span&gt;&lt;span&gt;}
 &lt;&#x2F;span&gt;&lt;span&gt;
 &lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;fn &lt;&#x2F;span&gt;&lt;span style=&quot;color:#8fa1b3;&quot;&gt;update&lt;&#x2F;span&gt;&lt;span&gt;(&lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;_c&lt;&#x2F;span&gt;&lt;span&gt;: &amp;amp;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;mut&lt;&#x2F;span&gt;&lt;span&gt; EngineContext) {
@@ -982,30 +1035,26 @@
 &lt;&#x2F;span&gt;&lt;span&gt;    &lt;&#x2F;span&gt;&lt;span style=&quot;color:#96b5b4;&quot;&gt;draw_light&lt;&#x2F;span&gt;&lt;span&gt;(Light::simple(&lt;&#x2F;span&gt;&lt;span style=&quot;color:#96b5b4;&quot;&gt;vec2&lt;&#x2F;span&gt;&lt;span&gt;(&lt;&#x2F;span&gt;&lt;span style=&quot;color:#d08770;&quot;&gt;3.0&lt;&#x2F;span&gt;&lt;span&gt;, &lt;&#x2F;span&gt;&lt;span style=&quot;color:#d08770;&quot;&gt;0.0&lt;&#x2F;span&gt;&lt;span&gt;), &lt;&#x2F;span&gt;&lt;span style=&quot;color:#d08770;&quot;&gt;8.0&lt;&#x2F;span&gt;&lt;span&gt;, &lt;&#x2F;span&gt;&lt;span style=&quot;color:#d08770;&quot;&gt;0.5&lt;&#x2F;span&gt;&lt;span&gt;));
 &lt;&#x2F;span&gt;&lt;span&gt;}
 &lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
-"
-              style="cursor: pointer;">
-              <video src="&#x2F;videos&#x2F;lighting.webm" autoplay loop width="408" style="border-radius: 5px" />
-            </a>
-
-            <!-- <div> -->
-            <!--   <a href="&#x2F;&#x2F;github.com&#x2F;darthdeus&#x2F;comfy&#x2F;blob&#x2F;master&#x2F;comfy&#x2F;examples&#x2F;lighting.rs"> -->
-            <!--     <i class=""> -->
-            <!--       <img src="/github-mark-white.svg" width="22px" /> -->
-            <!--     </i> -->
-            <!--   </a> -->
-            <!-- </div> -->
-          </div>
+" style="cursor: pointer;">
+        <div class="card border width-fit-content">
+          <div class="header card-header text-center border">lighting</div>
+          <video src="&#x2F;videos&#x2F;lighting.webm" autoplay loop muted width="380" class="object-fit-cover rounded-bottom mw-100"></video>
         </div>
-      </div>
+      </a>
+
+      <!-- <div> -->
+      <!--   <a href="&#x2F;&#x2F;github.com&#x2F;darthdeus&#x2F;comfy&#x2F;blob&#x2F;master&#x2F;comfy&#x2F;examples&#x2F;lighting.rs"> -->
+      <!--     <i class=""> -->
+      <!--       <img src="/github-mark-white.svg" width="22px" /> -->
+      <!--     </i> -->
+      <!--   </a> -->
+      <!-- </div> -->
+
       
-      <div class="col">
-        <div class="card border">
-          <div class="header card-header text-center border">music</div>
-          <div class="content card-body example-card-body">
-            <a class="example-detail-link card-img-top" data-bs-toggle="modal" data-bs-target="#comfyModal" data-bs-title="music"
-              data-bs-wasm-source="&#x2F;wasm&#x2F;music&#x2F;index.html"
-              data-bs-github-href="&#x2F;&#x2F;github.com&#x2F;darthdeus&#x2F;comfy&#x2F;blob&#x2F;master&#x2F;comfy&#x2F;examples&#x2F;music.rs"
-              data-bs-example-code="&lt;pre data-lang=&quot;rust&quot; style=&quot;background-color:#2b303b;color:#c0c5ce;&quot; class=&quot;language-rust &quot;&gt;&lt;code class=&quot;language-rust&quot; data-lang=&quot;rust&quot;&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;use &lt;&#x2F;span&gt;&lt;span&gt;comfy::*;
+
+      <a data-bs-toggle="modal" data-bs-target="#comfyModal" data-bs-title="music"
+        data-bs-wasm-source="&#x2F;wasm&#x2F;music&#x2F;index.html" data-bs-github-href="&#x2F;&#x2F;github.com&#x2F;darthdeus&#x2F;comfy&#x2F;blob&#x2F;master&#x2F;comfy&#x2F;examples&#x2F;music.rs"
+        data-bs-example-code="&lt;pre data-lang=&quot;rust&quot; style=&quot;background-color:#2b303b;color:#c0c5ce;&quot; class=&quot;language-rust &quot;&gt;&lt;code class=&quot;language-rust&quot; data-lang=&quot;rust&quot;&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;use &lt;&#x2F;span&gt;&lt;span&gt;comfy::*;
 &lt;&#x2F;span&gt;&lt;span&gt;
 &lt;&#x2F;span&gt;&lt;span style=&quot;color:#65737e;&quot;&gt;&#x2F;&#x2F; Unlike in many other examples, we&amp;#39;ll need a custom GameState
 &lt;&#x2F;span&gt;&lt;span style=&quot;color:#65737e;&quot;&gt;&#x2F;&#x2F; to know if our music player is playing.
@@ -1078,30 +1127,26 @@
 &lt;&#x2F;span&gt;&lt;span&gt;    }
 &lt;&#x2F;span&gt;&lt;span&gt;}
 &lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
-"
-              style="cursor: pointer;">
-              <video src="&#x2F;videos&#x2F;music.webm" autoplay loop width="408" style="border-radius: 5px" />
-            </a>
-
-            <!-- <div> -->
-            <!--   <a href="&#x2F;&#x2F;github.com&#x2F;darthdeus&#x2F;comfy&#x2F;blob&#x2F;master&#x2F;comfy&#x2F;examples&#x2F;music.rs"> -->
-            <!--     <i class=""> -->
-            <!--       <img src="/github-mark-white.svg" width="22px" /> -->
-            <!--     </i> -->
-            <!--   </a> -->
-            <!-- </div> -->
-          </div>
+" style="cursor: pointer;">
+        <div class="card border width-fit-content">
+          <div class="header card-header text-center border">music</div>
+          <video src="&#x2F;videos&#x2F;music.webm" autoplay loop muted width="380" class="object-fit-cover rounded-bottom mw-100"></video>
         </div>
-      </div>
+      </a>
+
+      <!-- <div> -->
+      <!--   <a href="&#x2F;&#x2F;github.com&#x2F;darthdeus&#x2F;comfy&#x2F;blob&#x2F;master&#x2F;comfy&#x2F;examples&#x2F;music.rs"> -->
+      <!--     <i class=""> -->
+      <!--       <img src="/github-mark-white.svg" width="22px" /> -->
+      <!--     </i> -->
+      <!--   </a> -->
+      <!-- </div> -->
+
       
-      <div class="col">
-        <div class="card border">
-          <div class="header card-header text-center border">particle_systems</div>
-          <div class="content card-body example-card-body">
-            <a class="example-detail-link card-img-top" data-bs-toggle="modal" data-bs-target="#comfyModal" data-bs-title="particle_systems"
-              data-bs-wasm-source="&#x2F;wasm&#x2F;particle_systems&#x2F;index.html"
-              data-bs-github-href="&#x2F;&#x2F;github.com&#x2F;darthdeus&#x2F;comfy&#x2F;blob&#x2F;master&#x2F;comfy&#x2F;examples&#x2F;particle_systems.rs"
-              data-bs-example-code="&lt;pre data-lang=&quot;rust&quot; style=&quot;background-color:#2b303b;color:#c0c5ce;&quot; class=&quot;language-rust &quot;&gt;&lt;code class=&quot;language-rust&quot; data-lang=&quot;rust&quot;&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;use &lt;&#x2F;span&gt;&lt;span&gt;comfy::*;
+
+      <a data-bs-toggle="modal" data-bs-target="#comfyModal" data-bs-title="particle_systems"
+        data-bs-wasm-source="&#x2F;wasm&#x2F;particle_systems&#x2F;index.html" data-bs-github-href="&#x2F;&#x2F;github.com&#x2F;darthdeus&#x2F;comfy&#x2F;blob&#x2F;master&#x2F;comfy&#x2F;examples&#x2F;particle_systems.rs"
+        data-bs-example-code="&lt;pre data-lang=&quot;rust&quot; style=&quot;background-color:#2b303b;color:#c0c5ce;&quot; class=&quot;language-rust &quot;&gt;&lt;code class=&quot;language-rust&quot; data-lang=&quot;rust&quot;&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;use &lt;&#x2F;span&gt;&lt;span&gt;comfy::*;
 &lt;&#x2F;span&gt;&lt;span&gt;
 &lt;&#x2F;span&gt;&lt;span&gt;simple_game!(&amp;quot;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt;Particle Systems Example&lt;&#x2F;span&gt;&lt;span&gt;&amp;quot;, setup, update);
 &lt;&#x2F;span&gt;&lt;span&gt;
@@ -1240,30 +1285,26 @@
 &lt;&#x2F;span&gt;&lt;span&gt;
 &lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;fn &lt;&#x2F;span&gt;&lt;span style=&quot;color:#8fa1b3;&quot;&gt;update&lt;&#x2F;span&gt;&lt;span&gt;(&lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;_c&lt;&#x2F;span&gt;&lt;span&gt;: &amp;amp;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;mut&lt;&#x2F;span&gt;&lt;span&gt; EngineContext) {}
 &lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
-"
-              style="cursor: pointer;">
-              <video src="&#x2F;videos&#x2F;particle_systems.webm" autoplay loop width="408" style="border-radius: 5px" />
-            </a>
-
-            <!-- <div> -->
-            <!--   <a href="&#x2F;&#x2F;github.com&#x2F;darthdeus&#x2F;comfy&#x2F;blob&#x2F;master&#x2F;comfy&#x2F;examples&#x2F;particle_systems.rs"> -->
-            <!--     <i class=""> -->
-            <!--       <img src="/github-mark-white.svg" width="22px" /> -->
-            <!--     </i> -->
-            <!--   </a> -->
-            <!-- </div> -->
-          </div>
+" style="cursor: pointer;">
+        <div class="card border width-fit-content">
+          <div class="header card-header text-center border">particle_systems</div>
+          <video src="&#x2F;videos&#x2F;particle_systems.webm" autoplay loop muted width="380" class="object-fit-cover rounded-bottom mw-100"></video>
         </div>
-      </div>
+      </a>
+
+      <!-- <div> -->
+      <!--   <a href="&#x2F;&#x2F;github.com&#x2F;darthdeus&#x2F;comfy&#x2F;blob&#x2F;master&#x2F;comfy&#x2F;examples&#x2F;particle_systems.rs"> -->
+      <!--     <i class=""> -->
+      <!--       <img src="/github-mark-white.svg" width="22px" /> -->
+      <!--     </i> -->
+      <!--   </a> -->
+      <!-- </div> -->
+
       
-      <div class="col">
-        <div class="card border">
-          <div class="header card-header text-center border">physics</div>
-          <div class="content card-body example-card-body">
-            <a class="example-detail-link card-img-top" data-bs-toggle="modal" data-bs-target="#comfyModal" data-bs-title="physics"
-              data-bs-wasm-source="&#x2F;wasm&#x2F;physics&#x2F;index.html"
-              data-bs-github-href="&#x2F;&#x2F;github.com&#x2F;darthdeus&#x2F;comfy&#x2F;blob&#x2F;master&#x2F;comfy&#x2F;examples&#x2F;physics.rs"
-              data-bs-example-code="&lt;pre data-lang=&quot;rust&quot; style=&quot;background-color:#2b303b;color:#c0c5ce;&quot; class=&quot;language-rust &quot;&gt;&lt;code class=&quot;language-rust&quot; data-lang=&quot;rust&quot;&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;use &lt;&#x2F;span&gt;&lt;span&gt;blobs::*;
+
+      <a data-bs-toggle="modal" data-bs-target="#comfyModal" data-bs-title="physics"
+        data-bs-wasm-source="&#x2F;wasm&#x2F;physics&#x2F;index.html" data-bs-github-href="&#x2F;&#x2F;github.com&#x2F;darthdeus&#x2F;comfy&#x2F;blob&#x2F;master&#x2F;comfy&#x2F;examples&#x2F;physics.rs"
+        data-bs-example-code="&lt;pre data-lang=&quot;rust&quot; style=&quot;background-color:#2b303b;color:#c0c5ce;&quot; class=&quot;language-rust &quot;&gt;&lt;code class=&quot;language-rust&quot; data-lang=&quot;rust&quot;&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;use &lt;&#x2F;span&gt;&lt;span&gt;blobs::*;
 &lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;use &lt;&#x2F;span&gt;&lt;span&gt;comfy::*;
 &lt;&#x2F;span&gt;&lt;span&gt;
 &lt;&#x2F;span&gt;&lt;span style=&quot;color:#65737e;&quot;&gt;&#x2F;&#x2F; This example shows an integration between comfy and blobs, a simple 2d physics engine. It&amp;#39;s not
@@ -1306,9 +1347,6 @@
 &lt;&#x2F;span&gt;&lt;span&gt;    &lt;&#x2F;span&gt;&lt;span style=&quot;color:#65737e;&quot;&gt;&#x2F;&#x2F; We&amp;#39;ll continually spawn balls using a simple f32 timer.
 &lt;&#x2F;span&gt;&lt;span&gt;    &lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;pub &lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;spawn_timer&lt;&#x2F;span&gt;&lt;span&gt;: &amp;amp;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;&amp;#39;a mut f32&lt;&#x2F;span&gt;&lt;span&gt;,
 &lt;&#x2F;span&gt;&lt;span&gt;    &lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;pub &lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;ball_spawning_speed&lt;&#x2F;span&gt;&lt;span&gt;: &amp;amp;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;&amp;#39;a mut&lt;&#x2F;span&gt;&lt;span&gt; BallSpawningSpeed,
-&lt;&#x2F;span&gt;&lt;span&gt;    &lt;&#x2F;span&gt;&lt;span style=&quot;color:#65737e;&quot;&gt;&#x2F;&#x2F; We could just write c.engine.egui instead, but ... getting in the habit
-&lt;&#x2F;span&gt;&lt;span&gt;    &lt;&#x2F;span&gt;&lt;span style=&quot;color:#65737e;&quot;&gt;&#x2F;&#x2F; of re-exporting things into the `GameContext` usually ends up being nice.
-&lt;&#x2F;span&gt;&lt;span&gt;    &lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;pub &lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;egui&lt;&#x2F;span&gt;&lt;span&gt;: &amp;amp;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;&amp;#39;a &lt;&#x2F;span&gt;&lt;span&gt;egui::Context,
 &lt;&#x2F;span&gt;&lt;span&gt;    &lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;pub &lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;physics&lt;&#x2F;span&gt;&lt;span&gt;: &amp;amp;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;&amp;#39;a mut&lt;&#x2F;span&gt;&lt;span&gt; Physics,
 &lt;&#x2F;span&gt;&lt;span&gt;    &lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;pub &lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;engine&lt;&#x2F;span&gt;&lt;span&gt;: &amp;amp;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;&amp;#39;a mut &lt;&#x2F;span&gt;&lt;span&gt;EngineContext&amp;lt;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;&amp;#39;b&lt;&#x2F;span&gt;&lt;span&gt;&amp;gt;,
 &lt;&#x2F;span&gt;&lt;span&gt;}
@@ -1321,7 +1359,6 @@
 &lt;&#x2F;span&gt;&lt;span&gt;        spawn_timer: &amp;amp;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;mut&lt;&#x2F;span&gt;&lt;span&gt; state.spawn_timer,
 &lt;&#x2F;span&gt;&lt;span&gt;        delta: engine.delta,
 &lt;&#x2F;span&gt;&lt;span&gt;        ball_spawning_speed: &amp;amp;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;mut&lt;&#x2F;span&gt;&lt;span&gt; state.ball_spawning_speed,
-&lt;&#x2F;span&gt;&lt;span&gt;        egui: engine.egui,
 &lt;&#x2F;span&gt;&lt;span&gt;        physics: &amp;amp;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;mut&lt;&#x2F;span&gt;&lt;span&gt; state.physics,
 &lt;&#x2F;span&gt;&lt;span&gt;        engine,
 &lt;&#x2F;span&gt;&lt;span&gt;    }
@@ -1430,7 +1467,7 @@
 &lt;&#x2F;span&gt;&lt;span&gt;
 &lt;&#x2F;span&gt;&lt;span&gt;    egui::Window::new(&amp;quot;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt;More balls&lt;&#x2F;span&gt;&lt;span&gt;&amp;quot;)
 &lt;&#x2F;span&gt;&lt;span&gt;        .&lt;&#x2F;span&gt;&lt;span style=&quot;color:#96b5b4;&quot;&gt;anchor&lt;&#x2F;span&gt;&lt;span&gt;(egui::Align2::&lt;&#x2F;span&gt;&lt;span style=&quot;color:#d08770;&quot;&gt;LEFT_TOP&lt;&#x2F;span&gt;&lt;span&gt;, egui::vec2(&lt;&#x2F;span&gt;&lt;span style=&quot;color:#d08770;&quot;&gt;10.0&lt;&#x2F;span&gt;&lt;span&gt;, &lt;&#x2F;span&gt;&lt;span style=&quot;color:#d08770;&quot;&gt;10.0&lt;&#x2F;span&gt;&lt;span&gt;))
-&lt;&#x2F;span&gt;&lt;span&gt;        .&lt;&#x2F;span&gt;&lt;span style=&quot;color:#96b5b4;&quot;&gt;show&lt;&#x2F;span&gt;&lt;span&gt;(c.egui, |&lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;ui&lt;&#x2F;span&gt;&lt;span&gt;| {
+&lt;&#x2F;span&gt;&lt;span&gt;        .&lt;&#x2F;span&gt;&lt;span style=&quot;color:#96b5b4;&quot;&gt;show&lt;&#x2F;span&gt;&lt;span&gt;(&lt;&#x2F;span&gt;&lt;span style=&quot;color:#96b5b4;&quot;&gt;egui&lt;&#x2F;span&gt;&lt;span&gt;(), |&lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;ui&lt;&#x2F;span&gt;&lt;span&gt;| {
 &lt;&#x2F;span&gt;&lt;span&gt;            &lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;match&lt;&#x2F;span&gt;&lt;span&gt; c.ball_spawning_speed {
 &lt;&#x2F;span&gt;&lt;span&gt;                BallSpawningSpeed::Comfy =&amp;gt; {
 &lt;&#x2F;span&gt;&lt;span&gt;                    &lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;if&lt;&#x2F;span&gt;&lt;span&gt; ui.&lt;&#x2F;span&gt;&lt;span style=&quot;color:#96b5b4;&quot;&gt;button&lt;&#x2F;span&gt;&lt;span&gt;(&amp;quot;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt;Make it go faster&lt;&#x2F;span&gt;&lt;span&gt;&amp;quot;).&lt;&#x2F;span&gt;&lt;span style=&quot;color:#96b5b4;&quot;&gt;clicked&lt;&#x2F;span&gt;&lt;span&gt;() {
@@ -1458,30 +1495,26 @@
 &lt;&#x2F;span&gt;&lt;span&gt;        });
 &lt;&#x2F;span&gt;&lt;span&gt;}
 &lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
-"
-              style="cursor: pointer;">
-              <video src="&#x2F;videos&#x2F;physics.webm" autoplay loop width="408" style="border-radius: 5px" />
-            </a>
-
-            <!-- <div> -->
-            <!--   <a href="&#x2F;&#x2F;github.com&#x2F;darthdeus&#x2F;comfy&#x2F;blob&#x2F;master&#x2F;comfy&#x2F;examples&#x2F;physics.rs"> -->
-            <!--     <i class=""> -->
-            <!--       <img src="/github-mark-white.svg" width="22px" /> -->
-            <!--     </i> -->
-            <!--   </a> -->
-            <!-- </div> -->
-          </div>
+" style="cursor: pointer;">
+        <div class="card border width-fit-content">
+          <div class="header card-header text-center border">physics</div>
+          <video src="&#x2F;videos&#x2F;physics.webm" autoplay loop muted width="380" class="object-fit-cover rounded-bottom mw-100"></video>
         </div>
-      </div>
+      </a>
+
+      <!-- <div> -->
+      <!--   <a href="&#x2F;&#x2F;github.com&#x2F;darthdeus&#x2F;comfy&#x2F;blob&#x2F;master&#x2F;comfy&#x2F;examples&#x2F;physics.rs"> -->
+      <!--     <i class=""> -->
+      <!--       <img src="/github-mark-white.svg" width="22px" /> -->
+      <!--     </i> -->
+      <!--   </a> -->
+      <!-- </div> -->
+
       
-      <div class="col">
-        <div class="card border">
-          <div class="header card-header text-center border">shapes</div>
-          <div class="content card-body example-card-body">
-            <a class="example-detail-link card-img-top" data-bs-toggle="modal" data-bs-target="#comfyModal" data-bs-title="shapes"
-              data-bs-wasm-source="&#x2F;wasm&#x2F;shapes&#x2F;index.html"
-              data-bs-github-href="&#x2F;&#x2F;github.com&#x2F;darthdeus&#x2F;comfy&#x2F;blob&#x2F;master&#x2F;comfy&#x2F;examples&#x2F;shapes.rs"
-              data-bs-example-code="&lt;pre data-lang=&quot;rust&quot; style=&quot;background-color:#2b303b;color:#c0c5ce;&quot; class=&quot;language-rust &quot;&gt;&lt;code class=&quot;language-rust&quot; data-lang=&quot;rust&quot;&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;use &lt;&#x2F;span&gt;&lt;span&gt;comfy::*;
+
+      <a data-bs-toggle="modal" data-bs-target="#comfyModal" data-bs-title="shapes"
+        data-bs-wasm-source="&#x2F;wasm&#x2F;shapes&#x2F;index.html" data-bs-github-href="&#x2F;&#x2F;github.com&#x2F;darthdeus&#x2F;comfy&#x2F;blob&#x2F;master&#x2F;comfy&#x2F;examples&#x2F;shapes.rs"
+        data-bs-example-code="&lt;pre data-lang=&quot;rust&quot; style=&quot;background-color:#2b303b;color:#c0c5ce;&quot; class=&quot;language-rust &quot;&gt;&lt;code class=&quot;language-rust&quot; data-lang=&quot;rust&quot;&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;use &lt;&#x2F;span&gt;&lt;span&gt;comfy::*;
 &lt;&#x2F;span&gt;&lt;span&gt;
 &lt;&#x2F;span&gt;&lt;span&gt;simple_game!(&amp;quot;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt;Shapes Example&lt;&#x2F;span&gt;&lt;span&gt;&amp;quot;, update);
 &lt;&#x2F;span&gt;&lt;span&gt;
@@ -1499,34 +1532,30 @@
 &lt;&#x2F;span&gt;&lt;span&gt;    &lt;&#x2F;span&gt;&lt;span style=&quot;color:#96b5b4;&quot;&gt;draw_rect_outline&lt;&#x2F;span&gt;&lt;span&gt;(&lt;&#x2F;span&gt;&lt;span style=&quot;color:#96b5b4;&quot;&gt;vec2&lt;&#x2F;span&gt;&lt;span&gt;(&lt;&#x2F;span&gt;&lt;span style=&quot;color:#d08770;&quot;&gt;2.0&lt;&#x2F;span&gt;&lt;span&gt;, &lt;&#x2F;span&gt;&lt;span style=&quot;color:#d08770;&quot;&gt;2.0&lt;&#x2F;span&gt;&lt;span&gt;), &lt;&#x2F;span&gt;&lt;span style=&quot;color:#96b5b4;&quot;&gt;splat&lt;&#x2F;span&gt;&lt;span&gt;(size), thickness, &lt;&#x2F;span&gt;&lt;span style=&quot;color:#d08770;&quot;&gt;GREEN&lt;&#x2F;span&gt;&lt;span&gt;, z);
 &lt;&#x2F;span&gt;&lt;span&gt;}
 &lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
-"
-              style="cursor: pointer;">
-              <video src="&#x2F;videos&#x2F;shapes.webm" autoplay loop width="408" style="border-radius: 5px" />
-            </a>
-
-            <!-- <div> -->
-            <!--   <a href="&#x2F;&#x2F;github.com&#x2F;darthdeus&#x2F;comfy&#x2F;blob&#x2F;master&#x2F;comfy&#x2F;examples&#x2F;shapes.rs"> -->
-            <!--     <i class=""> -->
-            <!--       <img src="/github-mark-white.svg" width="22px" /> -->
-            <!--     </i> -->
-            <!--   </a> -->
-            <!-- </div> -->
-          </div>
+" style="cursor: pointer;">
+        <div class="card border width-fit-content">
+          <div class="header card-header text-center border">shapes</div>
+          <video src="&#x2F;videos&#x2F;shapes.webm" autoplay loop muted width="380" class="object-fit-cover rounded-bottom mw-100"></video>
         </div>
-      </div>
+      </a>
+
+      <!-- <div> -->
+      <!--   <a href="&#x2F;&#x2F;github.com&#x2F;darthdeus&#x2F;comfy&#x2F;blob&#x2F;master&#x2F;comfy&#x2F;examples&#x2F;shapes.rs"> -->
+      <!--     <i class=""> -->
+      <!--       <img src="/github-mark-white.svg" width="22px" /> -->
+      <!--     </i> -->
+      <!--   </a> -->
+      <!-- </div> -->
+
       
-      <div class="col">
-        <div class="card border">
-          <div class="header card-header text-center border">single_particle</div>
-          <div class="content card-body example-card-body">
-            <a class="example-detail-link card-img-top" data-bs-toggle="modal" data-bs-target="#comfyModal" data-bs-title="single_particle"
-              data-bs-wasm-source="&#x2F;wasm&#x2F;single_particle&#x2F;index.html"
-              data-bs-github-href="&#x2F;&#x2F;github.com&#x2F;darthdeus&#x2F;comfy&#x2F;blob&#x2F;master&#x2F;comfy&#x2F;examples&#x2F;single_particle.rs"
-              data-bs-example-code="&lt;pre data-lang=&quot;rust&quot; style=&quot;background-color:#2b303b;color:#c0c5ce;&quot; class=&quot;language-rust &quot;&gt;&lt;code class=&quot;language-rust&quot; data-lang=&quot;rust&quot;&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;use &lt;&#x2F;span&gt;&lt;span&gt;comfy::*;
+
+      <a data-bs-toggle="modal" data-bs-target="#comfyModal" data-bs-title="single_particle"
+        data-bs-wasm-source="&#x2F;wasm&#x2F;single_particle&#x2F;index.html" data-bs-github-href="&#x2F;&#x2F;github.com&#x2F;darthdeus&#x2F;comfy&#x2F;blob&#x2F;master&#x2F;comfy&#x2F;examples&#x2F;single_particle.rs"
+        data-bs-example-code="&lt;pre data-lang=&quot;rust&quot; style=&quot;background-color:#2b303b;color:#c0c5ce;&quot; class=&quot;language-rust &quot;&gt;&lt;code class=&quot;language-rust&quot; data-lang=&quot;rust&quot;&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;use &lt;&#x2F;span&gt;&lt;span&gt;comfy::*;
 &lt;&#x2F;span&gt;&lt;span&gt;
 &lt;&#x2F;span&gt;&lt;span&gt;simple_game!(&amp;quot;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt;Single Particle Example&lt;&#x2F;span&gt;&lt;span&gt;&amp;quot;, update);
 &lt;&#x2F;span&gt;&lt;span&gt;
-&lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;fn &lt;&#x2F;span&gt;&lt;span style=&quot;color:#8fa1b3;&quot;&gt;update&lt;&#x2F;span&gt;&lt;span&gt;(&lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;c&lt;&#x2F;span&gt;&lt;span&gt;: &amp;amp;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;mut&lt;&#x2F;span&gt;&lt;span&gt; EngineContext) {
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;fn &lt;&#x2F;span&gt;&lt;span style=&quot;color:#8fa1b3;&quot;&gt;update&lt;&#x2F;span&gt;&lt;span&gt;(&lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;_c&lt;&#x2F;span&gt;&lt;span&gt;: &amp;amp;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;mut&lt;&#x2F;span&gt;&lt;span&gt; EngineContext) {
 &lt;&#x2F;span&gt;&lt;span&gt;    &lt;&#x2F;span&gt;&lt;span style=&quot;color:#65737e;&quot;&gt;&#x2F;&#x2F; We only want to spawn a particle once every 100ms.
 &lt;&#x2F;span&gt;&lt;span&gt;    &lt;&#x2F;span&gt;&lt;span style=&quot;color:#65737e;&quot;&gt;&#x2F;&#x2F; Comfy provides a comfy way of doing ad-hoc timers with `Cooldowns`.
 &lt;&#x2F;span&gt;&lt;span&gt;    &lt;&#x2F;span&gt;&lt;span style=&quot;color:#65737e;&quot;&gt;&#x2F;&#x2F;
@@ -1542,30 +1571,26 @@
 &lt;&#x2F;span&gt;&lt;span&gt;    }
 &lt;&#x2F;span&gt;&lt;span&gt;}
 &lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
-"
-              style="cursor: pointer;">
-              <video src="&#x2F;videos&#x2F;single_particle.webm" autoplay loop width="408" style="border-radius: 5px" />
-            </a>
-
-            <!-- <div> -->
-            <!--   <a href="&#x2F;&#x2F;github.com&#x2F;darthdeus&#x2F;comfy&#x2F;blob&#x2F;master&#x2F;comfy&#x2F;examples&#x2F;single_particle.rs"> -->
-            <!--     <i class=""> -->
-            <!--       <img src="/github-mark-white.svg" width="22px" /> -->
-            <!--     </i> -->
-            <!--   </a> -->
-            <!-- </div> -->
-          </div>
+" style="cursor: pointer;">
+        <div class="card border width-fit-content">
+          <div class="header card-header text-center border">single_particle</div>
+          <video src="&#x2F;videos&#x2F;single_particle.webm" autoplay loop muted width="380" class="object-fit-cover rounded-bottom mw-100"></video>
         </div>
-      </div>
+      </a>
+
+      <!-- <div> -->
+      <!--   <a href="&#x2F;&#x2F;github.com&#x2F;darthdeus&#x2F;comfy&#x2F;blob&#x2F;master&#x2F;comfy&#x2F;examples&#x2F;single_particle.rs"> -->
+      <!--     <i class=""> -->
+      <!--       <img src="/github-mark-white.svg" width="22px" /> -->
+      <!--     </i> -->
+      <!--   </a> -->
+      <!-- </div> -->
+
       
-      <div class="col">
-        <div class="card border">
-          <div class="header card-header text-center border">sound</div>
-          <div class="content card-body example-card-body">
-            <a class="example-detail-link card-img-top" data-bs-toggle="modal" data-bs-target="#comfyModal" data-bs-title="sound"
-              data-bs-wasm-source="&#x2F;wasm&#x2F;sound&#x2F;index.html"
-              data-bs-github-href="&#x2F;&#x2F;github.com&#x2F;darthdeus&#x2F;comfy&#x2F;blob&#x2F;master&#x2F;comfy&#x2F;examples&#x2F;sound.rs"
-              data-bs-example-code="&lt;pre data-lang=&quot;rust&quot; style=&quot;background-color:#2b303b;color:#c0c5ce;&quot; class=&quot;language-rust &quot;&gt;&lt;code class=&quot;language-rust&quot; data-lang=&quot;rust&quot;&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;use &lt;&#x2F;span&gt;&lt;span&gt;comfy::*;
+
+      <a data-bs-toggle="modal" data-bs-target="#comfyModal" data-bs-title="sound"
+        data-bs-wasm-source="&#x2F;wasm&#x2F;sound&#x2F;index.html" data-bs-github-href="&#x2F;&#x2F;github.com&#x2F;darthdeus&#x2F;comfy&#x2F;blob&#x2F;master&#x2F;comfy&#x2F;examples&#x2F;sound.rs"
+        data-bs-example-code="&lt;pre data-lang=&quot;rust&quot; style=&quot;background-color:#2b303b;color:#c0c5ce;&quot; class=&quot;language-rust &quot;&gt;&lt;code class=&quot;language-rust&quot; data-lang=&quot;rust&quot;&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;use &lt;&#x2F;span&gt;&lt;span&gt;comfy::*;
 &lt;&#x2F;span&gt;&lt;span&gt;
 &lt;&#x2F;span&gt;&lt;span&gt;simple_game!(&amp;quot;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt;Sound Example&lt;&#x2F;span&gt;&lt;span&gt;&amp;quot;, setup, update);
 &lt;&#x2F;span&gt;&lt;span&gt;
@@ -1591,30 +1616,26 @@
 &lt;&#x2F;span&gt;&lt;span&gt;    }
 &lt;&#x2F;span&gt;&lt;span&gt;}
 &lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
-"
-              style="cursor: pointer;">
-              <video src="&#x2F;videos&#x2F;sound.webm" autoplay loop width="408" style="border-radius: 5px" />
-            </a>
-
-            <!-- <div> -->
-            <!--   <a href="&#x2F;&#x2F;github.com&#x2F;darthdeus&#x2F;comfy&#x2F;blob&#x2F;master&#x2F;comfy&#x2F;examples&#x2F;sound.rs"> -->
-            <!--     <i class=""> -->
-            <!--       <img src="/github-mark-white.svg" width="22px" /> -->
-            <!--     </i> -->
-            <!--   </a> -->
-            <!-- </div> -->
-          </div>
+" style="cursor: pointer;">
+        <div class="card border width-fit-content">
+          <div class="header card-header text-center border">sound</div>
+          <video src="&#x2F;videos&#x2F;sound.webm" autoplay loop muted width="380" class="object-fit-cover rounded-bottom mw-100"></video>
         </div>
-      </div>
+      </a>
+
+      <!-- <div> -->
+      <!--   <a href="&#x2F;&#x2F;github.com&#x2F;darthdeus&#x2F;comfy&#x2F;blob&#x2F;master&#x2F;comfy&#x2F;examples&#x2F;sound.rs"> -->
+      <!--     <i class=""> -->
+      <!--       <img src="/github-mark-white.svg" width="22px" /> -->
+      <!--     </i> -->
+      <!--   </a> -->
+      <!-- </div> -->
+
       
-      <div class="col">
-        <div class="card border">
-          <div class="header card-header text-center border">sprite</div>
-          <div class="content card-body example-card-body">
-            <a class="example-detail-link card-img-top" data-bs-toggle="modal" data-bs-target="#comfyModal" data-bs-title="sprite"
-              data-bs-wasm-source="&#x2F;wasm&#x2F;sprite&#x2F;index.html"
-              data-bs-github-href="&#x2F;&#x2F;github.com&#x2F;darthdeus&#x2F;comfy&#x2F;blob&#x2F;master&#x2F;comfy&#x2F;examples&#x2F;sprite.rs"
-              data-bs-example-code="&lt;pre data-lang=&quot;rust&quot; style=&quot;background-color:#2b303b;color:#c0c5ce;&quot; class=&quot;language-rust &quot;&gt;&lt;code class=&quot;language-rust&quot; data-lang=&quot;rust&quot;&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;use &lt;&#x2F;span&gt;&lt;span&gt;comfy::*;
+
+      <a data-bs-toggle="modal" data-bs-target="#comfyModal" data-bs-title="sprite"
+        data-bs-wasm-source="&#x2F;wasm&#x2F;sprite&#x2F;index.html" data-bs-github-href="&#x2F;&#x2F;github.com&#x2F;darthdeus&#x2F;comfy&#x2F;blob&#x2F;master&#x2F;comfy&#x2F;examples&#x2F;sprite.rs"
+        data-bs-example-code="&lt;pre data-lang=&quot;rust&quot; style=&quot;background-color:#2b303b;color:#c0c5ce;&quot; class=&quot;language-rust &quot;&gt;&lt;code class=&quot;language-rust&quot; data-lang=&quot;rust&quot;&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;use &lt;&#x2F;span&gt;&lt;span&gt;comfy::*;
 &lt;&#x2F;span&gt;&lt;span&gt;
 &lt;&#x2F;span&gt;&lt;span&gt;simple_game!(&amp;quot;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt;Sprite Example&lt;&#x2F;span&gt;&lt;span&gt;&amp;quot;, setup, update);
 &lt;&#x2F;span&gt;&lt;span&gt;
@@ -1642,30 +1663,26 @@
 &lt;&#x2F;span&gt;&lt;span&gt;    );
 &lt;&#x2F;span&gt;&lt;span&gt;}
 &lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
-"
-              style="cursor: pointer;">
-              <video src="&#x2F;videos&#x2F;sprite.webm" autoplay loop width="408" style="border-radius: 5px" />
-            </a>
-
-            <!-- <div> -->
-            <!--   <a href="&#x2F;&#x2F;github.com&#x2F;darthdeus&#x2F;comfy&#x2F;blob&#x2F;master&#x2F;comfy&#x2F;examples&#x2F;sprite.rs"> -->
-            <!--     <i class=""> -->
-            <!--       <img src="/github-mark-white.svg" width="22px" /> -->
-            <!--     </i> -->
-            <!--   </a> -->
-            <!-- </div> -->
-          </div>
+" style="cursor: pointer;">
+        <div class="card border width-fit-content">
+          <div class="header card-header text-center border">sprite</div>
+          <video src="&#x2F;videos&#x2F;sprite.webm" autoplay loop muted width="380" class="object-fit-cover rounded-bottom mw-100"></video>
         </div>
-      </div>
+      </a>
+
+      <!-- <div> -->
+      <!--   <a href="&#x2F;&#x2F;github.com&#x2F;darthdeus&#x2F;comfy&#x2F;blob&#x2F;master&#x2F;comfy&#x2F;examples&#x2F;sprite.rs"> -->
+      <!--     <i class=""> -->
+      <!--       <img src="/github-mark-white.svg" width="22px" /> -->
+      <!--     </i> -->
+      <!--   </a> -->
+      <!-- </div> -->
+
       
-      <div class="col">
-        <div class="card border">
-          <div class="header card-header text-center border">text</div>
-          <div class="content card-body example-card-body">
-            <a class="example-detail-link card-img-top" data-bs-toggle="modal" data-bs-target="#comfyModal" data-bs-title="text"
-              data-bs-wasm-source="&#x2F;wasm&#x2F;text&#x2F;index.html"
-              data-bs-github-href="&#x2F;&#x2F;github.com&#x2F;darthdeus&#x2F;comfy&#x2F;blob&#x2F;master&#x2F;comfy&#x2F;examples&#x2F;text.rs"
-              data-bs-example-code="&lt;pre data-lang=&quot;rust&quot; style=&quot;background-color:#2b303b;color:#c0c5ce;&quot; class=&quot;language-rust &quot;&gt;&lt;code class=&quot;language-rust&quot; data-lang=&quot;rust&quot;&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;use &lt;&#x2F;span&gt;&lt;span&gt;comfy::*;
+
+      <a data-bs-toggle="modal" data-bs-target="#comfyModal" data-bs-title="text"
+        data-bs-wasm-source="&#x2F;wasm&#x2F;text&#x2F;index.html" data-bs-github-href="&#x2F;&#x2F;github.com&#x2F;darthdeus&#x2F;comfy&#x2F;blob&#x2F;master&#x2F;comfy&#x2F;examples&#x2F;text.rs"
+        data-bs-example-code="&lt;pre data-lang=&quot;rust&quot; style=&quot;background-color:#2b303b;color:#c0c5ce;&quot; class=&quot;language-rust &quot;&gt;&lt;code class=&quot;language-rust&quot; data-lang=&quot;rust&quot;&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;use &lt;&#x2F;span&gt;&lt;span&gt;comfy::*;
 &lt;&#x2F;span&gt;&lt;span&gt;
 &lt;&#x2F;span&gt;&lt;span&gt;simple_game!(&amp;quot;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt;Text Example&lt;&#x2F;span&gt;&lt;span&gt;&amp;quot;, update);
 &lt;&#x2F;span&gt;&lt;span&gt;
@@ -1687,30 +1704,26 @@
 &lt;&#x2F;span&gt;&lt;span&gt;    );
 &lt;&#x2F;span&gt;&lt;span&gt;}
 &lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
-"
-              style="cursor: pointer;">
-              <video src="&#x2F;videos&#x2F;text.webm" autoplay loop width="408" style="border-radius: 5px" />
-            </a>
-
-            <!-- <div> -->
-            <!--   <a href="&#x2F;&#x2F;github.com&#x2F;darthdeus&#x2F;comfy&#x2F;blob&#x2F;master&#x2F;comfy&#x2F;examples&#x2F;text.rs"> -->
-            <!--     <i class=""> -->
-            <!--       <img src="/github-mark-white.svg" width="22px" /> -->
-            <!--     </i> -->
-            <!--   </a> -->
-            <!-- </div> -->
-          </div>
+" style="cursor: pointer;">
+        <div class="card border width-fit-content">
+          <div class="header card-header text-center border">text</div>
+          <video src="&#x2F;videos&#x2F;text.webm" autoplay loop muted width="380" class="object-fit-cover rounded-bottom mw-100"></video>
         </div>
-      </div>
+      </a>
+
+      <!-- <div> -->
+      <!--   <a href="&#x2F;&#x2F;github.com&#x2F;darthdeus&#x2F;comfy&#x2F;blob&#x2F;master&#x2F;comfy&#x2F;examples&#x2F;text.rs"> -->
+      <!--     <i class=""> -->
+      <!--       <img src="/github-mark-white.svg" width="22px" /> -->
+      <!--     </i> -->
+      <!--   </a> -->
+      <!-- </div> -->
+
       
-      <div class="col">
-        <div class="card border">
-          <div class="header card-header text-center border">timed_draw</div>
-          <div class="content card-body example-card-body">
-            <a class="example-detail-link card-img-top" data-bs-toggle="modal" data-bs-target="#comfyModal" data-bs-title="timed_draw"
-              data-bs-wasm-source="&#x2F;wasm&#x2F;timed_draw&#x2F;index.html"
-              data-bs-github-href="&#x2F;&#x2F;github.com&#x2F;darthdeus&#x2F;comfy&#x2F;blob&#x2F;master&#x2F;comfy&#x2F;examples&#x2F;timed_draw.rs"
-              data-bs-example-code="&lt;pre data-lang=&quot;rust&quot; style=&quot;background-color:#2b303b;color:#c0c5ce;&quot; class=&quot;language-rust &quot;&gt;&lt;code class=&quot;language-rust&quot; data-lang=&quot;rust&quot;&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;use &lt;&#x2F;span&gt;&lt;span&gt;comfy::*;
+
+      <a data-bs-toggle="modal" data-bs-target="#comfyModal" data-bs-title="timed_draw"
+        data-bs-wasm-source="&#x2F;wasm&#x2F;timed_draw&#x2F;index.html" data-bs-github-href="&#x2F;&#x2F;github.com&#x2F;darthdeus&#x2F;comfy&#x2F;blob&#x2F;master&#x2F;comfy&#x2F;examples&#x2F;timed_draw.rs"
+        data-bs-example-code="&lt;pre data-lang=&quot;rust&quot; style=&quot;background-color:#2b303b;color:#c0c5ce;&quot; class=&quot;language-rust &quot;&gt;&lt;code class=&quot;language-rust&quot; data-lang=&quot;rust&quot;&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;use &lt;&#x2F;span&gt;&lt;span&gt;comfy::*;
 &lt;&#x2F;span&gt;&lt;span&gt;
 &lt;&#x2F;span&gt;&lt;span&gt;simple_game!(&amp;quot;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt;Timed Draw Example&lt;&#x2F;span&gt;&lt;span&gt;&amp;quot;, update);
 &lt;&#x2F;span&gt;&lt;span&gt;
@@ -1722,7 +1735,7 @@
 &lt;&#x2F;span&gt;&lt;span&gt;        .&lt;&#x2F;span&gt;&lt;span style=&quot;color:#96b5b4;&quot;&gt;collapsible&lt;&#x2F;span&gt;&lt;span&gt;(&lt;&#x2F;span&gt;&lt;span style=&quot;color:#d08770;&quot;&gt;false&lt;&#x2F;span&gt;&lt;span&gt;)
 &lt;&#x2F;span&gt;&lt;span&gt;        .&lt;&#x2F;span&gt;&lt;span style=&quot;color:#96b5b4;&quot;&gt;title_bar&lt;&#x2F;span&gt;&lt;span&gt;(&lt;&#x2F;span&gt;&lt;span style=&quot;color:#d08770;&quot;&gt;false&lt;&#x2F;span&gt;&lt;span&gt;)
 &lt;&#x2F;span&gt;&lt;span&gt;        .&lt;&#x2F;span&gt;&lt;span style=&quot;color:#96b5b4;&quot;&gt;resizable&lt;&#x2F;span&gt;&lt;span&gt;(&lt;&#x2F;span&gt;&lt;span style=&quot;color:#d08770;&quot;&gt;false&lt;&#x2F;span&gt;&lt;span&gt;)
-&lt;&#x2F;span&gt;&lt;span&gt;        .&lt;&#x2F;span&gt;&lt;span style=&quot;color:#96b5b4;&quot;&gt;show&lt;&#x2F;span&gt;&lt;span&gt;(c.egui, |&lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;ui&lt;&#x2F;span&gt;&lt;span&gt;| {
+&lt;&#x2F;span&gt;&lt;span&gt;        .&lt;&#x2F;span&gt;&lt;span style=&quot;color:#96b5b4;&quot;&gt;show&lt;&#x2F;span&gt;&lt;span&gt;(&lt;&#x2F;span&gt;&lt;span style=&quot;color:#96b5b4;&quot;&gt;egui&lt;&#x2F;span&gt;&lt;span&gt;(), |&lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;ui&lt;&#x2F;span&gt;&lt;span&gt;| {
 &lt;&#x2F;span&gt;&lt;span&gt;            &lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;if&lt;&#x2F;span&gt;&lt;span&gt; ui.&lt;&#x2F;span&gt;&lt;span style=&quot;color:#96b5b4;&quot;&gt;button&lt;&#x2F;span&gt;&lt;span&gt;(&amp;quot;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt;Click me!&lt;&#x2F;span&gt;&lt;span&gt;&amp;quot;).&lt;&#x2F;span&gt;&lt;span style=&quot;color:#96b5b4;&quot;&gt;clicked&lt;&#x2F;span&gt;&lt;span&gt;() {
 &lt;&#x2F;span&gt;&lt;span&gt;                c.draw.&lt;&#x2F;span&gt;&lt;span style=&quot;color:#96b5b4;&quot;&gt;borrow_mut&lt;&#x2F;span&gt;&lt;span&gt;().&lt;&#x2F;span&gt;&lt;span style=&quot;color:#96b5b4;&quot;&gt;timed&lt;&#x2F;span&gt;&lt;span&gt;(&lt;&#x2F;span&gt;&lt;span style=&quot;color:#d08770;&quot;&gt;3.0&lt;&#x2F;span&gt;&lt;span&gt;, |&lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;_c&lt;&#x2F;span&gt;&lt;span&gt;| {
 &lt;&#x2F;span&gt;&lt;span&gt;                    &lt;&#x2F;span&gt;&lt;span style=&quot;color:#96b5b4;&quot;&gt;draw_text&lt;&#x2F;span&gt;&lt;span&gt;(
@@ -1747,30 +1760,102 @@
 &lt;&#x2F;span&gt;&lt;span&gt;        });
 &lt;&#x2F;span&gt;&lt;span&gt;}
 &lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
-"
-              style="cursor: pointer;">
-              <video src="&#x2F;videos&#x2F;timed_draw.webm" autoplay loop width="408" style="border-radius: 5px" />
-            </a>
-
-            <!-- <div> -->
-            <!--   <a href="&#x2F;&#x2F;github.com&#x2F;darthdeus&#x2F;comfy&#x2F;blob&#x2F;master&#x2F;comfy&#x2F;examples&#x2F;timed_draw.rs"> -->
-            <!--     <i class=""> -->
-            <!--       <img src="/github-mark-white.svg" width="22px" /> -->
-            <!--     </i> -->
-            <!--   </a> -->
-            <!-- </div> -->
-          </div>
+" style="cursor: pointer;">
+        <div class="card border width-fit-content">
+          <div class="header card-header text-center border">timed_draw</div>
+          <video src="&#x2F;videos&#x2F;timed_draw.webm" autoplay loop muted width="380" class="object-fit-cover rounded-bottom mw-100"></video>
         </div>
-      </div>
+      </a>
+
+      <!-- <div> -->
+      <!--   <a href="&#x2F;&#x2F;github.com&#x2F;darthdeus&#x2F;comfy&#x2F;blob&#x2F;master&#x2F;comfy&#x2F;examples&#x2F;timed_draw.rs"> -->
+      <!--     <i class=""> -->
+      <!--       <img src="/github-mark-white.svg" width="22px" /> -->
+      <!--     </i> -->
+      <!--   </a> -->
+      <!-- </div> -->
+
       
-      <div class="col">
-        <div class="card border">
-          <div class="header card-header text-center border">post_processing</div>
-          <div class="content card-body example-card-body">
-            <a class="example-detail-link card-img-top" data-bs-toggle="modal" data-bs-target="#comfyModal" data-bs-title="post_processing"
-              data-bs-wasm-source="&#x2F;wasm&#x2F;post_processing&#x2F;index.html"
-              data-bs-github-href="&#x2F;&#x2F;github.com&#x2F;darthdeus&#x2F;comfy&#x2F;blob&#x2F;master&#x2F;comfy&#x2F;examples&#x2F;post_processing.rs"
-              data-bs-example-code="&lt;pre data-lang=&quot;rust&quot; style=&quot;background-color:#2b303b;color:#c0c5ce;&quot; class=&quot;language-rust &quot;&gt;&lt;code class=&quot;language-rust&quot; data-lang=&quot;rust&quot;&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;use &lt;&#x2F;span&gt;&lt;span&gt;comfy::*;
+
+      <a data-bs-toggle="modal" data-bs-target="#comfyModal" data-bs-title="y_sort"
+        data-bs-wasm-source="&#x2F;wasm&#x2F;y_sort&#x2F;index.html" data-bs-github-href="&#x2F;&#x2F;github.com&#x2F;darthdeus&#x2F;comfy&#x2F;blob&#x2F;master&#x2F;comfy&#x2F;examples&#x2F;y_sort.rs"
+        data-bs-example-code="&lt;pre data-lang=&quot;rust&quot; style=&quot;background-color:#2b303b;color:#c0c5ce;&quot; class=&quot;language-rust &quot;&gt;&lt;code class=&quot;language-rust&quot; data-lang=&quot;rust&quot;&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;use &lt;&#x2F;span&gt;&lt;span&gt;comfy::*;
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span&gt;simple_game!(&amp;quot;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt;Sprite Example&lt;&#x2F;span&gt;&lt;span&gt;&amp;quot;, setup, update);
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;fn &lt;&#x2F;span&gt;&lt;span style=&quot;color:#8fa1b3;&quot;&gt;setup&lt;&#x2F;span&gt;&lt;span&gt;(&lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;_c&lt;&#x2F;span&gt;&lt;span&gt;: &amp;amp;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;mut&lt;&#x2F;span&gt;&lt;span&gt; EngineContext) {
+&lt;&#x2F;span&gt;&lt;span&gt;    &lt;&#x2F;span&gt;&lt;span style=&quot;color:#96b5b4;&quot;&gt;set_y_sort&lt;&#x2F;span&gt;&lt;span&gt;(&lt;&#x2F;span&gt;&lt;span style=&quot;color:#d08770;&quot;&gt;0&lt;&#x2F;span&gt;&lt;span&gt;, &lt;&#x2F;span&gt;&lt;span style=&quot;color:#d08770;&quot;&gt;true&lt;&#x2F;span&gt;&lt;span&gt;);
+&lt;&#x2F;span&gt;&lt;span&gt;}
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;fn &lt;&#x2F;span&gt;&lt;span style=&quot;color:#8fa1b3;&quot;&gt;update&lt;&#x2F;span&gt;&lt;span&gt;(&lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;_c&lt;&#x2F;span&gt;&lt;span&gt;: &amp;amp;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;mut&lt;&#x2F;span&gt;&lt;span&gt; EngineContext) {
+&lt;&#x2F;span&gt;&lt;span&gt;    &lt;&#x2F;span&gt;&lt;span style=&quot;color:#96b5b4;&quot;&gt;draw_comfy&lt;&#x2F;span&gt;&lt;span&gt;(Vec2::&lt;&#x2F;span&gt;&lt;span style=&quot;color:#d08770;&quot;&gt;ZERO&lt;&#x2F;span&gt;&lt;span&gt;, &lt;&#x2F;span&gt;&lt;span style=&quot;color:#d08770;&quot;&gt;WHITE&lt;&#x2F;span&gt;&lt;span&gt;, &lt;&#x2F;span&gt;&lt;span style=&quot;color:#d08770;&quot;&gt;0&lt;&#x2F;span&gt;&lt;span&gt;, &lt;&#x2F;span&gt;&lt;span style=&quot;color:#96b5b4;&quot;&gt;splat&lt;&#x2F;span&gt;&lt;span&gt;(&lt;&#x2F;span&gt;&lt;span style=&quot;color:#d08770;&quot;&gt;5.0&lt;&#x2F;span&gt;&lt;span&gt;));
+&lt;&#x2F;span&gt;&lt;span&gt;    &lt;&#x2F;span&gt;&lt;span style=&quot;color:#96b5b4;&quot;&gt;draw_comfy&lt;&#x2F;span&gt;&lt;span&gt;(&lt;&#x2F;span&gt;&lt;span style=&quot;color:#96b5b4;&quot;&gt;vec2&lt;&#x2F;span&gt;&lt;span&gt;(&lt;&#x2F;span&gt;&lt;span style=&quot;color:#d08770;&quot;&gt;3.0&lt;&#x2F;span&gt;&lt;span&gt;, (&lt;&#x2F;span&gt;&lt;span style=&quot;color:#d08770;&quot;&gt;4.0 &lt;&#x2F;span&gt;&lt;span&gt;* &lt;&#x2F;span&gt;&lt;span style=&quot;color:#96b5b4;&quot;&gt;get_time&lt;&#x2F;span&gt;&lt;span&gt;()).&lt;&#x2F;span&gt;&lt;span style=&quot;color:#96b5b4;&quot;&gt;sin&lt;&#x2F;span&gt;&lt;span&gt;() as &lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;f32&lt;&#x2F;span&gt;&lt;span&gt;), &lt;&#x2F;span&gt;&lt;span style=&quot;color:#d08770;&quot;&gt;RED&lt;&#x2F;span&gt;&lt;span&gt;, &lt;&#x2F;span&gt;&lt;span style=&quot;color:#d08770;&quot;&gt;0&lt;&#x2F;span&gt;&lt;span&gt;, &lt;&#x2F;span&gt;&lt;span style=&quot;color:#96b5b4;&quot;&gt;splat&lt;&#x2F;span&gt;&lt;span&gt;(&lt;&#x2F;span&gt;&lt;span style=&quot;color:#d08770;&quot;&gt;3.0&lt;&#x2F;span&gt;&lt;span&gt;));
+&lt;&#x2F;span&gt;&lt;span&gt;}
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+" style="cursor: pointer;">
+        <div class="card border width-fit-content">
+          <div class="header card-header text-center border">y_sort</div>
+          <video src="&#x2F;videos&#x2F;y_sort.webm" autoplay loop muted width="380" class="object-fit-cover rounded-bottom mw-100"></video>
+        </div>
+      </a>
+
+      <!-- <div> -->
+      <!--   <a href="&#x2F;&#x2F;github.com&#x2F;darthdeus&#x2F;comfy&#x2F;blob&#x2F;master&#x2F;comfy&#x2F;examples&#x2F;y_sort.rs"> -->
+      <!--     <i class=""> -->
+      <!--       <img src="/github-mark-white.svg" width="22px" /> -->
+      <!--     </i> -->
+      <!--   </a> -->
+      <!-- </div> -->
+
+      
+
+      <a data-bs-toggle="modal" data-bs-target="#comfyModal" data-bs-title="custom_config"
+        data-bs-wasm-source="&#x2F;wasm&#x2F;custom_config&#x2F;index.html" data-bs-github-href="&#x2F;&#x2F;github.com&#x2F;darthdeus&#x2F;comfy&#x2F;blob&#x2F;master&#x2F;comfy&#x2F;examples&#x2F;custom_config.rs"
+        data-bs-example-code="&lt;pre data-lang=&quot;rust&quot; style=&quot;background-color:#2b303b;color:#c0c5ce;&quot; class=&quot;language-rust &quot;&gt;&lt;code class=&quot;language-rust&quot; data-lang=&quot;rust&quot;&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;use &lt;&#x2F;span&gt;&lt;span&gt;comfy::*;
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span&gt;simple_game!(&amp;quot;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt;Portrait mode&lt;&#x2F;span&gt;&lt;span&gt;&amp;quot;, GameState, config, setup, update);
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;fn &lt;&#x2F;span&gt;&lt;span style=&quot;color:#8fa1b3;&quot;&gt;config&lt;&#x2F;span&gt;&lt;span&gt;(&lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;config&lt;&#x2F;span&gt;&lt;span&gt;: GameConfig) -&amp;gt; GameConfig {
+&lt;&#x2F;span&gt;&lt;span&gt;    GameConfig {
+&lt;&#x2F;span&gt;&lt;span&gt;        resolution: ResolutionConfig::Physical(&lt;&#x2F;span&gt;&lt;span style=&quot;color:#d08770;&quot;&gt;600&lt;&#x2F;span&gt;&lt;span&gt;, &lt;&#x2F;span&gt;&lt;span style=&quot;color:#d08770;&quot;&gt;600 &lt;&#x2F;span&gt;&lt;span&gt;* &lt;&#x2F;span&gt;&lt;span style=&quot;color:#d08770;&quot;&gt;16 &lt;&#x2F;span&gt;&lt;span&gt;&#x2F; &lt;&#x2F;span&gt;&lt;span style=&quot;color:#d08770;&quot;&gt;9&lt;&#x2F;span&gt;&lt;span&gt;),
+&lt;&#x2F;span&gt;&lt;span&gt;        ..config
+&lt;&#x2F;span&gt;&lt;span&gt;    }
+&lt;&#x2F;span&gt;&lt;span&gt;}
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;pub struct &lt;&#x2F;span&gt;&lt;span&gt;GameState {}
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;impl &lt;&#x2F;span&gt;&lt;span&gt;GameState {
+&lt;&#x2F;span&gt;&lt;span&gt;    &lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;pub fn &lt;&#x2F;span&gt;&lt;span style=&quot;color:#8fa1b3;&quot;&gt;new&lt;&#x2F;span&gt;&lt;span&gt;(&lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;_c&lt;&#x2F;span&gt;&lt;span&gt;: &amp;amp;EngineContext) -&amp;gt; &lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;Self &lt;&#x2F;span&gt;&lt;span&gt;{
+&lt;&#x2F;span&gt;&lt;span&gt;        &lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;Self &lt;&#x2F;span&gt;&lt;span&gt;{}
+&lt;&#x2F;span&gt;&lt;span&gt;    }
+&lt;&#x2F;span&gt;&lt;span&gt;}
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;fn &lt;&#x2F;span&gt;&lt;span style=&quot;color:#8fa1b3;&quot;&gt;setup&lt;&#x2F;span&gt;&lt;span&gt;(&lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;_state&lt;&#x2F;span&gt;&lt;span&gt;: &amp;amp;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;mut&lt;&#x2F;span&gt;&lt;span&gt; GameState, &lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;_c&lt;&#x2F;span&gt;&lt;span&gt;: &amp;amp;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;mut&lt;&#x2F;span&gt;&lt;span&gt; EngineContext) {}
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;fn &lt;&#x2F;span&gt;&lt;span style=&quot;color:#8fa1b3;&quot;&gt;update&lt;&#x2F;span&gt;&lt;span&gt;(&lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;_state&lt;&#x2F;span&gt;&lt;span&gt;: &amp;amp;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;mut&lt;&#x2F;span&gt;&lt;span&gt; GameState, &lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;_c&lt;&#x2F;span&gt;&lt;span&gt;: &amp;amp;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;mut&lt;&#x2F;span&gt;&lt;span&gt; EngineContext) {
+&lt;&#x2F;span&gt;&lt;span&gt;    &lt;&#x2F;span&gt;&lt;span style=&quot;color:#96b5b4;&quot;&gt;draw_text&lt;&#x2F;span&gt;&lt;span&gt;(&amp;quot;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt;Comfy likes portrait mode&lt;&#x2F;span&gt;&lt;span&gt;&amp;quot;, Vec2::&lt;&#x2F;span&gt;&lt;span style=&quot;color:#d08770;&quot;&gt;ZERO&lt;&#x2F;span&gt;&lt;span&gt;, &lt;&#x2F;span&gt;&lt;span style=&quot;color:#d08770;&quot;&gt;PINK&lt;&#x2F;span&gt;&lt;span&gt;, TextAlign::Center);
+&lt;&#x2F;span&gt;&lt;span&gt;}
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+" style="cursor: pointer;">
+        <div class="card border width-fit-content">
+          <div class="header card-header text-center border">custom_config</div>
+          <video src="&#x2F;videos&#x2F;custom_config.webm" autoplay loop muted width="380" class="object-fit-cover rounded-bottom mw-100"></video>
+        </div>
+      </a>
+
+      <!-- <div> -->
+      <!--   <a href="&#x2F;&#x2F;github.com&#x2F;darthdeus&#x2F;comfy&#x2F;blob&#x2F;master&#x2F;comfy&#x2F;examples&#x2F;custom_config.rs"> -->
+      <!--     <i class=""> -->
+      <!--       <img src="/github-mark-white.svg" width="22px" /> -->
+      <!--     </i> -->
+      <!--   </a> -->
+      <!-- </div> -->
+
+      
+
+      <a data-bs-toggle="modal" data-bs-target="#comfyModal" data-bs-title="post_processing"
+        data-bs-wasm-source="&#x2F;wasm&#x2F;post_processing&#x2F;index.html" data-bs-github-href="&#x2F;&#x2F;github.com&#x2F;darthdeus&#x2F;comfy&#x2F;blob&#x2F;master&#x2F;comfy&#x2F;examples&#x2F;post_processing.rs"
+        data-bs-example-code="&lt;pre data-lang=&quot;rust&quot; style=&quot;background-color:#2b303b;color:#c0c5ce;&quot; class=&quot;language-rust &quot;&gt;&lt;code class=&quot;language-rust&quot; data-lang=&quot;rust&quot;&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;use &lt;&#x2F;span&gt;&lt;span&gt;comfy::*;
 &lt;&#x2F;span&gt;&lt;span&gt;
 &lt;&#x2F;span&gt;&lt;span&gt;simple_game!(&amp;quot;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt;Post Processing&lt;&#x2F;span&gt;&lt;span&gt;&amp;quot;, setup, update);
 &lt;&#x2F;span&gt;&lt;span&gt;
@@ -1785,23 +1870,22 @@
 &lt;&#x2F;span&gt;&lt;span&gt;    &lt;&#x2F;span&gt;&lt;span style=&quot;color:#96b5b4;&quot;&gt;draw_rect&lt;&#x2F;span&gt;&lt;span&gt;(Vec2::&lt;&#x2F;span&gt;&lt;span style=&quot;color:#d08770;&quot;&gt;ZERO&lt;&#x2F;span&gt;&lt;span&gt;, &lt;&#x2F;span&gt;&lt;span style=&quot;color:#96b5b4;&quot;&gt;splat&lt;&#x2F;span&gt;&lt;span&gt;(&lt;&#x2F;span&gt;&lt;span style=&quot;color:#d08770;&quot;&gt;5.0&lt;&#x2F;span&gt;&lt;span&gt;), &lt;&#x2F;span&gt;&lt;span style=&quot;color:#d08770;&quot;&gt;WHITE&lt;&#x2F;span&gt;&lt;span&gt;, &lt;&#x2F;span&gt;&lt;span style=&quot;color:#d08770;&quot;&gt;0&lt;&#x2F;span&gt;&lt;span&gt;);
 &lt;&#x2F;span&gt;&lt;span&gt;}
 &lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
-"
-              style="cursor: pointer;">
-              <video src="&#x2F;videos&#x2F;post_processing.webm" autoplay loop width="408" style="border-radius: 5px" />
-            </a>
-
-            <!-- <div> -->
-            <!--   <a href="&#x2F;&#x2F;github.com&#x2F;darthdeus&#x2F;comfy&#x2F;blob&#x2F;master&#x2F;comfy&#x2F;examples&#x2F;post_processing.rs"> -->
-            <!--     <i class=""> -->
-            <!--       <img src="/github-mark-white.svg" width="22px" /> -->
-            <!--     </i> -->
-            <!--   </a> -->
-            <!-- </div> -->
-          </div>
+" style="cursor: pointer;">
+        <div class="card border width-fit-content">
+          <div class="header card-header text-center border">post_processing</div>
+          <video src="&#x2F;videos&#x2F;post_processing.webm" autoplay loop muted width="380" class="object-fit-cover rounded-bottom mw-100"></video>
         </div>
-      </div>
+      </a>
+
+      <!-- <div> -->
+      <!--   <a href="&#x2F;&#x2F;github.com&#x2F;darthdeus&#x2F;comfy&#x2F;blob&#x2F;master&#x2F;comfy&#x2F;examples&#x2F;post_processing.rs"> -->
+      <!--     <i class=""> -->
+      <!--       <img src="/github-mark-white.svg" width="22px" /> -->
+      <!--     </i> -->
+      <!--   </a> -->
+      <!-- </div> -->
+
       
-      </ul>
     </div>
   </div>
 </section>
@@ -1836,26 +1920,6 @@
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
       integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous">
-    </script>
-
-    <script>
-      document.addEventListener('DOMContentLoaded', function () {
-      const themeSwitch = document.getElementById('comfySwitch');
-      const currentTheme = document.documentElement.getAttribute('data-bs-theme') || 'dark'; // default to 'dark' if not set
-
-      // Set the checkbox state based on the current theme
-      themeSwitch.checked = currentTheme === 'dark';
-
-      themeSwitch.addEventListener('change', function () {
-          if (themeSwitch.checked && currentTheme !== 'dark') {
-              document.documentElement.setAttribute('data-bs-theme', 'dark');
-              localStorage.setItem('data-bs-theme', 'dark');
-          } else if (!themeSwitch.checked) {
-              document.documentElement.setAttribute('data-bs-theme', 'light');
-              localStorage.setItem('data-bs-theme', 'light');
-          }
-        });
-      });
     </script>
 </body>
 </html>

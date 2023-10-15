@@ -52,11 +52,11 @@ export function wgpu_render_pass_set_index_buffer(a: number, b: number, c: numbe
 export function __wbindgen_malloc(a: number, b: number): number;
 export function __wbindgen_realloc(a: number, b: number, c: number, d: number): number;
 export const __wbindgen_export_2: WebAssembly.Table;
-export function _dyn_core__ops__function__FnMut__A____Output___R_as_wasm_bindgen__closure__WasmClosure___describe__invoke__h03d172edd408cb22(a: number, b: number, c: number): void;
-export function _dyn_core__ops__function__FnMut_____Output___R_as_wasm_bindgen__closure__WasmClosure___describe__invoke__heb8d3752e61ca7cd(a: number, b: number): void;
-export function _dyn_core__ops__function__FnMut_____Output___R_as_wasm_bindgen__closure__WasmClosure___describe__invoke__h78ba257f1b4d39df(a: number, b: number): void;
-export function _dyn_core__ops__function__FnMut__A____Output___R_as_wasm_bindgen__closure__WasmClosure___describe__invoke__hfc3f48b928a7368e(a: number, b: number, c: number): void;
-export function _dyn_core__ops__function__FnMut__A____Output___R_as_wasm_bindgen__closure__WasmClosure___describe__invoke__h5c681d4d03f92839(a: number, b: number, c: number): void;
+export function wasm_bindgen__convert__closures__invoke1_mut__h31242874babf133b(a: number, b: number, c: number): void;
+export function wasm_bindgen__convert__closures__invoke0_mut__h79fbc95fa43b7c5a(a: number, b: number): void;
+export function wasm_bindgen__convert__closures__invoke0_mut__h0b4167250c390cf6(a: number, b: number): void;
+export function _dyn_core__ops__function__FnMut__A____Output___R_as_wasm_bindgen__closure__WasmClosure___describe__invoke__h3c87e73e6e6e8cfd(a: number, b: number, c: number): void;
+export function _dyn_core__ops__function__FnMut__A____Output___R_as_wasm_bindgen__closure__WasmClosure___describe__invoke__hd509736037a76a7f(a: number, b: number, c: number): void;
 export function __wbindgen_free(a: number, b: number, c: number): void;
 export function __wbindgen_exn_store(a: number): void;
 export function __wbindgen_start(): void;

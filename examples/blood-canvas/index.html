@@ -1,0 +1,156 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
+  <meta name="description" content="Comfy is an ergonomic 2D game engine built in Rust. It's designed to be opinionated, productive, and easy to use.">
+
+  <title>Comfy Engine</title>
+
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-1DRWETLGBR"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'G-1DRWETLGBR');
+  </script>
+
+  <script>
+    const savedTheme = localStorage.getItem('data-bs-theme');
+    const preferredTheme = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+    const theme = savedTheme || preferredTheme;
+    document.documentElement.setAttribute('data-bs-theme', theme);
+
+    document.addEventListener('DOMContentLoaded', function () {
+      const themeSwitch = document.getElementById('comfySwitch');
+
+      // Set the checkbox state based on the current theme
+      themeSwitch.checked = theme === 'dark';
+
+      themeSwitch.addEventListener('change', function () {
+        if (themeSwitch.checked) {
+          document.documentElement.setAttribute('data-bs-theme', 'dark');
+          localStorage.setItem('data-bs-theme', 'dark');
+        } else {
+          document.documentElement.setAttribute('data-bs-theme', 'light');
+          localStorage.setItem('data-bs-theme', 'light');
+        }
+      });
+    });
+  </script>
+
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fira+Sans:wght@400;700&display=swap" />
+
+  <!-- <link -->
+  <!--   href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" -->
+  <!--   rel="stylesheet" -->
+  <!--   integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" -->
+  <!--   crossorigin="anonymous" -->
+  <!-- /> -->
+
+  <link rel="stylesheet" href="/style.css" />
+</head>
+
+<body>
+  <div class="container mb-4">
+    <header class="d-flex flex-wrap justify-content-center py-3 mb-4 border-bottom">
+      <a href="/" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto link-body-emphasis text-decoration-none">
+        <img src="/comfy.png" alt="logo of the comfy engine" class="bi me-2" width="32" height="32" />
+        <span class="fs-4"><strong>Comfy</strong></span>
+      </a>
+
+      <ul class="nav nav-pills">
+        <li class="nav-item">
+          <a href="/book" class="nav-link">Book</a>
+        </li>
+        <li class="nav-item">
+          <a href="/features" class="nav-link">Features</a>
+        </li>
+        <li class="nav-item"><a href="/examples" class="nav-link">Examples</a></li>
+        <li class="nav-item"><a href="/blog" class="nav-link">Blog</a></li>
+        <li class="nav-item">
+          <a href="https://github.com/darthdeus/comfy" class="">
+            <img class="light-github" width="40" height="40" src="/github-mark.svg" alt="Github repo" />
+            <img class="dark-github" width="40" height="40" src="/github-mark-white.svg" alt="Github repo" />
+          </a>
+        </li>
+        <li class="nav-item mx-2">
+          <a href="https://discord.com/invite/XrGZQkq" class="">
+            <img class="light-discord" height="40" src="/discord-mark-black.png" alt="Discord" />
+            <img class="dark-discord" height="40" src="/discord-mark-white.png" alt="Discord" />
+          </a>
+        </li>
+
+        <li class="ms-3 my-2">
+          <div class="form-check form-switch">
+            <input class="form-check-input" type="checkbox" role="switch" id="comfySwitch" style="cursor: pointer">
+            <label class="form-check-label" for="comfySwitch">Dark Theme</label>
+          </div>
+        </li>
+      </ul>
+
+    </header>
+
+    <section class="section">
+      <div class="container">
+<h1 class="title">blood_canvas</h1>
+<p class="subtitle"><strong>2023-10-15</strong></p>
+<pre data-lang="rust" style="background-color:#2b303b;color:#c0c5ce;" class="language-rust "><code class="language-rust" data-lang="rust"><span style="color:#b48ead;">use </span><span>comfy::*;
+</span><span>
+</span><span style="color:#65737e;">// This example might seem quite random, especially given the name.
+</span><span style="color:#65737e;">//
+</span><span style="color:#65737e;">// The blood canvas is actually something that comes from BITGUN,
+</span><span style="color:#65737e;">// our first Rust game, and something we&#39;ve ported over between many
+</span><span style="color:#65737e;">// engines (Godot, Unity, Bevy, Macroquad, Comfy).
+</span><span style="color:#65737e;">//
+</span><span style="color:#65737e;">// The way it works is that blood and other debris or permanent &quot;decals&quot;
+</span><span style="color:#65737e;">// can be written to a texture on CPU, and then drawn on top of the level
+</span><span style="color:#65737e;">// as a single sprite at Z_BLOOD_CANVAS.
+</span><span style="color:#65737e;">//
+</span><span style="color:#65737e;">// This is of course not incredibly flexible, but we&#39;ve used it in a few games
+</span><span style="color:#65737e;">// so far and found it very nice.
+</span><span style="color:#65737e;">//
+</span><span style="color:#65737e;">// The actual &quot;canvas&quot; is not just a single texture, but a grid of textures
+</span><span style="color:#65737e;">// that only get allocated on a need-to basis. Basically, once a pixel is written to
+</span><span style="color:#65737e;">// a texture 1024x1024 in that grid area gets allocated (and later reused).
+</span><span style="color:#65737e;">//
+</span><span style="color:#65737e;">// The implementation is relatively simple right now, but it is something we
+</span><span style="color:#65737e;">// want to expand on, as &quot;permanent debris&quot; is something we enjoy in games,
+</span><span style="color:#65737e;">// as it adds more immersion compared to usual &quot;disappearing particles&quot;.
+</span><span style="color:#65737e;">//
+</span><span style="color:#65737e;">// While writing to a CPU texture is not the fastest thing in the world,
+</span><span style="color:#65737e;">// _do not be afraid to call these functions_. In both BITGUN and BITGUN Survivors
+</span><span style="color:#65737e;">// we have &quot;meat particles&quot; which are simple objects that write a blood trail as they fly
+</span><span style="color:#65737e;">// on every frame, and it works just fine.
+</span><span>simple_game!(&quot;</span><span style="color:#a3be8c;">Blood Canvas</span><span>&quot;, update);
+</span><span>
+</span><span style="color:#b48ead;">fn </span><span style="color:#8fa1b3;">random_blood</span><span>() -&gt; Color {
+</span><span>    </span><span style="color:#b48ead;">static </span><span style="color:#d08770;">BLOOD_COLOR</span><span>: Color = Color { r: </span><span style="color:#d08770;">0.454</span><span>, g: </span><span style="color:#d08770;">0.113</span><span>, b: </span><span style="color:#d08770;">0.19</span><span>, a: </span><span style="color:#d08770;">1.0 </span><span>}; </span><span style="color:#65737e;">// &quot;#411d31&quot;
+</span><span>    </span><span style="color:#d08770;">BLOOD_COLOR</span><span>.</span><span style="color:#96b5b4;">darken</span><span>(</span><span style="color:#96b5b4;">random</span><span>() * </span><span style="color:#d08770;">0.2</span><span>)
+</span><span>}
+</span><span>
+</span><span style="color:#b48ead;">fn </span><span style="color:#8fa1b3;">update</span><span>(</span><span style="color:#bf616a;">_c</span><span>: &amp;</span><span style="color:#b48ead;">mut</span><span> EngineContext) {
+</span><span>    </span><span style="color:#96b5b4;">draw_text</span><span>(
+</span><span>        &quot;</span><span style="color:#a3be8c;">Click anywhere for blooooooooood!</span><span>&quot;,
+</span><span>        Vec2::</span><span style="color:#d08770;">ZERO</span><span>,
+</span><span>        </span><span style="color:#d08770;">WHITE</span><span>,
+</span><span>        TextAlign::Center,
+</span><span>    );
+</span><span>
+</span><span>    </span><span style="color:#b48ead;">if </span><span style="color:#96b5b4;">is_mouse_button_pressed</span><span>(MouseButton::Left) {
+</span><span>        </span><span style="color:#96b5b4;">blood_circle_at</span><span>(</span><span style="color:#96b5b4;">mouse_world</span><span>(), </span><span style="color:#d08770;">4</span><span>, </span><span style="color:#d08770;">0.6</span><span>, random_blood);
+</span><span>    }
+</span><span>}
+</span></code></pre>
+ </div>
+    </section>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous">
+    </script>
+</body>
+</html>

@@ -20,10 +20,27 @@
   </script>
 
   <script>
-      (function() {
-          const savedTheme = localStorage.getItem('data-bs-theme') || 'dark';  // default to 'dark' if not set
-          document.documentElement.setAttribute('data-bs-theme', savedTheme);
-      })();
+    const savedTheme = localStorage.getItem('data-bs-theme');
+    const preferredTheme = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+    const theme = savedTheme || preferredTheme;
+    document.documentElement.setAttribute('data-bs-theme', theme);
+
+    document.addEventListener('DOMContentLoaded', function () {
+      const themeSwitch = document.getElementById('comfySwitch');
+
+      // Set the checkbox state based on the current theme
+      themeSwitch.checked = theme === 'dark';
+
+      themeSwitch.addEventListener('change', function () {
+        if (themeSwitch.checked) {
+          document.documentElement.setAttribute('data-bs-theme', 'dark');
+          localStorage.setItem('data-bs-theme', 'dark');
+        } else {
+          document.documentElement.setAttribute('data-bs-theme', 'light');
+          localStorage.setItem('data-bs-theme', 'light');
+        }
+      });
+    });
   </script>
 
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fira+Sans:wght@400;700&display=swap" />
@@ -54,7 +71,7 @@
           <a href="/features" class="nav-link">Features</a>
         </li>
         <li class="nav-item"><a href="/examples" class="nav-link">Examples</a></li>
-        <li class="nav-item"><a href="/blog/first" class="nav-link">Blog</a></li>
+        <li class="nav-item"><a href="/blog" class="nav-link">Blog</a></li>
         <li class="nav-item">
           <a href="https://github.com/darthdeus/comfy" class="">
             <img class="light-github" width="40" height="40" src="/github-mark.svg" alt="Github repo" />
@@ -81,7 +98,7 @@
     <section class="section">
       <div class="container">
 <h1 class="title">particle_systems</h1>
-<p class="subtitle"><strong>2023-09-28</strong></p>
+<p class="subtitle"><strong>2023-10-15</strong></p>
 <pre data-lang="rust" style="background-color:#2b303b;color:#c0c5ce;" class="language-rust "><code class="language-rust" data-lang="rust"><span style="color:#b48ead;">use </span><span>comfy::*;
 </span><span>
 </span><span>simple_game!(&quot;</span><span style="color:#a3be8c;">Particle Systems Example</span><span>&quot;, setup, update);
@@ -226,26 +243,6 @@
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
       integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous">
-    </script>
-
-    <script>
-      document.addEventListener('DOMContentLoaded', function () {
-      const themeSwitch = document.getElementById('comfySwitch');
-      const currentTheme = document.documentElement.getAttribute('data-bs-theme') || 'dark'; // default to 'dark' if not set
-
-      // Set the checkbox state based on the current theme
-      themeSwitch.checked = currentTheme === 'dark';
-
-      themeSwitch.addEventListener('change', function () {
-          if (themeSwitch.checked && currentTheme !== 'dark') {
-              document.documentElement.setAttribute('data-bs-theme', 'dark');
-              localStorage.setItem('data-bs-theme', 'dark');
-          } else if (!themeSwitch.checked) {
-              document.documentElement.setAttribute('data-bs-theme', 'light');
-              localStorage.setItem('data-bs-theme', 'light');
-          }
-        });
-      });
     </script>
 </body>
 </html>

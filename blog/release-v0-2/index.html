@@ -1,0 +1,202 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
+  <meta name="description" content="Comfy is an ergonomic 2D game engine built in Rust. It's designed to be opinionated, productive, and easy to use.">
+
+  <title>Comfy Engine</title>
+
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-1DRWETLGBR"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'G-1DRWETLGBR');
+  </script>
+
+  <script>
+    const savedTheme = localStorage.getItem('data-bs-theme');
+    const preferredTheme = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+    const theme = savedTheme || preferredTheme;
+    document.documentElement.setAttribute('data-bs-theme', theme);
+
+    document.addEventListener('DOMContentLoaded', function () {
+      const themeSwitch = document.getElementById('comfySwitch');
+
+      // Set the checkbox state based on the current theme
+      themeSwitch.checked = theme === 'dark';
+
+      themeSwitch.addEventListener('change', function () {
+        if (themeSwitch.checked) {
+          document.documentElement.setAttribute('data-bs-theme', 'dark');
+          localStorage.setItem('data-bs-theme', 'dark');
+        } else {
+          document.documentElement.setAttribute('data-bs-theme', 'light');
+          localStorage.setItem('data-bs-theme', 'light');
+        }
+      });
+    });
+  </script>
+
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fira+Sans:wght@400;700&display=swap" />
+
+  <!-- <link -->
+  <!--   href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" -->
+  <!--   rel="stylesheet" -->
+  <!--   integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" -->
+  <!--   crossorigin="anonymous" -->
+  <!-- /> -->
+
+  <link rel="stylesheet" href="/style.css" />
+</head>
+
+<body>
+  <div class="container mb-4">
+    <header class="d-flex flex-wrap justify-content-center py-3 mb-4 border-bottom">
+      <a href="/" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto link-body-emphasis text-decoration-none">
+        <img src="/comfy.png" alt="logo of the comfy engine" class="bi me-2" width="32" height="32" />
+        <span class="fs-4"><strong>Comfy</strong></span>
+      </a>
+
+      <ul class="nav nav-pills">
+        <li class="nav-item">
+          <a href="/book" class="nav-link">Book</a>
+        </li>
+        <li class="nav-item">
+          <a href="/features" class="nav-link">Features</a>
+        </li>
+        <li class="nav-item"><a href="/examples" class="nav-link">Examples</a></li>
+        <li class="nav-item"><a href="/blog" class="nav-link">Blog</a></li>
+        <li class="nav-item">
+          <a href="https://github.com/darthdeus/comfy" class="">
+            <img class="light-github" width="40" height="40" src="/github-mark.svg" alt="Github repo" />
+            <img class="dark-github" width="40" height="40" src="/github-mark-white.svg" alt="Github repo" />
+          </a>
+        </li>
+        <li class="nav-item mx-2">
+          <a href="https://discord.com/invite/XrGZQkq" class="">
+            <img class="light-discord" height="40" src="/discord-mark-black.png" alt="Discord" />
+            <img class="dark-discord" height="40" src="/discord-mark-white.png" alt="Discord" />
+          </a>
+        </li>
+
+        <li class="ms-3 my-2">
+          <div class="form-check form-switch">
+            <input class="form-check-input" type="checkbox" role="switch" id="comfySwitch" style="cursor: pointer">
+            <label class="form-check-label" for="comfySwitch">Dark Theme</label>
+          </div>
+        </li>
+      </ul>
+
+    </header>
+
+    <section class="section">
+      <div class="container">
+<h1 class="title">Release v0.2</h1>
+<p class="subtitle"><strong>2023-10-15</strong></p>
+<p>This is a second release of Comfy at version <code>v0.2.0</code>. In short it brings some
+API improvements, greatly improved default performance on integrated GPUs (by
+disabling some heavy features), and overall a lot of bugfixes &amp; small
+performance improvements.</p>
+<h2 id="changelog">CHANGELOG</h2>
+<p>The main change in this release is that <code>EngineContext</code> is not necessary to
+pass around anymore. This should simplify a lot of the confusion, as the #1
+question about Comfy from <em>many</em> people was about <code>GameContext</code> and
+<code>EngineContext</code> and why are there two any why do we even need them.</p>
+<p>Since Comfy already uses globals for many things, it makes sense to just
+embrace this fully and move the remaining things to globals as well. Many
+of the values provided in <code>EngineContext</code> were already available through
+globals and just re-exported, so this shouldn't be a huge issue.</p>
+<p>Comfy will still use <code>EngineContext</code> internally for some things, but this
+won't be re-exported to the users as everything should be accessible by
+other means.</p>
+<p>List of removed things and where to find them now:</p>
+<ul>
+<li><code>c.delta</code> -&gt; <code>delta()</code>. This is likely going to be something that most users
+(including us) will re-export into their <code>GameContext/GameState</code> anyway.</li>
+<li><code>c.world()</code> -&gt; <code>world()</code>. ECS world already lived in a single instance, it's
+now moved into a single global.</li>
+<li><code>c.commands()</code> -&gt; <code>commands()</code>. Same as above.</li>
+<li><code>c.cooldowns()</code> -&gt; <code>cooldowns()</code>. This might be worth re-exporting into
+<code>GameContext</code> if accessed frequently, but in either way there's no extra
+overhead compared to before.</li>
+<li><code>c.mouse_world</code> -&gt; <code>mouse_world()</code>. This already existed before, and may
+also be worth re-exporting anyway.</li>
+<li><code>c.egui</code> -&gt; <code>egui()</code>. Note that before this was a field, now it's a
+global function. Though in this case <code>egui::Context</code> is already
+internally <code>Arc&lt;Mutex&lt;ContextImpl&gt;&gt;</code>, so this function is actually very
+cheap to call as it just returns a <code>&amp;'static egui::Context</code> :)</li>
+<li><code>c.egui_wants_mouse</code> -&gt; <code>egui().wants_pointer_input()</code></li>
+<li><code>c.config</code> -&gt; <code>game_config()</code> and <code>game_config_mut()</code>.</li>
+<li><code>c.cached_loader.borrow_mut()</code> -&gt; <code>cached_loader_mut()</code> (for <code>&amp;</code> just
+omit <code>_mut</code>).</li>
+<li>similarly <code>c.changes.borrow_mut()</code> -&gt; <code>changes()</code> and <code>c.notifications.borrow_mut()</code> -&gt; <code>notifications()</code>.
+The last three were undocumented and are not really intended for public
+use yet, but documenting them here anyway.</li>
+</ul>
+<p>NOTE: Comfy still includes many APIs which are not currently documented but are
+still exposed. The current goal is to work through codebase and cleanup some
+odd bits and document them at the same time. If you find something that is not
+mentioned on the website or any examples, it's very likely to change in the
+future.</p>
+<p>As a secondary note, it should be noted that comfy is still <em>very early</em> on in
+its lifecycle. Comfy will do its best not to break existing games, but we may
+need to iterate on some ideas, and some of them might be controversial, such
+as the use of globals.</p>
+<p>Comfy is not a project ran by RFCs, and while we do appreciate feedback, some
+things have to be figured out by actually using the tool to build games,
+running benchmarks, and making decisions based on real world usage.</p>
+<p>In our usage of Comfy we've found many things that many in the Rust community
+would consider &quot;bad ideas&quot; to be incredible boosts in ergonomics and
+productivity. This is something that seems to happen more often than not, and
+as such we're not really afraid to make changes like the above where a large
+portion of the state is moved into globals. If you find the above change
+unacceptable and what we had before &quot;good&quot;, maybe take a look at the source
+code and see how many globals we already had :)</p>
+<p>That being said, the #1 priority of Comfy is and always will be making real
+games. If any changes we make become problematic <em>in real world use cases</em>,
+please do report these. If you think something is slow, please submit a
+benchmark showing this. Comfy has enough examples using all of the systems, and
+a builtin integration with Tracy, so it should be easy to extend. We do care
+about reasonable games performing well on consumer hardware, but we do not care
+about being the fastest at rendering 500k particles.</p>
+<p>Our own games are not locked behind on an ancient version of Comfy, and we're
+doing our best to stay up to date with the latest changes, to make sure things
+are actually working smoothly.</p>
+<h2 id="bloom">Bloom</h2>
+<p>Comfy <code>v0.1.0</code> had bloom turned on by default. This turned out to be quite
+problematic on older integrated GPUs as some users reported, as the builtin
+bloom does 20 blur passes :)</p>
+<p>In <code>v0.2.0</code> bloom is now turned off by default. You can still enable it by
+calling <code>game_config_mut().bloom_enabled = true;</code>. There's also a <a href="https://github.com/darthdeus/comfy/blob/master/comfy/examples/bloom.rs">new
+example</a>
+that showcases bloom and how it can be configured.</p>
+<h2 id="chromatic-aberration">Chromatic aberration</h2>
+<p>Comfy <code>v0.1.0</code> also had chromatic aberration enabled by default, but
+considering this isn't even a documented feature and the API for using it is
+quite ugly we turned it off for now in <code>v0.2.0</code>. I don't think there's any
+chance anyone actually used it, but if you did, it'll come back soon I promise.</p>
+<p>Post processing is one of the things that should improve after <code>v0.2.0</code> is out,
+and we'll be able to add more effects and make them easier to use.</p>
+<h2 id="minor-changes">Minor changes:</h2>
+<ul>
+<li><code>GameConfig</code> is no longer <code>Copy</code>. This shouldn't really affect anyone in
+any way, as it was behind a <code>RefCell</code> anyway.</li>
+</ul>
+<h2 id="next-up">Next up</h2>
+<p>The global namespace is currently polluted by a lot of things. The next
+<code>v0.3.0</code> release will focus on cleaning this up and making some things more
+directly accessible (e.g. some globals which are now currently not public).</p>
+ </div>
+    </section>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous">
+    </script>
+</body>
+</html>
