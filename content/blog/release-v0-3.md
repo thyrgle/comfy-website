@@ -84,7 +84,7 @@ builds if you end up triggering a rebuild of the quicktype file.
 
 This is especially noticable if you tried to do something like
 `serde_json::from_str::<LdtkJson>(...)` in your crate. In my testing this
-easily takes a <1s build to 3-5 seconds alone.
+alone easily takes a <1s build to 3-5 seconds.
 
 A solution is surprisingly simple, we just need to define a non-generic
 function that wraps serde's generic deserializer and move it into its own
