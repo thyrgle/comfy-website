@@ -106,8 +106,8 @@ It would be interesting to see how this would compare with
 [`nanoserde`](https://docs.rs/nanoserde/latest/nanoserde/), which is
 _significantly faster to compile than serde_, but it would require some changes
 to the generated LDTK file and we just haven't had the time to do those yet.
-That being said, Comfy would like to move away from serde in the near if at all
-possible.
+That being said, Comfy would like to move away from serde in the near future if
+at all possible.
 
 On top of this, we also provide a few extension traits for LDTK's types that
 make working with it a little more convenient. Please keep in mind that LDTK
