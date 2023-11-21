@@ -13,7 +13,7 @@ Rust. If you've used [macroquad](https://macroquad.rs/),
 feel right at home. If you haven't, don't worry, Comfy is designed to a nice
 environment for making games.
 
-If you just want to see some code, check out the [examples](/examples), which
+**If you just want to see some code, check out the [examples](/examples)**, which
 while not exhaustive should cover most of the basics. Notably, the
 [`full_game_loop`](https://github.com/darthdeus/comfy/blob/master/comfy/examples/full_game_loop.rs)
 example strips away all of comfy's macros and shows a simple setup for a game
@@ -30,6 +30,12 @@ public immediate mode APIs you can use directly if you prefer, and which are
 also used in many of the examples. You should not feel limited by the existing ECS types,
 they mainly exist as an evolution of what we use for our own games, but comfy should be flexible
 enough so you can build games in whatever way you prefer.
+
+It should be noted that while Comfy doesn't have extensive documentation, we do
+have quite a few examples that showcase almost everything users have
+needed/asked for. **Please take a look at the [existing
+examples](https://github.com/darthdeus/comfy/tree/master/comfy/examples), it's
+very likely they'll be able to answer most of your questions :)**
 
 ## Drawing a red circle
 
