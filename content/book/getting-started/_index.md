@@ -112,6 +112,89 @@ gameplay code, and also because while it may not be the most performant
 approach, it's still very very fast, and for most games won't even show up in a
 profiler.
 
+## Optimizations in debug builds
+
+While Rust as a language can be incredibly fast and efficient, it is _very_
+slow in debug builds with no additional configuration. Fortunately, there's a
+very simple change you can make that won't have any negative impact and will
+just make everything significantly faster. Copy paste the following lines into
+your `Cargo.toml`:
+
+```toml
+[profile.dev]
+opt-level = 1
+[profile.dev.package."*"]
+opt-level = 1
+```
+
+This will enable some level of optimizations for your game code, Comfy, and all
+of the dependencies. At level 1 it shouldn't really affect compile times, and
+in some cases it actually makes things compile faster because Rust's procedural
+macros benefit from optimizations, and they usually account for a large portion
+of compile times.
+
+If you'd like to go a step further and improve your compile times, here's
+another trick. By default Rust will use a very slow linker.
+
+On Linux this is very easy with the [`mold`
+linker](https://github.com/rui314/mold) which is incredibly fast and is
+available in your distro's package manager (e.g. `sudo pacman -S mold clang` on
+Arch Linux).
+
+```toml
+[target.x86_64-unknown-linux-gnu]
+linker = "clang"
+rustflags = ["-Clink-arg=-fuse-ld=mold", "-Zshare-generics=y"]
+```
+
+One of the options is `-Zshare-generics=y` which generally helps, but requires
+the Nightly version of the Rust compiler. You can get this with `rustup default
+nightly`, which on its own should also improve compile times a little bit just
+by having more of the newer features. We've been running nightly `rustc` on dev
+machines for over two years and in general would recommend it, as the number of
+issues one runs into is extremely small. I don't even remember the last time we
+had an issue due to using nightly. If you'd like to use the stable version of
+`rustc`, simply remove `-Zshare-generics=y` from all of the configurations.
+
+On MacOS the situation is a bit more complicatedl there's a now deprecated
+[`zld` linker](https://github.com/michaeleisel/zld), and a commercial MacOS
+version of `mold` which is called
+[`sold`](https://github.com/bluewhalesystems/sold).
+
+This is something where you'll have to play around a bit and see what you can
+get working, but here's an example of using `zld` on Intel MacOS and default
+linker but with `share-generics=y` on ARM.
+
+```toml
+[target.x86_64-apple-darwin]
+rustflags = ["-C", "link-arg=-fuse-ld=/usr/local/bin/zld", "-Zshare-generics=y"]
+
+[target.aarch64-apple-darwin]
+rustflags = ["-Zshare-generics=y"]
+```
+
+On Windows you'll have to intsall a few dependencies
+
+```
+cargo install -f cargo-binutils
+rustup component add llvm-tools-preview
+```
+
+and then the following should work
+
+```toml
+[target.x86_64-pc-windows-msvc]
+linker = "rust-lld.exe"
+rustflags = []
+```
+
+# Optional: Uncommenting the following improves compile times, but reduces the amount of debug info to 'line number tables only'
+# In most cases the gains are negligible, but if you are on macos and have slow compile times you should see significant gains.
+#[profile.dev]
+#debug = 1
+```
+
+
 ## simple game with `setup`
 
 Continuing from the previous example, let's say we want to draw a sprite
