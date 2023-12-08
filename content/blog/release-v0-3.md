@@ -1,6 +1,6 @@
 +++
-title = "Release v0.3: No Lifetimes, User Shaders, Text Rendering, 2.5D, LDTK
-date = 2023-11-21
+title = "Release v0.3: No Lifetimes, User Shaders, Text Rendering, 2.5D, LDTK"
+date = 2023-12-07
 +++
 
 Much like overscoping is a problem in game development, I've just realized it's
@@ -59,7 +59,11 @@ While "3D" may sound like a big deal for an initially 2D engine, **we very much
 want to avoid over-hyping this feature.** This essentially just means [using a
 perspective camera with
 `glam`](https://docs.rs/glam/latest/glam/f32/struct.Mat4.html#method.perspective_rh)
-and a few tweaks to allow users to configure this. Comfy does support drawing
+and a few tweaks to allow users to configure this. If you'd like to see how
+this works, take a look at [the perspective camera
+example](https://github.com/darthdeus/comfy/blob/master/comfy/examples/perspective-camera.rs).
+
+Comfy does support drawing
 arbitrary meshes with `draw_mesh_ex`, and now with custom fragment shaders this
 can probably be taken a bit further than one could expect. But the ergonomics
 around 3D are very much not ready yet. For example Comfy does not support
@@ -126,5 +130,3 @@ There are quite a few issues that were planned for `v0.3` that didn't make it
 into the release, and if someone has something they need fixed sooner rather
 than later feel free to ping @darth on Discord. There's a lot of stuff
 happening around Comfy at the same time, and I do forget things quite often :)
-
-As for the upcoming features,
