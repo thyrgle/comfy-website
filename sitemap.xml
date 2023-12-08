@@ -15,6 +15,10 @@
         <lastmod>2023-10-15</lastmod>
     </url>
     <url>
+        <loc>https://comfyengine.org/blog/release-v0-3/</loc>
+        <lastmod>2023-12-07</lastmod>
+    </url>
+    <url>
         <loc>https://comfyengine.org/book/</loc>
     </url>
     <url>
@@ -42,106 +46,141 @@
         <loc>https://comfyengine.org/book/other_engines/</loc>
     </url>
     <url>
+        <loc>https://comfyengine.org/book/releasing/</loc>
+    </url>
+    <url>
         <loc>https://comfyengine.org/book/roadmap/</loc>
     </url>
     <url>
         <loc>https://comfyengine.org/examples/</loc>
     </url>
     <url>
+        <loc>https://comfyengine.org/examples/alpha-sprite/</loc>
+        <lastmod>2023-12-08</lastmod>
+    </url>
+    <url>
         <loc>https://comfyengine.org/examples/animated-shapes/</loc>
-        <lastmod>2023-10-15</lastmod>
+        <lastmod>2023-12-08</lastmod>
     </url>
     <url>
         <loc>https://comfyengine.org/examples/animated-sprites/</loc>
-        <lastmod>2023-10-15</lastmod>
+        <lastmod>2023-12-08</lastmod>
     </url>
     <url>
         <loc>https://comfyengine.org/examples/animated-text/</loc>
-        <lastmod>2023-10-15</lastmod>
+        <lastmod>2023-12-08</lastmod>
     </url>
     <url>
         <loc>https://comfyengine.org/examples/blood-canvas/</loc>
-        <lastmod>2023-10-15</lastmod>
+        <lastmod>2023-12-08</lastmod>
     </url>
     <url>
         <loc>https://comfyengine.org/examples/bloom/</loc>
-        <lastmod>2023-10-15</lastmod>
+        <lastmod>2023-12-08</lastmod>
     </url>
     <url>
         <loc>https://comfyengine.org/examples/circle/</loc>
-        <lastmod>2023-10-15</lastmod>
+        <lastmod>2023-12-08</lastmod>
+    </url>
+    <url>
+        <loc>https://comfyengine.org/examples/colors/</loc>
+        <lastmod>2023-12-08</lastmod>
     </url>
     <url>
         <loc>https://comfyengine.org/examples/cooldowns/</loc>
-        <lastmod>2023-10-15</lastmod>
-    </url>
-    <url>
-        <loc>https://comfyengine.org/examples/custom-config/</loc>
-        <lastmod>2023-09-28</lastmod>
+        <lastmod>2023-12-08</lastmod>
     </url>
     <url>
         <loc>https://comfyengine.org/examples/custom-fonts/</loc>
-        <lastmod>2023-10-15</lastmod>
+        <lastmod>2023-12-08</lastmod>
     </url>
     <url>
         <loc>https://comfyengine.org/examples/ecs-sprite/</loc>
-        <lastmod>2023-10-15</lastmod>
+        <lastmod>2023-12-08</lastmod>
     </url>
     <url>
         <loc>https://comfyengine.org/examples/ecs-topdown-game/</loc>
-        <lastmod>2023-10-15</lastmod>
+        <lastmod>2023-12-08</lastmod>
+    </url>
+    <url>
+        <loc>https://comfyengine.org/examples/egui/</loc>
+        <lastmod>2023-12-08</lastmod>
+    </url>
+    <url>
+        <loc>https://comfyengine.org/examples/exr-hdr-image/</loc>
+        <lastmod>2023-12-08</lastmod>
+    </url>
+    <url>
+        <loc>https://comfyengine.org/examples/fragment-shader/</loc>
+        <lastmod>2023-12-08</lastmod>
+    </url>
+    <url>
+        <loc>https://comfyengine.org/examples/framerate-vsync/</loc>
+        <lastmod>2023-12-08</lastmod>
     </url>
     <url>
         <loc>https://comfyengine.org/examples/full-game-loop/</loc>
-        <lastmod>2023-10-15</lastmod>
+        <lastmod>2023-12-08</lastmod>
+    </url>
+    <url>
+        <loc>https://comfyengine.org/examples/ldtk/</loc>
+        <lastmod>2023-12-08</lastmod>
     </url>
     <url>
         <loc>https://comfyengine.org/examples/lighting/</loc>
-        <lastmod>2023-10-15</lastmod>
+        <lastmod>2023-12-08</lastmod>
     </url>
     <url>
         <loc>https://comfyengine.org/examples/music/</loc>
-        <lastmod>2023-10-15</lastmod>
+        <lastmod>2023-12-08</lastmod>
     </url>
     <url>
         <loc>https://comfyengine.org/examples/particle-systems/</loc>
-        <lastmod>2023-10-15</lastmod>
+        <lastmod>2023-12-08</lastmod>
+    </url>
+    <url>
+        <loc>https://comfyengine.org/examples/perspective-camera/</loc>
+        <lastmod>2023-12-08</lastmod>
     </url>
     <url>
         <loc>https://comfyengine.org/examples/physics/</loc>
-        <lastmod>2023-10-15</lastmod>
+        <lastmod>2023-12-08</lastmod>
     </url>
     <url>
-        <loc>https://comfyengine.org/examples/post-processing/</loc>
-        <lastmod>2023-09-24</lastmod>
+        <loc>https://comfyengine.org/examples/render-target/</loc>
+        <lastmod>2023-12-08</lastmod>
     </url>
     <url>
         <loc>https://comfyengine.org/examples/shapes/</loc>
-        <lastmod>2023-10-15</lastmod>
+        <lastmod>2023-12-08</lastmod>
     </url>
     <url>
         <loc>https://comfyengine.org/examples/single-particle/</loc>
-        <lastmod>2023-10-15</lastmod>
+        <lastmod>2023-12-08</lastmod>
     </url>
     <url>
         <loc>https://comfyengine.org/examples/sound/</loc>
-        <lastmod>2023-10-15</lastmod>
+        <lastmod>2023-12-08</lastmod>
     </url>
     <url>
         <loc>https://comfyengine.org/examples/sprite/</loc>
-        <lastmod>2023-10-15</lastmod>
+        <lastmod>2023-12-08</lastmod>
     </url>
     <url>
         <loc>https://comfyengine.org/examples/text/</loc>
-        <lastmod>2023-10-15</lastmod>
+        <lastmod>2023-12-08</lastmod>
     </url>
     <url>
         <loc>https://comfyengine.org/examples/timed-draw/</loc>
-        <lastmod>2023-10-15</lastmod>
+        <lastmod>2023-12-08</lastmod>
+    </url>
+    <url>
+        <loc>https://comfyengine.org/examples/version/</loc>
+        <lastmod>2023-12-08</lastmod>
     </url>
     <url>
         <loc>https://comfyengine.org/examples/y-sort/</loc>
-        <lastmod>2023-10-15</lastmod>
+        <lastmod>2023-12-08</lastmod>
     </url>
     <url>
         <loc>https://comfyengine.org/features/</loc>

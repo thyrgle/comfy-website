@@ -275,6 +275,31 @@
 
     <li class="nav-item">
         <div class="tree-menu__label">
+            <a class="nav-link " aria-current="page" tree-menu__link" href="&#x2F;book&#x2F;releasing&#x2F;">Releasing Your Game</a>
+            
+        </div>
+        
+    </li>
+
+        
+            
+    
+    
+    
+    
+    
+    
+
+    
+        
+    
+
+    
+
+    
+
+    <li class="nav-item">
+        <div class="tree-menu__label">
             <a class="nav-link " aria-current="page" tree-menu__link" href="&#x2F;book&#x2F;contributing&#x2F;">Contributing</a>
             
         </div>
@@ -365,7 +390,7 @@ Rust. If you've used <a href="https://macroquad.rs/">macroquad</a>,
 <a href="https://www.raylib.com/">Raylib</a>, or <a href="https://love2d.org/">Love2D</a> you should
 feel right at home. If you haven't, don't worry, Comfy is designed to a nice
 environment for making games.</p>
-<p>If you just want to see some code, check out the <a href="/examples">examples</a>, which
+<p><strong>If you just want to see some code, check out the <a href="/examples">examples</a></strong>, which
 while not exhaustive should cover most of the basics. Notably, the
 <a href="https://github.com/darthdeus/comfy/blob/master/comfy/examples/full_game_loop.rs"><code>full_game_loop</code></a>
 example strips away all of comfy's macros and shows a simple setup for a game
@@ -380,6 +405,11 @@ public immediate mode APIs you can use directly if you prefer, and which are
 also used in many of the examples. You should not feel limited by the existing ECS types,
 they mainly exist as an evolution of what we use for our own games, but comfy should be flexible
 enough so you can build games in whatever way you prefer.</p>
+<p>It should be noted that while Comfy doesn't have extensive documentation, we do
+have quite a few examples that showcase almost everything users have
+needed/asked for. <strong>Please take a look at the <a href="https://github.com/darthdeus/comfy/tree/master/comfy/examples">existing
+examples</a>, it's
+very likely they'll be able to answer most of your questions :)</strong></p>
 <h2 id="drawing-a-red-circle">Drawing a red circle<a class="zola-anchor" href="#drawing-a-red-circle" aria-label="Anchor link for: drawing-a-red-circle">🔗</a></h2>
 <ol>
 <li>
@@ -446,38 +476,103 @@ engine then later processes the draw queue, batches all the calls, handles
 gameplay code, and also because while it may not be the most performant
 approach, it's still very very fast, and for most games won't even show up in a
 profiler.</p>
-<h2 id="simple-game-with-setup">simple game with <code>setup</code><a class="zola-anchor" href="#simple-game-with-setup" aria-label="Anchor link for: simple-game-with-setup">🔗</a></h2>
-<p>Continuing from the previous example, let's say we want to draw a sprite
-instead of a boring circle. This creates a new problem, <em>how do we load
-assets</em>?</p>
-<p>Comfy does not use any kind of complicated asset management solution. We do
-have a parallel asset loader, but let's begin simple with just one sprite.</p>
-<pre data-lang="rust" style="background-color:#2b303b;color:#c0c5ce;" class="language-rust "><code class="language-rust" data-lang="rust"><span style="color:#b48ead;">use </span><span>comfy::*;
+<h2 id="optimizations-in-debug-builds">Optimizations in debug builds<a class="zola-anchor" href="#optimizations-in-debug-builds" aria-label="Anchor link for: optimizations-in-debug-builds">🔗</a></h2>
+<p>While Rust as a language can be incredibly fast and efficient, it is <em>very</em>
+slow in debug builds with no additional configuration. Fortunately, there's a
+very simple change you can make that won't have any negative impact and will
+just make everything significantly faster. Copy paste the following lines into
+your <code>Cargo.toml</code>:</p>
+<pre data-lang="toml" style="background-color:#2b303b;color:#c0c5ce;" class="language-toml "><code class="language-toml" data-lang="toml"><span>[profile.dev]
+</span><span style="color:#bf616a;">opt-level </span><span>= </span><span style="color:#d08770;">1
+</span><span>[profile.dev.package.&quot;</span><span style="color:#a3be8c;">*</span><span>&quot;]
+</span><span style="color:#bf616a;">opt-level </span><span>= </span><span style="color:#d08770;">1
+</span></code></pre>
+<p>This will enable some level of optimizations for your game code, Comfy, and all
+of the dependencies. At level 1 it shouldn't really affect compile times, and
+in some cases it actually makes things compile faster because Rust's procedural
+macros benefit from optimizations, and they usually account for a large portion
+of compile times.</p>
+<p>If you'd like to go a step further and improve your compile times, here's
+another trick. By default Rust will use a very slow linker.</p>
+<p>On Linux this is very easy with the <a href="https://github.com/rui314/mold"><code>mold</code>
+linker</a> which is incredibly fast and is
+available in your distro's package manager (e.g. <code>sudo pacman -S mold clang</code> on
+Arch Linux).</p>
+<pre data-lang="toml" style="background-color:#2b303b;color:#c0c5ce;" class="language-toml "><code class="language-toml" data-lang="toml"><span>[target.x86_64-unknown-linux-gnu]
+</span><span style="color:#bf616a;">linker </span><span>= &quot;</span><span style="color:#a3be8c;">clang</span><span>&quot;
+</span><span style="color:#bf616a;">rustflags </span><span>= [&quot;</span><span style="color:#a3be8c;">-Clink-arg=-fuse-ld=mold</span><span>&quot;, &quot;</span><span style="color:#a3be8c;">-Zshare-generics=y</span><span>&quot;]
+</span></code></pre>
+<p>One of the options is <code>-Zshare-generics=y</code> which generally helps, but requires
+the Nightly version of the Rust compiler. You can get this with <code>rustup default nightly</code>, which on its own should also improve compile times a little bit just
+by having more of the newer features. We've been running nightly <code>rustc</code> on dev
+machines for over two years and in general would recommend it, as the number of
+issues one runs into is extremely small. I don't even remember the last time we
+had an issue due to using nightly. If you'd like to use the stable version of
+<code>rustc</code>, simply remove <code>-Zshare-generics=y</code> from all of the configurations.</p>
+<p>On MacOS the situation is a bit more complicatedl there's a now deprecated
+<a href="https://github.com/michaeleisel/zld"><code>zld</code> linker</a>, and a commercial MacOS
+version of <code>mold</code> which is called
+<a href="https://github.com/bluewhalesystems/sold"><code>sold</code></a>.</p>
+<p>This is something where you'll have to play around a bit and see what you can
+get working, but here's an example of using <code>zld</code> on Intel MacOS and default
+linker but with <code>share-generics=y</code> on ARM.</p>
+<pre data-lang="toml" style="background-color:#2b303b;color:#c0c5ce;" class="language-toml "><code class="language-toml" data-lang="toml"><span>[target.x86_64-apple-darwin]
+</span><span style="color:#bf616a;">rustflags </span><span>= [&quot;</span><span style="color:#a3be8c;">-C</span><span>&quot;, &quot;</span><span style="color:#a3be8c;">link-arg=-fuse-ld=/usr/local/bin/zld</span><span>&quot;, &quot;</span><span style="color:#a3be8c;">-Zshare-generics=y</span><span>&quot;]
 </span><span>
-</span><span>simple_game!(&quot;</span><span style="color:#a3be8c;">Sprite Example</span><span>&quot;, setup, update);
+</span><span>[target.aarch64-apple-darwin]
+</span><span style="color:#bf616a;">rustflags </span><span>= [&quot;</span><span style="color:#a3be8c;">-Zshare-generics=y</span><span>&quot;]
+</span></code></pre>
+<p>On Windows you'll have to intsall a few dependencies</p>
+<pre style="background-color:#2b303b;color:#c0c5ce;"><code><span>cargo install -f cargo-binutils
+</span><span>rustup component add llvm-tools-preview
+</span></code></pre>
+<p>and then the following should work</p>
+<pre data-lang="toml" style="background-color:#2b303b;color:#c0c5ce;" class="language-toml "><code class="language-toml" data-lang="toml"><span>[target.x86_64-pc-windows-msvc]
+</span><span style="color:#bf616a;">linker </span><span>= &quot;</span><span style="color:#a3be8c;">rust-lld.exe</span><span>&quot;
+</span><span style="color:#bf616a;">rustflags </span><span>= []
+</span></code></pre>
+<h1 id="optional-uncommenting-the-following-improves-compile-times-but-reduces-the-amount-of-debug-info-to-line-number-tables-only">Optional: Uncommenting the following improves compile times, but reduces the amount of debug info to 'line number tables only'<a class="zola-anchor" href="#optional-uncommenting-the-following-improves-compile-times-but-reduces-the-amount-of-debug-info-to-line-number-tables-only" aria-label="Anchor link for: optional-uncommenting-the-following-improves-compile-times-but-reduces-the-amount-of-debug-info-to-line-number-tables-only">🔗</a></h1>
+<h1 id="in-most-cases-the-gains-are-negligible-but-if-you-are-on-macos-and-have-slow-compile-times-you-should-see-significant-gains">In most cases the gains are negligible, but if you are on macos and have slow compile times you should see significant gains.<a class="zola-anchor" href="#in-most-cases-the-gains-are-negligible-but-if-you-are-on-macos-and-have-slow-compile-times-you-should-see-significant-gains" aria-label="Anchor link for: in-most-cases-the-gains-are-negligible-but-if-you-are-on-macos-and-have-slow-compile-times-you-should-see-significant-gains">🔗</a></h1>
+<p>#[profile.dev]
+#debug = 1</p>
+<pre style="background-color:#2b303b;color:#c0c5ce;"><code><span>
 </span><span>
-</span><span style="color:#b48ead;">fn </span><span style="color:#8fa1b3;">setup</span><span>(</span><span style="color:#bf616a;">c</span><span>: &amp;</span><span style="color:#b48ead;">mut</span><span> EngineContext) {
-</span><span>    c.</span><span style="color:#96b5b4;">load_texture_from_bytes</span><span>(
-</span><span>        </span><span style="color:#65737e;">// Name of our sprite
-</span><span>        &quot;</span><span style="color:#a3be8c;">comfy</span><span>&quot;,
-</span><span>        </span><span style="color:#65737e;">// &amp;[u8] with the image data.
-</span><span>        include_bytes!(&quot;</span><span style="color:#a3be8c;">assets/comfy.png</span><span>&quot;)
+</span><span>## simple game with `setup`
+</span><span>
+</span><span>Continuing from the previous example, let&#39;s say we want to draw a sprite
+</span><span>instead of a boring circle. This creates a new problem, _how do we load
+</span><span>assets_?
+</span><span>
+</span><span>Comfy does not use any kind of complicated asset management solution. We do
+</span><span>have a parallel asset loader, but let&#39;s begin simple with just one sprite.
+</span><span>
+</span><span>```rust
+</span><span>use comfy::*;
+</span><span>
+</span><span>simple_game!(&quot;Sprite Example&quot;, setup, update);
+</span><span>
+</span><span>fn setup(c: &amp;mut EngineContext) {
+</span><span>    c.load_texture_from_bytes(
+</span><span>        // Name of our sprite
+</span><span>        &quot;comfy&quot;,
+</span><span>        // &amp;[u8] with the image data.
+</span><span>        include_bytes!(&quot;assets/comfy.png&quot;)
 </span><span>    );
 </span><span>}
 </span><span>
-</span><span style="color:#b48ead;">fn </span><span style="color:#8fa1b3;">update</span><span>(</span><span style="color:#bf616a;">_c</span><span>: &amp;</span><span style="color:#b48ead;">mut</span><span> EngineContext) {
-</span><span>    </span><span style="color:#96b5b4;">draw_sprite</span><span>(
-</span><span>        </span><span style="color:#65737e;">// Sprites are referenced with their string name.
-</span><span>        </span><span style="color:#65737e;">// Comfy doesn&#39;t use asset handles.
-</span><span>        </span><span style="color:#96b5b4;">texture_id</span><span>(&quot;</span><span style="color:#a3be8c;">comfy</span><span>&quot;),
-</span><span>        </span><span style="color:#65737e;">// position
-</span><span>        Vec2::</span><span style="color:#d08770;">ZERO</span><span>,
-</span><span>        </span><span style="color:#65737e;">// color tint
-</span><span>        </span><span style="color:#d08770;">WHITE</span><span>,
-</span><span>        </span><span style="color:#65737e;">// z_index
-</span><span>        </span><span style="color:#d08770;">0</span><span>,
-</span><span>        </span><span style="color:#65737e;">// size
-</span><span>        </span><span style="color:#96b5b4;">splat</span><span>(</span><span style="color:#d08770;">5.0</span><span>),
+</span><span>fn update(_c: &amp;mut EngineContext) {
+</span><span>    draw_sprite(
+</span><span>        // Sprites are referenced with their string name.
+</span><span>        // Comfy doesn&#39;t use asset handles.
+</span><span>        texture_id(&quot;comfy&quot;),
+</span><span>        // position
+</span><span>        Vec2::ZERO,
+</span><span>        // color tint
+</span><span>        WHITE,
+</span><span>        // z_index
+</span><span>        0,
+</span><span>        // size
+</span><span>        splat(5.0),
 </span><span>    );
 </span><span>}
 </span></code></pre>
@@ -493,7 +588,7 @@ annoying to work with when all you want is to say &quot;draw this sprite&quot;.<
 too high, you can simply cache the result. That being said, we've never
 observed any of this to be a problem in our games.</p>
 <p>When you look around the examples in comfy, notably the <a href="https://github.com/darthdeus/comfy/blob/master/comfy/examples/sprite.rs">sprite
-exampe</a>
+example</a>
 you'll notice that we're actually calling <code>include_bytes!(...)</code> like this.</p>
 <pre data-lang="rust" style="background-color:#2b303b;color:#c0c5ce;" class="language-rust "><code class="language-rust" data-lang="rust"><span>include_bytes!(concat!(env!(&quot;</span><span style="color:#a3be8c;">CARGO_MANIFEST_DIR</span><span>&quot;), &quot;</span><span style="color:#a3be8c;">/../assets/comfy.png</span><span>&quot;))
 </span></code></pre>

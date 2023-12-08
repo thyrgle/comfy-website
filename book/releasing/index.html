@@ -1,0 +1,474 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
+  <meta name="description" content="Comfy is an ergonomic 2D game engine built in Rust. It's designed to be opinionated, productive, and easy to use.">
+
+  <title>Comfy Engine</title>
+
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-1DRWETLGBR"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'G-1DRWETLGBR');
+  </script>
+
+  <script>
+    const savedTheme = localStorage.getItem('data-bs-theme');
+    const preferredTheme = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+    const theme = savedTheme || preferredTheme;
+    document.documentElement.setAttribute('data-bs-theme', theme);
+
+    document.addEventListener('DOMContentLoaded', function () {
+      const themeSwitch = document.getElementById('comfySwitch');
+
+      // Set the checkbox state based on the current theme
+      themeSwitch.checked = theme === 'dark';
+
+      themeSwitch.addEventListener('change', function () {
+        if (themeSwitch.checked) {
+          document.documentElement.setAttribute('data-bs-theme', 'dark');
+          localStorage.setItem('data-bs-theme', 'dark');
+        } else {
+          document.documentElement.setAttribute('data-bs-theme', 'light');
+          localStorage.setItem('data-bs-theme', 'light');
+        }
+      });
+    });
+  </script>
+
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fira+Sans:wght@400;700&display=swap" />
+
+  <!-- <link -->
+  <!--   href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" -->
+  <!--   rel="stylesheet" -->
+  <!--   integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" -->
+  <!--   crossorigin="anonymous" -->
+  <!-- /> -->
+
+  <link rel="stylesheet" href="/style.css" />
+</head>
+
+<body>
+  <div class="container mb-4">
+    <header class="d-flex flex-wrap justify-content-center py-3 mb-4 border-bottom">
+      <a href="/" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto link-body-emphasis text-decoration-none">
+        <img src="/comfy.png" alt="logo of the comfy engine" class="bi me-2" width="32" height="32" />
+        <span class="fs-4"><strong>Comfy</strong></span>
+      </a>
+
+      <ul class="nav nav-pills">
+        <li class="nav-item">
+          <a href="/book" class="nav-link">Book</a>
+        </li>
+        <li class="nav-item">
+          <a href="/features" class="nav-link">Features</a>
+        </li>
+        <li class="nav-item"><a href="/examples" class="nav-link">Examples</a></li>
+        <li class="nav-item"><a href="/blog" class="nav-link">Blog</a></li>
+        <li class="nav-item">
+          <a href="https://github.com/darthdeus/comfy" class="">
+            <img class="light-github" width="40" height="40" src="/github-mark.svg" alt="Github repo" />
+            <img class="dark-github" width="40" height="40" src="/github-mark-white.svg" alt="Github repo" />
+          </a>
+        </li>
+        <li class="nav-item mx-2">
+          <a href="https://discord.gg/6NGGGTUz7x" class="">
+            <img class="light-discord" height="40" src="/discord-mark-black.png" alt="Discord" />
+            <img class="dark-discord" height="40" src="/discord-mark-white.png" alt="Discord" />
+          </a>
+        </li>
+
+        <li class="ms-3 my-2">
+          <div class="form-check form-switch">
+            <input class="form-check-input" type="checkbox" role="switch" id="comfySwitch" style="cursor: pointer">
+            <label class="form-check-label" for="comfySwitch">Dark Theme</label>
+          </div>
+        </li>
+      </ul>
+
+    </header>
+
+    <section class="section">
+      <div class="container">
+
+<section>
+  <div class="row">
+    <div class="col-md-3">
+      
+      
+      
+    <ul class="nav flex-column">
+        
+            
+    
+    
+    
+    
+    
+    
+
+    
+        
+    
+
+    
+
+    
+
+    <li class="nav-item">
+        <div class="tree-menu__label">
+            <a class="nav-link " aria-current="page" tree-menu__link" href="&#x2F;book&#x2F;getting-started&#x2F;">Getting Started</a>
+            
+        </div>
+        
+    </li>
+
+        
+            
+    
+    
+    
+    
+    
+    
+
+    
+        
+    
+
+    
+
+    
+
+    <li class="nav-item">
+        <div class="tree-menu__label">
+            <a class="nav-link " aria-current="page" tree-menu__link" href="&#x2F;book&#x2F;camera&#x2F;">Camera</a>
+            
+        </div>
+        
+    </li>
+
+        
+            
+    
+    
+    
+    
+    
+    
+
+    
+        
+    
+
+    
+
+    
+
+    <li class="nav-item">
+        <div class="tree-menu__label">
+            <a class="nav-link " aria-current="page" tree-menu__link" href="&#x2F;book&#x2F;context&#x2F;">Context</a>
+            
+        </div>
+        
+    </li>
+
+        
+            
+    
+    
+    
+    
+    
+    
+
+    
+        
+    
+
+    
+
+    
+
+    <li class="nav-item">
+        <div class="tree-menu__label">
+            <a class="nav-link " aria-current="page" tree-menu__link" href="&#x2F;book&#x2F;ecs&#x2F;">ECS</a>
+            
+        </div>
+        
+    </li>
+
+        
+            
+    
+    
+    
+    
+    
+    
+
+    
+        
+    
+
+    
+
+    
+
+    <li class="nav-item">
+        <div class="tree-menu__label">
+            <a class="nav-link " aria-current="page" tree-menu__link" href="&#x2F;book&#x2F;other_engines&#x2F;">Why comfy and not X?</a>
+            
+        </div>
+        
+    </li>
+
+        
+            
+    
+    
+    
+    
+    
+    
+
+    
+        
+    
+
+    
+
+    
+
+    <li class="nav-item">
+        <div class="tree-menu__label">
+            <a class="nav-link " aria-current="page" tree-menu__link" href="&#x2F;book&#x2F;roadmap&#x2F;">Roadmap</a>
+            
+        </div>
+        
+    </li>
+
+        
+            
+    
+    
+    
+    
+    
+    
+
+    
+        
+        
+    
+
+    
+
+    
+
+    <li class="nav-item">
+        <div class="tree-menu__label">
+            <a class="nav-link disabled" aria-current="page" tree-menu__link" href="&#x2F;book&#x2F;releasing&#x2F;">Releasing Your Game</a>
+            
+        </div>
+        
+    </li>
+
+        
+            
+    
+    
+    
+    
+    
+    
+
+    
+        
+    
+
+    
+
+    
+
+    <li class="nav-item">
+        <div class="tree-menu__label">
+            <a class="nav-link " aria-current="page" tree-menu__link" href="&#x2F;book&#x2F;contributing&#x2F;">Contributing</a>
+            
+        </div>
+        
+    </li>
+
+        
+            
+    
+    
+    
+    
+    
+    
+
+    
+        
+    
+
+    
+
+    
+
+    <li class="nav-item">
+        <div class="tree-menu__label">
+            <a class="nav-link " aria-current="page" tree-menu__link" href="&#x2F;book&#x2F;games_using_comfy&#x2F;">Games Using Comfy</a>
+            
+        </div>
+        
+    </li>
+
+        
+            
+    
+    
+    
+    
+    
+    
+
+    
+        
+    
+
+    
+
+    
+
+    <li class="nav-item">
+        <div class="tree-menu__label">
+            <a class="nav-link " aria-current="page" tree-menu__link" href="&#x2F;book&#x2F;credits&#x2F;">Credits</a>
+            
+        </div>
+        
+    </li>
+
+        
+    </ul>
+
+
+    </div>
+    <div class="col-md-9">
+
+      <div class="docs-page">
+          <div class="docs-content">
+              
+              
+              
+              
+
+              
+
+              
+              
+              
+              
+
+              
+
+              <h1>
+                  
+                      Releasing Your Game
+                  
+                  
+              </h1>
+              <div class="media-content"><p>This section covers the general steps to take when you want to release your
+game to players, be it just for playtesting, or for a final release on a
+platform like Steam or Itch.io.</p>
+<h2 id="release-builds">Release builds<a class="zola-anchor" href="#release-builds" aria-label="Anchor link for: release-builds">🔗</a></h2>
+<p>By default Comfy might turn on some debug features, such as the FPS performance
+window. You can enable a <code>ci-release</code> feature with <code>cargo</code> that should be
+viewed as <em>do what makes sense for a release build</em>. The reason it's named
+<code>ci-release</code> is that <code>cargo</code> already has a <code>--release</code> flag, and it's likely
+you might want to create release builds in CI anyway :)</p>
+<p>To build a release build, run the following</p>
+<pre data-lang="bash" style="background-color:#2b303b;color:#c0c5ce;" class="language-bash "><code class="language-bash" data-lang="bash"><span style="color:#bf616a;">cargo</span><span> run</span><span style="color:#bf616a;"> --release --features</span><span> comfy/ci-release
+</span></code></pre>
+<p>The <code>--release</code> flag enables release optimizations with the Rust compiler,
+which will make your game run a bit faster depending on your dev config. If you
+haven't enabled any optimizations in development (say with <code>opt-level = 1</code>)
+this will end up being <em>significantly</em> faster than your debug builds. Note that
+building with <code>--release</code> takes noticably longer.</p>
+<p>After this, you should have a <code>game-name.exe</code> under <code>target/release</code>, where <code>game-name</code>
+is the name of your binary crate.</p>
+<p>If you're using <code>include_bytes!(...)</code> or Comfy's parallel asset loader you
+don't need to distribute any other file, as everything will be packed into the
+executable :)</p>
+<p>If you're loading assets/shaders by hand using <code>std::fs::read</code> or similar
+you'll have to make sure you pack and distribute your assets with the built
+binary.</p>
+<h2 id="wasm-web-builds-with-itch-io">WASM (Web) builds with Itch.io<a class="zola-anchor" href="#wasm-web-builds-with-itch-io" aria-label="Anchor link for: wasm-web-builds-with-itch-io">🔗</a></h2>
+<p>Comfy does natively support web builds with Web Assembly (WASM) with a little bit of setup.
+Firstly, you'll need to install the <code>wasm32-unknown-unknown</code> target with <code>rustup</code></p>
+<pre data-lang="bash" style="background-color:#2b303b;color:#c0c5ce;" class="language-bash "><code class="language-bash" data-lang="bash"><span style="color:#bf616a;">rustup</span><span> target add wasm32-unknown-unknown
+</span></code></pre>
+<p>After that we need to actually build the game. There's quite a few options for
+WASM, but the easiest right now seems to be using
+<a href="https://trunkrs.dev/">Trunk</a>. If you have some other preference feel free to
+use it instead :) If you run into issues, please report it as a bug on GitHub.
+Everything should mostly &quot;just work&quot;. Only thing to note is that Comfy will
+attach the canvas to a HTML element with the id <code>wasm-body</code>. This will become
+configurable in the future, but for now this should be good enough for most use
+cases.</p>
+<p>To install <code>trunk</code> run the following:</p>
+<pre data-lang="bash" style="background-color:#2b303b;color:#c0c5ce;" class="language-bash "><code class="language-bash" data-lang="bash"><span style="color:#bf616a;">cargo</span><span> install</span><span style="color:#bf616a;"> --locked</span><span> trunk
+</span></code></pre>
+<p>Next up, you'll need to add a <code>index.html</code> to your project. There's a few
+things that are required, notably Comfy uses a HTML element with the id
+<code>wasm-body</code> to attach the canvas it renders into.</p>
+<p>If you don't want to bother with any of this, <a href="https://github.com/darthdeus/comfy-demos/blob/master/bitmob/index.html">you can use the <code>index.html</code>
+from one of our demo
+games</a>
+which already has everything setup. The other nice thing this file does is
+correctly handle audio sources on the web, since web browsers won't allow
+websites to play audio until the user has interacted with the page, and the
+<code>index.html</code> linked above handles this correctly.</p>
+<p>Lastly, you just need to use <code>trunk</code> to build the distribution package, which is as simple as</p>
+<pre data-lang="bash" style="background-color:#2b303b;color:#c0c5ce;" class="language-bash "><code class="language-bash" data-lang="bash"><span style="color:#bf616a;">$</span><span> trunk build</span><span style="color:#bf616a;"> --release --features</span><span> comfy/ci-release
+</span></code></pre>
+<p>This will create a <code>dist/</code> folder that you can just upload to your web server
+or itch.io. Note that if you're using itch.io you might need to enable
+<code>SharedArrayBuffer</code> support on itch.io. <a href="https://itch.io/docs/creators/html5#common-pitfalls">This page describes some of the common
+errors</a>.</p>
+</div>
+              <div class="docs-footer">
+                  <nav class="docs-footer__nav">
+                      
+                      
+                  </nav>
+                  <div class="docs-footer__edit-wrapper">
+                      <a class="docs-footer__edit" href="https://github.com/darthdeus/comfy-website/edit/master/content/book&#x2F;releasing&#x2F;_index.md">
+                          <i class="icon icon--pencil"></i>
+                          Improve this page
+                      </a>
+                  </div>
+              </div>
+          </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+
+</div>
+    </section>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous">
+    </script>
+</body>
+</html>

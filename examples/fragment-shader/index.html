@@ -1,0 +1,206 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
+  <meta name="description" content="Comfy is an ergonomic 2D game engine built in Rust. It's designed to be opinionated, productive, and easy to use.">
+
+  <title>Comfy Engine</title>
+
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-1DRWETLGBR"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'G-1DRWETLGBR');
+  </script>
+
+  <script>
+    const savedTheme = localStorage.getItem('data-bs-theme');
+    const preferredTheme = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+    const theme = savedTheme || preferredTheme;
+    document.documentElement.setAttribute('data-bs-theme', theme);
+
+    document.addEventListener('DOMContentLoaded', function () {
+      const themeSwitch = document.getElementById('comfySwitch');
+
+      // Set the checkbox state based on the current theme
+      themeSwitch.checked = theme === 'dark';
+
+      themeSwitch.addEventListener('change', function () {
+        if (themeSwitch.checked) {
+          document.documentElement.setAttribute('data-bs-theme', 'dark');
+          localStorage.setItem('data-bs-theme', 'dark');
+        } else {
+          document.documentElement.setAttribute('data-bs-theme', 'light');
+          localStorage.setItem('data-bs-theme', 'light');
+        }
+      });
+    });
+  </script>
+
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fira+Sans:wght@400;700&display=swap" />
+
+  <!-- <link -->
+  <!--   href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" -->
+  <!--   rel="stylesheet" -->
+  <!--   integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" -->
+  <!--   crossorigin="anonymous" -->
+  <!-- /> -->
+
+  <link rel="stylesheet" href="/style.css" />
+</head>
+
+<body>
+  <div class="container mb-4">
+    <header class="d-flex flex-wrap justify-content-center py-3 mb-4 border-bottom">
+      <a href="/" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto link-body-emphasis text-decoration-none">
+        <img src="/comfy.png" alt="logo of the comfy engine" class="bi me-2" width="32" height="32" />
+        <span class="fs-4"><strong>Comfy</strong></span>
+      </a>
+
+      <ul class="nav nav-pills">
+        <li class="nav-item">
+          <a href="/book" class="nav-link">Book</a>
+        </li>
+        <li class="nav-item">
+          <a href="/features" class="nav-link">Features</a>
+        </li>
+        <li class="nav-item"><a href="/examples" class="nav-link">Examples</a></li>
+        <li class="nav-item"><a href="/blog" class="nav-link">Blog</a></li>
+        <li class="nav-item">
+          <a href="https://github.com/darthdeus/comfy" class="">
+            <img class="light-github" width="40" height="40" src="/github-mark.svg" alt="Github repo" />
+            <img class="dark-github" width="40" height="40" src="/github-mark-white.svg" alt="Github repo" />
+          </a>
+        </li>
+        <li class="nav-item mx-2">
+          <a href="https://discord.gg/6NGGGTUz7x" class="">
+            <img class="light-discord" height="40" src="/discord-mark-black.png" alt="Discord" />
+            <img class="dark-discord" height="40" src="/discord-mark-white.png" alt="Discord" />
+          </a>
+        </li>
+
+        <li class="ms-3 my-2">
+          <div class="form-check form-switch">
+            <input class="form-check-input" type="checkbox" role="switch" id="comfySwitch" style="cursor: pointer">
+            <label class="form-check-label" for="comfySwitch">Dark Theme</label>
+          </div>
+        </li>
+      </ul>
+
+    </header>
+
+    <section class="section">
+      <div class="container">
+<h1 class="title">fragment-shader</h1>
+<p class="subtitle"><strong>2023-12-08</strong></p>
+<pre data-lang="rust" style="background-color:#2b303b;color:#c0c5ce;" class="language-rust "><code class="language-rust" data-lang="rust"><span style="color:#b48ead;">use </span><span>comfy::*;
+</span><span>
+</span><span>simple_game!(&quot;</span><span style="color:#a3be8c;">Fragment Shader Example</span><span>&quot;, GameState, setup, update);
+</span><span>
+</span><span style="color:#b48ead;">pub struct </span><span>GameState {
+</span><span>    </span><span style="color:#b48ead;">pub </span><span style="color:#bf616a;">my_shader_id</span><span>: Option&lt;ShaderId&gt;,
+</span><span>    </span><span style="color:#b48ead;">pub </span><span style="color:#bf616a;">intensity</span><span>: </span><span style="color:#b48ead;">f32</span><span>,
+</span><span>}
+</span><span>
+</span><span style="color:#b48ead;">impl </span><span>GameState {
+</span><span>    </span><span style="color:#b48ead;">pub fn </span><span style="color:#8fa1b3;">new</span><span>(</span><span style="color:#bf616a;">_c</span><span>: &amp;</span><span style="color:#b48ead;">mut</span><span> EngineState) -&gt; </span><span style="color:#b48ead;">Self </span><span>{
+</span><span>        </span><span style="color:#b48ead;">Self </span><span>{ my_shader_id: None, intensity: </span><span style="color:#d08770;">2.0 </span><span>}
+</span><span>    }
+</span><span>}
+</span><span>
+</span><span style="color:#b48ead;">fn </span><span style="color:#8fa1b3;">setup</span><span>(</span><span style="color:#bf616a;">_state</span><span>: &amp;</span><span style="color:#b48ead;">mut</span><span> GameState, </span><span style="color:#bf616a;">_c</span><span>: &amp;</span><span style="color:#b48ead;">mut</span><span> EngineContext) {
+</span><span>    </span><span style="color:#96b5b4;">game_config_mut</span><span>().bloom_enabled = </span><span style="color:#d08770;">true</span><span>;
+</span><span>}
+</span><span>
+</span><span style="color:#b48ead;">fn </span><span style="color:#8fa1b3;">update</span><span>(</span><span style="color:#bf616a;">state</span><span>: &amp;</span><span style="color:#b48ead;">mut</span><span> GameState, </span><span style="color:#bf616a;">c</span><span>: &amp;</span><span style="color:#b48ead;">mut</span><span> EngineContext) {
+</span><span>    </span><span style="color:#b48ead;">if</span><span> state.my_shader_id.</span><span style="color:#96b5b4;">is_none</span><span>() {
+</span><span>        state.my_shader_id = Some(
+</span><span>            </span><span style="color:#65737e;">// Comfy now supports shader hot reloading. We&#39;ll create a simple shader and provide
+</span><span>            </span><span style="color:#65737e;">// both `static_source` which would be used in release builds allowing the game to be
+</span><span>            </span><span style="color:#65737e;">// shipped with shaders embedded in the binary, as well as a path for hot reloading,
+</span><span>            </span><span style="color:#65737e;">// which will be watched by Comfy and hot-reloaded on change.
+</span><span>            </span><span style="color:#65737e;">//
+</span><span>            </span><span style="color:#65737e;">// Note that currently hot reloading an invalid shader will log the error in the
+</span><span>            </span><span style="color:#65737e;">// terminal, but will automatically fall back to the previous shader that compiled.
+</span><span>            </span><span style="color:#96b5b4;">create_reloadable_sprite_shader</span><span>(
+</span><span>                &amp;</span><span style="color:#b48ead;">mut</span><span> c.renderer.shaders.</span><span style="color:#96b5b4;">borrow_mut</span><span>(),
+</span><span>                &quot;</span><span style="color:#a3be8c;">my-shader</span><span>&quot;,
+</span><span>                ReloadableShaderSource {
+</span><span>                    static_source: include_str!(&quot;</span><span style="color:#a3be8c;">fragment-shader.wgsl</span><span>&quot;)
+</span><span>                        .</span><span style="color:#96b5b4;">to_string</span><span>(),
+</span><span>                    path: &quot;</span><span style="color:#a3be8c;">comfy/examples/fragment-shader.wgsl</span><span>&quot;.</span><span style="color:#96b5b4;">to_string</span><span>(),
+</span><span>                },
+</span><span>                </span><span style="color:#65737e;">// Uniforms can have default values. When we switch to this shader we&#39;ll have to
+</span><span>                </span><span style="color:#65737e;">// set all the uniforms that don&#39;t have a default value before drawing anything
+</span><span>                </span><span style="color:#65737e;">// using the shader, otherwise we&#39;ll get a crash.
+</span><span>                </span><span style="color:#65737e;">//
+</span><span>                </span><span style="color:#65737e;">// In this case we don&#39;t provide a default for &quot;time&quot; as we&#39;ll set it every frame,
+</span><span>                </span><span style="color:#65737e;">// but we will provide a value for &quot;intensity&quot; just to showcase how this would
+</span><span>                </span><span style="color:#65737e;">// work.
+</span><span>                </span><span style="color:#65737e;">//
+</span><span>                </span><span style="color:#65737e;">// Experiment with this to learn what happens in different scenarios!
+</span><span>                </span><span style="color:#65737e;">//
+</span><span>                </span><span style="color:#65737e;">// If you change &quot;intensity&quot; default to `None` you&#39;ll get a crash saying which
+</span><span>                </span><span style="color:#65737e;">// uniform was missing a value.
+</span><span>                hashmap! {
+</span><span>                    &quot;</span><span style="color:#a3be8c;">time</span><span>&quot;.</span><span style="color:#96b5b4;">to_string</span><span>() =&gt; UniformDef::</span><span style="color:#d08770;">F32</span><span>(None),
+</span><span>                    &quot;</span><span style="color:#a3be8c;">intensity</span><span>&quot;.</span><span style="color:#96b5b4;">to_string</span><span>() =&gt; UniformDef::</span><span style="color:#d08770;">F32</span><span>(Some(</span><span style="color:#d08770;">1.0</span><span>)),
+</span><span>                },
+</span><span>            )
+</span><span>            .</span><span style="color:#96b5b4;">unwrap</span><span>(),
+</span><span>        )
+</span><span>    }
+</span><span>
+</span><span>    </span><span style="color:#b48ead;">let</span><span> shader_id = state.my_shader_id.</span><span style="color:#96b5b4;">unwrap</span><span>();
+</span><span>
+</span><span>    </span><span style="color:#65737e;">// First draw with a default shader.
+</span><span>    </span><span style="color:#96b5b4;">draw_comfy</span><span>(</span><span style="color:#96b5b4;">vec2</span><span>(-</span><span style="color:#d08770;">2.0</span><span>, </span><span style="color:#d08770;">0.0</span><span>), </span><span style="color:#d08770;">WHITE</span><span>, </span><span style="color:#d08770;">0</span><span>, </span><span style="color:#96b5b4;">splat</span><span>(</span><span style="color:#d08770;">1.0</span><span>));
+</span><span>
+</span><span>    egui::Window::new(&quot;</span><span style="color:#a3be8c;">Uniforms</span><span>&quot;)
+</span><span>        .</span><span style="color:#96b5b4;">anchor</span><span>(egui::Align2::</span><span style="color:#d08770;">CENTER_CENTER</span><span>, egui::vec2(</span><span style="color:#d08770;">0.0</span><span>, -</span><span style="color:#d08770;">100.0</span><span>))
+</span><span>        .</span><span style="color:#96b5b4;">show</span><span>(</span><span style="color:#96b5b4;">egui</span><span>(), |</span><span style="color:#bf616a;">ui</span><span>| {
+</span><span>            ui.</span><span style="color:#96b5b4;">label</span><span>(&quot;</span><span style="color:#a3be8c;">HDR intensity</span><span>&quot;);
+</span><span>            ui.</span><span style="color:#96b5b4;">add</span><span>(egui::Slider::new(&amp;</span><span style="color:#b48ead;">mut</span><span> state.intensity, </span><span style="color:#d08770;">1.0</span><span>..=</span><span style="color:#d08770;">5.0</span><span>));
+</span><span>        });
+</span><span>
+</span><span>    </span><span style="color:#65737e;">// When we switch a shader the uniforms will get their default value
+</span><span>    </span><span style="color:#96b5b4;">use_shader</span><span>(shader_id);
+</span><span>
+</span><span>    </span><span style="color:#b48ead;">let</span><span> time = </span><span style="color:#96b5b4;">get_time</span><span>() as </span><span style="color:#b48ead;">f32</span><span>;
+</span><span>
+</span><span>    </span><span style="color:#65737e;">// We can only set one and then draw and the other uniform will be set
+</span><span>    </span><span style="color:#65737e;">// to the default value we specified when creating the shader.
+</span><span>    </span><span style="color:#96b5b4;">set_uniform_f32</span><span>(&quot;</span><span style="color:#a3be8c;">time</span><span>&quot;, time);
+</span><span>
+</span><span>    </span><span style="color:#96b5b4;">draw_comfy</span><span>(</span><span style="color:#96b5b4;">vec2</span><span>(</span><span style="color:#d08770;">0.0</span><span>, </span><span style="color:#d08770;">0.0</span><span>), </span><span style="color:#d08770;">WHITE</span><span>, </span><span style="color:#d08770;">0</span><span>, </span><span style="color:#96b5b4;">splat</span><span>(</span><span style="color:#d08770;">1.0</span><span>));
+</span><span>
+</span><span>    </span><span style="color:#65737e;">// This will set &quot;intensity&quot; while retaining &quot;time&quot; from the previous set in this frame, as
+</span><span>    </span><span style="color:#65737e;">// expected. None of this should be surprising, other than the fact that we can draw in between
+</span><span>    </span><span style="color:#65737e;">// `set_uniform` calls and things will _just work_.
+</span><span>    </span><span style="color:#65737e;">//
+</span><span>    </span><span style="color:#65737e;">// Note that doing things like this will result in the draw calls not being batched together
+</span><span>    </span><span style="color:#65737e;">// and instead be done in two separate render passes. This is unavoidable and should be
+</span><span>    </span><span style="color:#65737e;">// expected, but we&#39;re mentioning it here just for extra clarity.
+</span><span>    </span><span style="color:#96b5b4;">set_uniform_f32</span><span>(&quot;</span><span style="color:#a3be8c;">intensity</span><span>&quot;, state.intensity);
+</span><span>
+</span><span>    </span><span style="color:#96b5b4;">draw_comfy</span><span>(</span><span style="color:#96b5b4;">vec2</span><span>(</span><span style="color:#d08770;">2.0</span><span>, </span><span style="color:#d08770;">0.0</span><span>), </span><span style="color:#d08770;">WHITE</span><span>, </span><span style="color:#d08770;">0</span><span>, </span><span style="color:#96b5b4;">splat</span><span>(</span><span style="color:#d08770;">1.0</span><span>));
+</span><span>
+</span><span>    </span><span style="color:#65737e;">// We can also easily switch back to the default sprite shader.
+</span><span>    </span><span style="color:#96b5b4;">use_default_shader</span><span>();
+</span><span>    </span><span style="color:#96b5b4;">draw_comfy</span><span>(</span><span style="color:#96b5b4;">vec2</span><span>(</span><span style="color:#d08770;">4.0</span><span>, </span><span style="color:#d08770;">0.0</span><span>), </span><span style="color:#d08770;">WHITE</span><span>, </span><span style="color:#d08770;">0</span><span>, </span><span style="color:#96b5b4;">splat</span><span>(</span><span style="color:#d08770;">1.0</span><span>));
+</span><span>}
+</span></code></pre>
+ </div>
+    </section>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous">
+    </script>
+</body>
+</html>

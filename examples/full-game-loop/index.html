@@ -98,111 +98,37 @@
     <section class="section">
       <div class="container">
 <h1 class="title">full_game_loop</h1>
-<p class="subtitle"><strong>2023-10-15</strong></p>
+<p class="subtitle"><strong>2023-12-08</strong></p>
 <pre data-lang="rust" style="background-color:#2b303b;color:#c0c5ce;" class="language-rust "><code class="language-rust" data-lang="rust"><span style="color:#b48ead;">use </span><span>comfy::*;
 </span><span>
 </span><span style="color:#65737e;">// As in other state-based example we define a global state object
 </span><span style="color:#65737e;">// for our game.
-</span><span style="color:#b48ead;">pub struct </span><span>GameState {
+</span><span style="color:#b48ead;">pub struct </span><span>MyGame {
 </span><span>    </span><span style="color:#b48ead;">pub </span><span style="color:#bf616a;">x</span><span>: </span><span style="color:#b48ead;">i32</span><span>,
 </span><span>    </span><span style="color:#b48ead;">pub </span><span style="color:#bf616a;">y</span><span>: </span><span style="color:#b48ead;">i32</span><span>,
 </span><span>}
 </span><span>
-</span><span style="color:#65737e;">// This state can be initialized from the engine&#39;s context.
-</span><span style="color:#b48ead;">impl </span><span>GameState {
-</span><span>    </span><span style="color:#b48ead;">pub fn </span><span style="color:#8fa1b3;">new</span><span>(</span><span style="color:#bf616a;">_c</span><span>: &amp;</span><span style="color:#b48ead;">mut</span><span> EngineContext) -&gt; </span><span style="color:#b48ead;">Self </span><span>{
-</span><span>        </span><span style="color:#b48ead;">Self </span><span>{ x: </span><span style="color:#d08770;">5</span><span>, y: </span><span style="color:#d08770;">2 </span><span>}
-</span><span>    }
-</span><span>}
-</span><span>
-</span><span style="color:#65737e;">// We also define our own `GameContext` which can be later
-</span><span style="color:#65737e;">// passed all throughout the game&#39;s systems.
-</span><span style="color:#65737e;">//
-</span><span style="color:#65737e;">// Unfortunately this does require a fair bit of boilerplate,
-</span><span style="color:#65737e;">// especially the &quot;need to mirror everything in state&quot;, but
-</span><span style="color:#65737e;">// the boilerplate tends to pay off later in gameplay code.
-</span><span style="color:#65737e;">//
-</span><span style="color:#65737e;">// One can start simple and just embed `state: &amp;&#39;a mut GameState`,
-</span><span style="color:#65737e;">// although game code will become a lot nicer when individual fields
-</span><span style="color:#65737e;">// are exposed.
-</span><span style="color:#b48ead;">pub struct </span><span>GameContext&lt;</span><span style="color:#b48ead;">&#39;a</span><span>, </span><span style="color:#b48ead;">&#39;b</span><span>: </span><span style="color:#b48ead;">&#39;a</span><span>&gt; {
-</span><span>    </span><span style="color:#b48ead;">pub </span><span style="color:#bf616a;">x</span><span>: &amp;</span><span style="color:#b48ead;">&#39;a mut i32</span><span>,
-</span><span>    </span><span style="color:#b48ead;">pub </span><span style="color:#bf616a;">y</span><span>: &amp;</span><span style="color:#b48ead;">&#39;a mut i32</span><span>,
-</span><span>    </span><span style="color:#b48ead;">pub </span><span style="color:#bf616a;">engine</span><span>: &amp;</span><span style="color:#b48ead;">&#39;a mut </span><span>EngineContext&lt;</span><span style="color:#b48ead;">&#39;b</span><span>&gt;,
-</span><span>}
-</span><span>
-</span><span style="color:#65737e;">// Our game owns the `EngineState`, as well as `GameState`. In order
-</span><span style="color:#65737e;">// to allow initialization of `GameState` from `EngineContext` it has
-</span><span style="color:#65737e;">// to be `Option&lt;T&gt;` and initialized later.
-</span><span style="color:#b48ead;">pub struct </span><span>ComfyGame {
-</span><span>    </span><span style="color:#b48ead;">pub </span><span style="color:#bf616a;">engine</span><span>: EngineState,
-</span><span>    </span><span style="color:#b48ead;">pub </span><span style="color:#bf616a;">state</span><span>: Option&lt;GameState&gt;,
-</span><span>}
-</span><span>
-</span><span style="color:#65737e;">// Necessary boilerplate.
-</span><span style="color:#b48ead;">impl </span><span>ComfyGame {
-</span><span>    </span><span style="color:#b48ead;">pub fn </span><span style="color:#8fa1b3;">new</span><span>(</span><span style="color:#bf616a;">engine</span><span>: EngineState) -&gt; </span><span style="color:#b48ead;">Self </span><span>{
-</span><span>        </span><span style="color:#b48ead;">Self </span><span>{ state: None, engine }
-</span><span>    }
-</span><span>}
-</span><span>
 </span><span style="color:#65737e;">// Everything interesting happens here.
-</span><span style="color:#b48ead;">impl </span><span>GameLoop </span><span style="color:#b48ead;">for </span><span>ComfyGame {
-</span><span>    </span><span style="color:#b48ead;">fn </span><span style="color:#8fa1b3;">update</span><span>(&amp;</span><span style="color:#b48ead;">mut </span><span style="color:#bf616a;">self</span><span>) {
-</span><span>        </span><span style="color:#65737e;">// All internal engine code expect an `EngineContext`.
-</span><span>        </span><span style="color:#b48ead;">let mut</span><span> c = </span><span style="color:#bf616a;">self</span><span>.engine.</span><span style="color:#96b5b4;">make_context</span><span>();
-</span><span>
-</span><span>        </span><span style="color:#65737e;">// State initialization using `EngineContext`. While this could
-</span><span>        </span><span style="color:#65737e;">// be simplified if our state is simple, doing it like this
-</span><span>        </span><span style="color:#65737e;">// has the only downside of a few extra lines of code, and could
-</span><span>        </span><span style="color:#65737e;">// save some headaches later.
-</span><span>        </span><span style="color:#b48ead;">if </span><span style="color:#bf616a;">self</span><span>.state.</span><span style="color:#96b5b4;">is_none</span><span>() {
-</span><span>            </span><span style="color:#b48ead;">let mut</span><span> state = GameState::new(&amp;</span><span style="color:#b48ead;">mut</span><span> c);
-</span><span>            </span><span style="color:#96b5b4;">setup</span><span>(&amp;</span><span style="color:#b48ead;">mut</span><span> state, &amp;</span><span style="color:#b48ead;">mut</span><span> c);
-</span><span>
-</span><span>            </span><span style="color:#bf616a;">self</span><span>.state = Some(state);
-</span><span>        }
-</span><span>
-</span><span>        </span><span style="color:#65737e;">// Now we just run our regular update.
-</span><span>        </span><span style="color:#b48ead;">if let </span><span>Some(state) = </span><span style="color:#bf616a;">self</span><span>.state.</span><span style="color:#96b5b4;">as_mut</span><span>() {
-</span><span>            </span><span style="color:#65737e;">// Right now engine stages have to be invoked manually.
-</span><span>            </span><span style="color:#96b5b4;">run_early_update_stages</span><span>(&amp;</span><span style="color:#b48ead;">mut</span><span> c);
-</span><span>
-</span><span>            </span><span style="color:#65737e;">// Users can construct their own context object by wrapping the `EngineContext`. Ideally
-</span><span>            </span><span style="color:#65737e;">// `ComfyGame` would be generic over this, but ... lifetimes are tough, and this is a
-</span><span>            </span><span style="color:#65737e;">// WIP. For now the solution is macros and/or copy pasting this trait impl.
-</span><span>            </span><span style="color:#96b5b4;">update</span><span>(&amp;</span><span style="color:#b48ead;">mut</span><span> GameContext {
-</span><span>                x: &amp;</span><span style="color:#b48ead;">mut</span><span> state.x,
-</span><span>                y: &amp;</span><span style="color:#b48ead;">mut</span><span> state.y,
-</span><span>                engine: &amp;</span><span style="color:#b48ead;">mut</span><span> c,
-</span><span>            });
-</span><span>
-</span><span>            </span><span style="color:#65737e;">// And here again
-</span><span>            </span><span style="color:#96b5b4;">run_late_update_stages</span><span>(&amp;</span><span style="color:#b48ead;">mut</span><span> c, </span><span style="color:#96b5b4;">delta</span><span>());
-</span><span>        }
+</span><span style="color:#b48ead;">impl </span><span>GameLoop </span><span style="color:#b48ead;">for </span><span>MyGame {
+</span><span>    </span><span style="color:#b48ead;">fn </span><span style="color:#8fa1b3;">new</span><span>(</span><span style="color:#bf616a;">_c</span><span>: &amp;</span><span style="color:#b48ead;">mut</span><span> EngineState) -&gt; </span><span style="color:#b48ead;">Self </span><span>{
+</span><span>        </span><span style="color:#b48ead;">Self </span><span>{ x: </span><span style="color:#d08770;">2</span><span>, y: </span><span style="color:#d08770;">3 </span><span>}
 </span><span>    }
 </span><span>
-</span><span>    </span><span style="color:#65737e;">// Since we&#39;re passing `ComfyGame` to the game loop we need to provide
-</span><span>    </span><span style="color:#65737e;">// a way to get back the `EngineState`. Again just boilerplate sacrificed
-</span><span>    </span><span style="color:#65737e;">// to the holy crab.
-</span><span>    </span><span style="color:#b48ead;">fn </span><span style="color:#8fa1b3;">engine</span><span>(&amp;</span><span style="color:#b48ead;">mut </span><span style="color:#bf616a;">self</span><span>) -&gt; &amp;</span><span style="color:#b48ead;">mut</span><span> EngineState {
-</span><span>        &amp;</span><span style="color:#b48ead;">mut </span><span style="color:#bf616a;">self</span><span>.engine
+</span><span>    </span><span style="color:#b48ead;">fn </span><span style="color:#8fa1b3;">update</span><span>(&amp;</span><span style="color:#b48ead;">mut </span><span style="color:#bf616a;">self</span><span>, </span><span style="color:#bf616a;">_c</span><span>: &amp;</span><span style="color:#b48ead;">mut</span><span> EngineContext) {
+</span><span>        </span><span style="color:#96b5b4;">draw_text</span><span>(
+</span><span>            &amp;format!(
+</span><span>                &quot;</span><span style="color:#a3be8c;">I&#39;m a very advanced example </span><span style="color:#d08770;">{}</span><span style="color:#a3be8c;"> + </span><span style="color:#d08770;">{}</span><span style="color:#a3be8c;"> = :O</span><span>&quot;,
+</span><span>                </span><span style="color:#bf616a;">self</span><span>.x, </span><span style="color:#bf616a;">self</span><span>.y
+</span><span>            ),
+</span><span>            Vec2::</span><span style="color:#d08770;">ZERO</span><span>,
+</span><span>            </span><span style="color:#d08770;">WHITE</span><span>,
+</span><span>            TextAlign::Center,
+</span><span>        );
+</span><span>
+</span><span>        </span><span style="color:#b48ead;">if </span><span style="color:#96b5b4;">is_key_pressed</span><span>(KeyCode::Space) {
+</span><span>            </span><span style="color:#bf616a;">self</span><span>.y += </span><span style="color:#d08770;">1</span><span>;
+</span><span>        }
 </span><span>    }
-</span><span>}
-</span><span>
-</span><span style="color:#65737e;">// Keeping the same `setup` as other examples for clarity.
-</span><span style="color:#b48ead;">fn </span><span style="color:#8fa1b3;">setup</span><span>(</span><span style="color:#bf616a;">state</span><span>: &amp;</span><span style="color:#b48ead;">mut</span><span> GameState, </span><span style="color:#bf616a;">c</span><span>: &amp;</span><span style="color:#b48ead;">mut</span><span> EngineContext) {
-</span><span>    state.x = c.flags.</span><span style="color:#96b5b4;">borrow</span><span>().</span><span style="color:#96b5b4;">len</span><span>() as </span><span style="color:#b48ead;">i32</span><span>;
-</span><span>}
-</span><span>
-</span><span style="color:#65737e;">// The usual update, except we can now use only `GameContext`
-</span><span style="color:#b48ead;">fn </span><span style="color:#8fa1b3;">update</span><span>(</span><span style="color:#bf616a;">c</span><span>: &amp;</span><span style="color:#b48ead;">mut</span><span> GameContext) {
-</span><span>    </span><span style="color:#96b5b4;">draw_text</span><span>(
-</span><span>        &amp;format!(&quot;</span><span style="color:#a3be8c;">I&#39;m a very advanced example </span><span style="color:#d08770;">{}</span><span style="color:#a3be8c;"> + </span><span style="color:#d08770;">{}</span><span style="color:#a3be8c;"> = :O</span><span>&quot;, c.x, c.y),
-</span><span>        Vec2::</span><span style="color:#d08770;">ZERO</span><span>,
-</span><span>        </span><span style="color:#d08770;">WHITE</span><span>,
-</span><span>        TextAlign::Center,
-</span><span>    );
 </span><span>}
 </span><span>
 </span><span style="color:#65737e;">// -------------------------------------------------------------------
@@ -231,10 +157,11 @@
 </span><span>        _comfy_default_config,
 </span><span>    );
 </span><span>
-</span><span>    </span><span style="color:#b48ead;">let</span><span> engine = EngineState::new();
-</span><span>    </span><span style="color:#b48ead;">let</span><span> game = ComfyGame::new(engine);
+</span><span>    </span><span style="color:#b48ead;">let mut</span><span> engine = EngineState::new();
+</span><span>    </span><span style="color:#65737e;">// We can do whatever initialization we want in this case.
+</span><span>    </span><span style="color:#b48ead;">let</span><span> game = MyGame::new(&amp;</span><span style="color:#b48ead;">mut</span><span> engine);
 </span><span>
-</span><span>    </span><span style="color:#96b5b4;">run_comfy_main_async</span><span>(game).await;
+</span><span>    </span><span style="color:#96b5b4;">run_comfy_main_async</span><span>(game, engine).await;
 </span><span>}
 </span><span>
 </span><span style="color:#b48ead;">fn </span><span style="color:#8fa1b3;">main</span><span>() {

@@ -98,196 +98,168 @@
     <section class="section">
       <div class="container">
 <h1 class="title">physics</h1>
-<p class="subtitle"><strong>2023-10-15</strong></p>
+<p class="subtitle"><strong>2023-12-08</strong></p>
 <pre data-lang="rust" style="background-color:#2b303b;color:#c0c5ce;" class="language-rust "><code class="language-rust" data-lang="rust"><span style="color:#b48ead;">use </span><span>blobs::*;
 </span><span style="color:#b48ead;">use </span><span>comfy::*;
 </span><span>
 </span><span style="color:#65737e;">// This example shows an integration between comfy and blobs, a simple 2d physics engine. It&#39;s not
 </span><span style="color:#65737e;">// the most beautiful example, and maybe a bit verbose for what it does, but it tries to showcase
 </span><span style="color:#65737e;">// some more extensible ways of using comfy.
-</span><span>comfy_game!(
-</span><span>    &quot;</span><span style="color:#a3be8c;">Physics Example</span><span>&quot;,
-</span><span>    GameContext,
-</span><span>    GameState,
-</span><span>    make_context,
-</span><span>    setup,
-</span><span>    update
-</span><span>);
+</span><span>comfy_game!(&quot;</span><span style="color:#a3be8c;">Physics Example</span><span>&quot;, PhysicsGame);
 </span><span>
 </span><span style="color:#b48ead;">pub enum </span><span>BallSpawningSpeed {
 </span><span>    Comfy,
 </span><span>    Uncomfy,
 </span><span>}
 </span><span>
-</span><span style="color:#b48ead;">pub struct </span><span>GameState {
+</span><span style="color:#b48ead;">pub struct </span><span>PhysicsGame {
 </span><span>    </span><span style="color:#b48ead;">pub </span><span style="color:#bf616a;">spawn_timer</span><span>: </span><span style="color:#b48ead;">f32</span><span>,
 </span><span>    </span><span style="color:#b48ead;">pub </span><span style="color:#bf616a;">physics</span><span>: Physics,
 </span><span>    </span><span style="color:#b48ead;">pub </span><span style="color:#bf616a;">ball_spawning_speed</span><span>: BallSpawningSpeed,
 </span><span>}
 </span><span>
-</span><span style="color:#b48ead;">impl </span><span>GameState {
-</span><span>    </span><span style="color:#b48ead;">pub fn </span><span style="color:#8fa1b3;">new</span><span>(</span><span style="color:#bf616a;">_c</span><span>: &amp;</span><span style="color:#b48ead;">mut</span><span> EngineContext) -&gt; </span><span style="color:#b48ead;">Self </span><span>{
-</span><span>        </span><span style="color:#b48ead;">Self </span><span>{
+</span><span style="color:#b48ead;">impl </span><span>GameLoop </span><span style="color:#b48ead;">for </span><span>PhysicsGame {
+</span><span>    </span><span style="color:#b48ead;">fn </span><span style="color:#8fa1b3;">new</span><span>(</span><span style="color:#bf616a;">_c</span><span>: &amp;</span><span style="color:#b48ead;">mut</span><span> EngineState) -&gt; </span><span style="color:#b48ead;">Self </span><span>{
+</span><span>        </span><span style="color:#b48ead;">let mut</span><span> state = </span><span style="color:#b48ead;">Self </span><span>{
 </span><span>            spawn_timer: </span><span style="color:#d08770;">0.0</span><span>,
 </span><span>            physics: Physics::new(</span><span style="color:#96b5b4;">vec2</span><span>(</span><span style="color:#d08770;">0.0</span><span>, -</span><span style="color:#d08770;">20.0</span><span>), </span><span style="color:#d08770;">false</span><span>),
 </span><span>            ball_spawning_speed: BallSpawningSpeed::Comfy,
-</span><span>        }
-</span><span>    }
-</span><span>}
-</span><span>
-</span><span style="color:#b48ead;">pub struct </span><span>GameContext&lt;</span><span style="color:#b48ead;">&#39;a</span><span>, </span><span style="color:#b48ead;">&#39;b</span><span>: </span><span style="color:#b48ead;">&#39;a</span><span>&gt; {
-</span><span>    </span><span style="color:#65737e;">// While we could access delta through .engine, it&#39;s easier to just expose it once and then
-</span><span>    </span><span style="color:#65737e;">// benefit all over the codebase.
-</span><span>    </span><span style="color:#b48ead;">pub </span><span style="color:#bf616a;">delta</span><span>: </span><span style="color:#b48ead;">f32</span><span>,
-</span><span>    </span><span style="color:#65737e;">// We&#39;ll continually spawn balls using a simple f32 timer.
-</span><span>    </span><span style="color:#b48ead;">pub </span><span style="color:#bf616a;">spawn_timer</span><span>: &amp;</span><span style="color:#b48ead;">&#39;a mut f32</span><span>,
-</span><span>    </span><span style="color:#b48ead;">pub </span><span style="color:#bf616a;">ball_spawning_speed</span><span>: &amp;</span><span style="color:#b48ead;">&#39;a mut</span><span> BallSpawningSpeed,
-</span><span>    </span><span style="color:#b48ead;">pub </span><span style="color:#bf616a;">physics</span><span>: &amp;</span><span style="color:#b48ead;">&#39;a mut</span><span> Physics,
-</span><span>    </span><span style="color:#b48ead;">pub </span><span style="color:#bf616a;">engine</span><span>: &amp;</span><span style="color:#b48ead;">&#39;a mut </span><span>EngineContext&lt;</span><span style="color:#b48ead;">&#39;b</span><span>&gt;,
-</span><span>}
-</span><span>
-</span><span style="color:#b48ead;">fn </span><span style="color:#8fa1b3;">make_context</span><span>&lt;</span><span style="color:#b48ead;">&#39;a</span><span>, </span><span style="color:#b48ead;">&#39;b</span><span>: </span><span style="color:#b48ead;">&#39;a</span><span>&gt;(
-</span><span>    </span><span style="color:#bf616a;">state</span><span>: &amp;</span><span style="color:#b48ead;">&#39;a mut</span><span> GameState,
-</span><span>    </span><span style="color:#bf616a;">engine</span><span>: &amp;</span><span style="color:#b48ead;">&#39;a mut </span><span>EngineContext&lt;</span><span style="color:#b48ead;">&#39;b</span><span>&gt;,
-</span><span>) -&gt; GameContext&lt;</span><span style="color:#b48ead;">&#39;a</span><span>, </span><span style="color:#b48ead;">&#39;b</span><span>&gt; {
-</span><span>    GameContext {
-</span><span>        spawn_timer: &amp;</span><span style="color:#b48ead;">mut</span><span> state.spawn_timer,
-</span><span>        delta: engine.delta,
-</span><span>        ball_spawning_speed: &amp;</span><span style="color:#b48ead;">mut</span><span> state.ball_spawning_speed,
-</span><span>        physics: &amp;</span><span style="color:#b48ead;">mut</span><span> state.physics,
-</span><span>        engine,
-</span><span>    }
-</span><span>}
-</span><span>
-</span><span style="color:#b48ead;">fn </span><span style="color:#8fa1b3;">setup</span><span>(</span><span style="color:#bf616a;">c</span><span>: &amp;</span><span style="color:#b48ead;">mut</span><span> GameContext) {
-</span><span>    </span><span style="color:#b48ead;">let</span><span> rbd_handle = c.physics.</span><span style="color:#96b5b4;">insert_rbd</span><span>(RigidBodyBuilder::new().</span><span style="color:#96b5b4;">build</span><span>());
-</span><span>
-</span><span>    c.physics.</span><span style="color:#96b5b4;">insert_collider_with_parent</span><span>(
-</span><span>        ColliderBuilder::new().</span><span style="color:#96b5b4;">build</span><span>(),
-</span><span>        rbd_handle,
-</span><span>    );
-</span><span>
-</span><span>    </span><span style="color:#65737e;">// We can add a circle constraint which prevents any body from leaving the constrained area.
-</span><span>    </span><span style="color:#65737e;">// Note that currently blobs constraints work based on position and ignore collider radius.
-</span><span>    c.physics
-</span><span>        .constraints
-</span><span>        .</span><span style="color:#96b5b4;">push</span><span>(Constraint { position: Vec2::</span><span style="color:#d08770;">ZERO</span><span>, radius: </span><span style="color:#d08770;">5.0 </span><span>});
-</span><span>
-</span><span>    </span><span style="color:#65737e;">// We&#39;ll need SFX for this
-</span><span>    c.engine.</span><span style="color:#96b5b4;">load_sound_from_bytes</span><span>(
-</span><span>        </span><span style="color:#65737e;">// Every sound gets a string name later used to reference it.
-</span><span>        &quot;</span><span style="color:#a3be8c;">comfy-bell</span><span>&quot;,
-</span><span>        include_bytes!(concat!(
-</span><span>            env!(&quot;</span><span style="color:#a3be8c;">CARGO_MANIFEST_DIR</span><span>&quot;),
-</span><span>            &quot;</span><span style="color:#a3be8c;">/../assets/bell-sfx.ogg</span><span>&quot;
-</span><span>        )),
-</span><span>        StaticSoundSettings::default(),
-</span><span>    );
-</span><span>}
-</span><span>
-</span><span style="color:#b48ead;">fn </span><span style="color:#8fa1b3;">update</span><span>(</span><span style="color:#bf616a;">c</span><span>: &amp;</span><span style="color:#b48ead;">mut</span><span> GameContext) {
-</span><span>    *c.spawn_timer -= c.delta;
-</span><span>
-</span><span>    </span><span style="color:#b48ead;">let</span><span> limit = </span><span style="color:#b48ead;">match</span><span> c.ball_spawning_speed {
-</span><span>        BallSpawningSpeed::Comfy =&gt; </span><span style="color:#d08770;">100</span><span>,
-</span><span>        BallSpawningSpeed::Uncomfy =&gt; </span><span style="color:#d08770;">1000</span><span>,
-</span><span>    };
-</span><span>
-</span><span>    </span><span style="color:#b48ead;">if </span><span>*c.spawn_timer &lt;= </span><span style="color:#d08770;">0.0 </span><span>&amp;&amp; c.physics.</span><span style="color:#96b5b4;">rbd_count</span><span>() &lt; limit {
-</span><span>        </span><span style="color:#b48ead;">let</span><span> max_time = </span><span style="color:#b48ead;">match</span><span> c.ball_spawning_speed {
-</span><span>            BallSpawningSpeed::Comfy =&gt; </span><span style="color:#d08770;">0.4</span><span>,
-</span><span>            BallSpawningSpeed::Uncomfy =&gt; </span><span style="color:#d08770;">0.01</span><span>,
 </span><span>        };
 </span><span>
-</span><span>        </span><span style="color:#65737e;">// Every time the timer expires we reset it to a random value.
-</span><span>        *c.spawn_timer = </span><span style="color:#96b5b4;">random_range</span><span>(</span><span style="color:#d08770;">0.01</span><span>, max_time);
+</span><span>        </span><span style="color:#b48ead;">let</span><span> rbd_handle =
+</span><span>            state.physics.</span><span style="color:#96b5b4;">insert_rbd</span><span>(RigidBodyBuilder::new().</span><span style="color:#96b5b4;">build</span><span>());
 </span><span>
-</span><span>        </span><span style="color:#b48ead;">let</span><span> rbd_handle = c.physics.</span><span style="color:#96b5b4;">insert_rbd</span><span>(
-</span><span>            RigidBodyBuilder::new().</span><span style="color:#96b5b4;">position</span><span>(</span><span style="color:#96b5b4;">random_circle</span><span>(</span><span style="color:#d08770;">2.0</span><span>)).</span><span style="color:#96b5b4;">build</span><span>(),
-</span><span>        );
-</span><span>
-</span><span>        c.physics.</span><span style="color:#96b5b4;">insert_collider_with_parent</span><span>(
-</span><span>            ColliderBuilder::new().</span><span style="color:#96b5b4;">radius</span><span>(</span><span style="color:#96b5b4;">random_range</span><span>(</span><span style="color:#d08770;">0.05</span><span>, </span><span style="color:#d08770;">0.4</span><span>)).</span><span style="color:#96b5b4;">build</span><span>(),
+</span><span>        state.physics.</span><span style="color:#96b5b4;">insert_collider_with_parent</span><span>(
+</span><span>            ColliderBuilder::new().</span><span style="color:#96b5b4;">build</span><span>(),
 </span><span>            rbd_handle,
 </span><span>        );
 </span><span>
-</span><span>        </span><span style="color:#96b5b4;">play_sound</span><span>(&quot;</span><span style="color:#a3be8c;">comfy-bell</span><span>&quot;);
-</span><span>    }
+</span><span>        </span><span style="color:#65737e;">// We can add a circle constraint which prevents any body from leaving the constrained area.
+</span><span>        </span><span style="color:#65737e;">// Note that currently blobs constraints work based on position and ignore collider radius.
+</span><span>        state
+</span><span>            .physics
+</span><span>            .constraints
+</span><span>            .</span><span style="color:#96b5b4;">push</span><span>(Constraint { position: Vec2::</span><span style="color:#d08770;">ZERO</span><span>, radius: </span><span style="color:#d08770;">5.0 </span><span>});
 </span><span>
-</span><span>    c.physics.</span><span style="color:#96b5b4;">step</span><span>(c.delta as </span><span style="color:#b48ead;">f64</span><span>);
-</span><span>
-</span><span>    </span><span style="color:#65737e;">// We could iterate rigid bodies individually, but blobs also has a nice way of collecting
-</span><span>    </span><span style="color:#65737e;">// debug data in a simple format for rendering/logginc that we&#39;ll use to draw all bodies and
-</span><span>    </span><span style="color:#65737e;">// colliders.
-</span><span>    </span><span style="color:#b48ead;">let</span><span> debug = c.physics.</span><span style="color:#96b5b4;">debug_data</span><span>();
-</span><span>
-</span><span>    </span><span style="color:#b48ead;">for</span><span> body in debug.bodies.</span><span style="color:#96b5b4;">iter</span><span>() {
-</span><span>        </span><span style="color:#96b5b4;">draw_circle</span><span>(body.transform.translation, </span><span style="color:#d08770;">0.1</span><span>, </span><span style="color:#d08770;">RED</span><span>.</span><span style="color:#96b5b4;">alpha</span><span>(</span><span style="color:#d08770;">0.8</span><span>), </span><span style="color:#d08770;">5</span><span>);
-</span><span>    }
-</span><span>
-</span><span>    </span><span style="color:#b48ead;">for</span><span> constraint in c.physics.constraints.</span><span style="color:#96b5b4;">iter</span><span>() {
-</span><span>        </span><span style="color:#96b5b4;">draw_circle</span><span>(
-</span><span>            constraint.position,
-</span><span>            constraint.radius,
-</span><span>            </span><span style="color:#d08770;">WHITE</span><span>.</span><span style="color:#96b5b4;">alpha</span><span>(</span><span style="color:#d08770;">0.1</span><span>),
-</span><span>            </span><span style="color:#d08770;">3</span><span>,
+</span><span>        </span><span style="color:#65737e;">// We&#39;ll need SFX for this
+</span><span>        </span><span style="color:#96b5b4;">load_sound_from_bytes</span><span>(
+</span><span>            </span><span style="color:#65737e;">// Every sound gets a string name later used to reference it.
+</span><span>            &quot;</span><span style="color:#a3be8c;">comfy-bell</span><span>&quot;,
+</span><span>            include_bytes!(concat!(
+</span><span>                env!(&quot;</span><span style="color:#a3be8c;">CARGO_MANIFEST_DIR</span><span>&quot;),
+</span><span>                &quot;</span><span style="color:#a3be8c;">/../assets/bell-sfx.ogg</span><span>&quot;
+</span><span>            )),
+</span><span>            StaticSoundSettings::default(),
 </span><span>        );
+</span><span>
+</span><span>        state
 </span><span>    }
 </span><span>
-</span><span>    </span><span style="color:#65737e;">// Let&#39;s use the colliders arena to draw the colliders for a change. We could
-</span><span>    </span><span style="color:#65737e;">// also just use `debug.colliders`.
-</span><span>    </span><span style="color:#b48ead;">for </span><span>(_, collider) in c.physics.col_set.</span><span style="color:#96b5b4;">iter</span><span>() {
-</span><span>        </span><span style="color:#65737e;">// We&#39;ll draw collider circles behind the rigid body circles using a lower z_index.
-</span><span>        </span><span style="color:#96b5b4;">draw_circle</span><span>(
-</span><span>            collider.absolute_transform.translation,
-</span><span>            collider.radius,
-</span><span>            </span><span style="color:#d08770;">BLUE</span><span>.</span><span style="color:#96b5b4;">alpha</span><span>(</span><span style="color:#d08770;">0.5</span><span>),
-</span><span>            </span><span style="color:#d08770;">4</span><span>,
+</span><span>    </span><span style="color:#b48ead;">fn </span><span style="color:#8fa1b3;">update</span><span>(&amp;</span><span style="color:#b48ead;">mut </span><span style="color:#bf616a;">self</span><span>, </span><span style="color:#bf616a;">_c</span><span>: &amp;</span><span style="color:#b48ead;">mut</span><span> EngineContext) {
+</span><span>        </span><span style="color:#bf616a;">self</span><span>.spawn_timer -= </span><span style="color:#96b5b4;">delta</span><span>();
+</span><span>
+</span><span>        </span><span style="color:#b48ead;">let</span><span> limit = </span><span style="color:#b48ead;">match </span><span style="color:#bf616a;">self</span><span>.ball_spawning_speed {
+</span><span>            BallSpawningSpeed::Comfy =&gt; </span><span style="color:#d08770;">100</span><span>,
+</span><span>            BallSpawningSpeed::Uncomfy =&gt; </span><span style="color:#d08770;">1000</span><span>,
+</span><span>        };
+</span><span>
+</span><span>        </span><span style="color:#b48ead;">if </span><span style="color:#bf616a;">self</span><span>.spawn_timer &lt;= </span><span style="color:#d08770;">0.0 </span><span>&amp;&amp; </span><span style="color:#bf616a;">self</span><span>.physics.</span><span style="color:#96b5b4;">rbd_count</span><span>() &lt; limit {
+</span><span>            </span><span style="color:#b48ead;">let</span><span> max_time = </span><span style="color:#b48ead;">match </span><span style="color:#bf616a;">self</span><span>.ball_spawning_speed {
+</span><span>                BallSpawningSpeed::Comfy =&gt; </span><span style="color:#d08770;">0.4</span><span>,
+</span><span>                BallSpawningSpeed::Uncomfy =&gt; </span><span style="color:#d08770;">0.01</span><span>,
+</span><span>            };
+</span><span>
+</span><span>            </span><span style="color:#65737e;">// Every time the timer expires we reset it to a random value.
+</span><span>            </span><span style="color:#bf616a;">self</span><span>.spawn_timer = </span><span style="color:#96b5b4;">random_range</span><span>(</span><span style="color:#d08770;">0.01</span><span>, max_time);
+</span><span>
+</span><span>            </span><span style="color:#b48ead;">let</span><span> rbd_handle = </span><span style="color:#bf616a;">self</span><span>.physics.</span><span style="color:#96b5b4;">insert_rbd</span><span>(
+</span><span>                RigidBodyBuilder::new().</span><span style="color:#96b5b4;">position</span><span>(</span><span style="color:#96b5b4;">random_circle</span><span>(</span><span style="color:#d08770;">2.0</span><span>)).</span><span style="color:#96b5b4;">build</span><span>(),
+</span><span>            );
+</span><span>
+</span><span>            </span><span style="color:#bf616a;">self</span><span>.physics.</span><span style="color:#96b5b4;">insert_collider_with_parent</span><span>(
+</span><span>                ColliderBuilder::new().</span><span style="color:#96b5b4;">radius</span><span>(</span><span style="color:#96b5b4;">random_range</span><span>(</span><span style="color:#d08770;">0.05</span><span>, </span><span style="color:#d08770;">0.4</span><span>)).</span><span style="color:#96b5b4;">build</span><span>(),
+</span><span>                rbd_handle,
+</span><span>            );
+</span><span>
+</span><span>            </span><span style="color:#96b5b4;">play_sound</span><span>(&quot;</span><span style="color:#a3be8c;">comfy-bell</span><span>&quot;);
+</span><span>        }
+</span><span>
+</span><span>        </span><span style="color:#bf616a;">self</span><span>.physics.</span><span style="color:#96b5b4;">step</span><span>(</span><span style="color:#96b5b4;">delta</span><span>() as </span><span style="color:#b48ead;">f64</span><span>);
+</span><span>
+</span><span>        </span><span style="color:#65737e;">// We could iterate rigid bodies individually, but blobs also has a nice way of collecting
+</span><span>        </span><span style="color:#65737e;">// debug data in a simple format for rendering/logginc that we&#39;ll use to draw all bodies and
+</span><span>        </span><span style="color:#65737e;">// colliders.
+</span><span>        </span><span style="color:#b48ead;">let</span><span> debug = </span><span style="color:#bf616a;">self</span><span>.physics.</span><span style="color:#96b5b4;">debug_data</span><span>();
+</span><span>
+</span><span>        </span><span style="color:#b48ead;">for</span><span> body in debug.bodies.</span><span style="color:#96b5b4;">iter</span><span>() {
+</span><span>            </span><span style="color:#96b5b4;">draw_circle</span><span>(body.transform.translation, </span><span style="color:#d08770;">0.1</span><span>, </span><span style="color:#d08770;">RED</span><span>.</span><span style="color:#96b5b4;">alpha</span><span>(</span><span style="color:#d08770;">0.8</span><span>), </span><span style="color:#d08770;">5</span><span>);
+</span><span>        }
+</span><span>
+</span><span>        </span><span style="color:#b48ead;">for</span><span> constraint in </span><span style="color:#bf616a;">self</span><span>.physics.constraints.</span><span style="color:#96b5b4;">iter</span><span>() {
+</span><span>            </span><span style="color:#96b5b4;">draw_circle</span><span>(
+</span><span>                constraint.position,
+</span><span>                constraint.radius,
+</span><span>                </span><span style="color:#d08770;">WHITE</span><span>.</span><span style="color:#96b5b4;">alpha</span><span>(</span><span style="color:#d08770;">0.1</span><span>),
+</span><span>                </span><span style="color:#d08770;">3</span><span>,
+</span><span>            );
+</span><span>        }
+</span><span>
+</span><span>        </span><span style="color:#65737e;">// Let&#39;s use the colliders arena to draw the colliders for a change. We could
+</span><span>        </span><span style="color:#65737e;">// also just use `debug.colliders`.
+</span><span>        </span><span style="color:#b48ead;">for </span><span>(_, collider) in </span><span style="color:#bf616a;">self</span><span>.physics.col_set.</span><span style="color:#96b5b4;">iter</span><span>() {
+</span><span>            </span><span style="color:#65737e;">// We&#39;ll draw collider circles behind the rigid body circles using a lower z_index.
+</span><span>            </span><span style="color:#96b5b4;">draw_circle</span><span>(
+</span><span>                collider.absolute_transform.translation,
+</span><span>                collider.radius,
+</span><span>                </span><span style="color:#d08770;">BLUE</span><span>.</span><span style="color:#96b5b4;">alpha</span><span>(</span><span style="color:#d08770;">0.5</span><span>),
+</span><span>                </span><span style="color:#d08770;">4</span><span>,
+</span><span>            );
+</span><span>        }
+</span><span>
+</span><span>        </span><span style="color:#96b5b4;">draw_text</span><span>(
+</span><span>            &quot;</span><span style="color:#a3be8c;">Be warned, blobs isn&#39;t very stable with many balls :)</span><span>&quot;,
+</span><span>            Position::screen_percent(</span><span style="color:#d08770;">0.5</span><span>, </span><span style="color:#d08770;">0.85</span><span>).</span><span style="color:#96b5b4;">to_world</span><span>(),
+</span><span>            </span><span style="color:#d08770;">WHITE</span><span>,
+</span><span>            TextAlign::Center,
 </span><span>        );
-</span><span>    }
 </span><span>
-</span><span>    </span><span style="color:#96b5b4;">draw_text</span><span>(
-</span><span>        &quot;</span><span style="color:#a3be8c;">Be warned, blobs isn&#39;t very stable with many balls :)</span><span>&quot;,
-</span><span>        Position::screen_percent(</span><span style="color:#d08770;">0.5</span><span>, </span><span style="color:#d08770;">0.85</span><span>).</span><span style="color:#96b5b4;">to_world</span><span>(),
-</span><span>        </span><span style="color:#d08770;">WHITE</span><span>,
-</span><span>        TextAlign::Center,
-</span><span>    );
+</span><span>        </span><span style="color:#96b5b4;">draw_text</span><span>(
+</span><span>            &amp;format!(&quot;</span><span style="color:#a3be8c;">There are now </span><span style="color:#d08770;">{}</span><span style="color:#a3be8c;"> balls</span><span>&quot;, </span><span style="color:#bf616a;">self</span><span>.physics.</span><span style="color:#96b5b4;">rbd_count</span><span>()),
+</span><span>            Position::screen_percent(</span><span style="color:#d08770;">0.5</span><span>, </span><span style="color:#d08770;">0.15</span><span>).</span><span style="color:#96b5b4;">to_world</span><span>(),
+</span><span>            </span><span style="color:#d08770;">WHITE</span><span>,
+</span><span>            TextAlign::Center,
+</span><span>        );
 </span><span>
-</span><span>    </span><span style="color:#96b5b4;">draw_text</span><span>(
-</span><span>        &amp;format!(&quot;</span><span style="color:#a3be8c;">There are now </span><span style="color:#d08770;">{}</span><span style="color:#a3be8c;"> balls</span><span>&quot;, c.physics.</span><span style="color:#96b5b4;">rbd_count</span><span>()),
-</span><span>        Position::screen_percent(</span><span style="color:#d08770;">0.5</span><span>, </span><span style="color:#d08770;">0.15</span><span>).</span><span style="color:#96b5b4;">to_world</span><span>(),
-</span><span>        </span><span style="color:#d08770;">WHITE</span><span>,
-</span><span>        TextAlign::Center,
-</span><span>    );
-</span><span>
-</span><span>    egui::Window::new(&quot;</span><span style="color:#a3be8c;">More balls</span><span>&quot;)
-</span><span>        .</span><span style="color:#96b5b4;">anchor</span><span>(egui::Align2::</span><span style="color:#d08770;">LEFT_TOP</span><span>, egui::vec2(</span><span style="color:#d08770;">10.0</span><span>, </span><span style="color:#d08770;">10.0</span><span>))
-</span><span>        .</span><span style="color:#96b5b4;">show</span><span>(</span><span style="color:#96b5b4;">egui</span><span>(), |</span><span style="color:#bf616a;">ui</span><span>| {
-</span><span>            </span><span style="color:#b48ead;">match</span><span> c.ball_spawning_speed {
-</span><span>                BallSpawningSpeed::Comfy =&gt; {
-</span><span>                    </span><span style="color:#b48ead;">if</span><span> ui.</span><span style="color:#96b5b4;">button</span><span>(&quot;</span><span style="color:#a3be8c;">Make it go faster</span><span>&quot;).</span><span style="color:#96b5b4;">clicked</span><span>() {
-</span><span>                        *c.ball_spawning_speed = BallSpawningSpeed::Uncomfy;
+</span><span>        egui::Window::new(&quot;</span><span style="color:#a3be8c;">More balls</span><span>&quot;)
+</span><span>            .</span><span style="color:#96b5b4;">anchor</span><span>(egui::Align2::</span><span style="color:#d08770;">LEFT_TOP</span><span>, egui::vec2(</span><span style="color:#d08770;">10.0</span><span>, </span><span style="color:#d08770;">10.0</span><span>))
+</span><span>            .</span><span style="color:#96b5b4;">show</span><span>(</span><span style="color:#96b5b4;">egui</span><span>(), |</span><span style="color:#bf616a;">ui</span><span>| {
+</span><span>                </span><span style="color:#b48ead;">match </span><span style="color:#bf616a;">self</span><span>.ball_spawning_speed {
+</span><span>                    BallSpawningSpeed::Comfy =&gt; {
+</span><span>                        </span><span style="color:#b48ead;">if</span><span> ui.</span><span style="color:#96b5b4;">button</span><span>(&quot;</span><span style="color:#a3be8c;">Make it go faster</span><span>&quot;).</span><span style="color:#96b5b4;">clicked</span><span>() {
+</span><span>                            </span><span style="color:#bf616a;">self</span><span>.ball_spawning_speed =
+</span><span>                                BallSpawningSpeed::Uncomfy;
+</span><span>                        }
 </span><span>                    }
-</span><span>                }
-</span><span>                BallSpawningSpeed::Uncomfy =&gt; {
-</span><span>                    </span><span style="color:#b48ead;">if</span><span> ui
-</span><span>                        .</span><span style="color:#96b5b4;">add</span><span>(egui::Button::new(
-</span><span>                            egui::RichText::new(&quot;</span><span style="color:#a3be8c;">NOOOO, PLS STOP!!!</span><span>&quot;).</span><span style="color:#96b5b4;">size</span><span>(
-</span><span>                                </span><span style="color:#96b5b4;">rescale</span><span>(
-</span><span>                                    c.physics.</span><span style="color:#96b5b4;">rbd_count</span><span>() as </span><span style="color:#b48ead;">f32</span><span>,
-</span><span>                                    </span><span style="color:#d08770;">0.0</span><span>..limit as </span><span style="color:#b48ead;">f32</span><span>,
-</span><span>                                    </span><span style="color:#d08770;">10.0</span><span>..</span><span style="color:#d08770;">100.0</span><span>,
+</span><span>                    BallSpawningSpeed::Uncomfy =&gt; {
+</span><span>                        </span><span style="color:#b48ead;">if</span><span> ui
+</span><span>                            .</span><span style="color:#96b5b4;">add</span><span>(egui::Button::new(
+</span><span>                                egui::RichText::new(&quot;</span><span style="color:#a3be8c;">NOOOO, PLS STOP!!!</span><span>&quot;).</span><span style="color:#96b5b4;">size</span><span>(
+</span><span>                                    </span><span style="color:#96b5b4;">rescale</span><span>(
+</span><span>                                        </span><span style="color:#bf616a;">self</span><span>.physics.</span><span style="color:#96b5b4;">rbd_count</span><span>() as </span><span style="color:#b48ead;">f32</span><span>,
+</span><span>                                        </span><span style="color:#d08770;">0.0</span><span>..limit as </span><span style="color:#b48ead;">f32</span><span>,
+</span><span>                                        </span><span style="color:#d08770;">10.0</span><span>..</span><span style="color:#d08770;">100.0</span><span>,
+</span><span>                                    ),
 </span><span>                                ),
-</span><span>                            ),
-</span><span>                        ))
-</span><span>                        .</span><span style="color:#96b5b4;">clicked</span><span>()
-</span><span>                    {
-</span><span>                        *c.ball_spawning_speed = BallSpawningSpeed::Comfy;
-</span><span>                        c.physics.</span><span style="color:#96b5b4;">reset</span><span>();
+</span><span>                            ))
+</span><span>                            .</span><span style="color:#96b5b4;">clicked</span><span>()
+</span><span>                        {
+</span><span>                            </span><span style="color:#bf616a;">self</span><span>.ball_spawning_speed = BallSpawningSpeed::Comfy;
+</span><span>                            </span><span style="color:#bf616a;">self</span><span>.physics.</span><span style="color:#96b5b4;">reset</span><span>();
+</span><span>                        }
 </span><span>                    }
 </span><span>                }
-</span><span>            }
-</span><span>        });
+</span><span>            });
+</span><span>    }
 </span><span>}
 </span></code></pre>
  </div>

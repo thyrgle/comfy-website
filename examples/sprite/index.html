@@ -98,7 +98,7 @@
     <section class="section">
       <div class="container">
 <h1 class="title">sprite</h1>
-<p class="subtitle"><strong>2023-10-15</strong></p>
+<p class="subtitle"><strong>2023-12-08</strong></p>
 <pre data-lang="rust" style="background-color:#2b303b;color:#c0c5ce;" class="language-rust "><code class="language-rust" data-lang="rust"><span style="color:#b48ead;">use </span><span>comfy::*;
 </span><span>
 </span><span>simple_game!(&quot;</span><span style="color:#a3be8c;">Sprite Example</span><span>&quot;, setup, update);
@@ -125,6 +125,16 @@
 </span><span>        </span><span style="color:#d08770;">0</span><span>,
 </span><span>        </span><span style="color:#96b5b4;">splat</span><span>(</span><span style="color:#d08770;">5.0</span><span>),
 </span><span>    );
+</span><span>
+</span><span>    </span><span style="color:#65737e;">// You might also want to use regular comfy sprites/textures within egui.
+</span><span>    </span><span style="color:#65737e;">// This is a bit more advanced, and if you don&#39;t know what egui is don&#39;t worry
+</span><span>    </span><span style="color:#65737e;">// about the following bit of code.
+</span><span>    egui::Window::new(&quot;</span><span style="color:#a3be8c;">Egui image</span><span>&quot;).</span><span style="color:#96b5b4;">show</span><span>(</span><span style="color:#96b5b4;">egui</span><span>(), |</span><span style="color:#bf616a;">ui</span><span>| {
+</span><span>        ui.</span><span style="color:#96b5b4;">image</span><span>((
+</span><span>            </span><span style="color:#96b5b4;">cached_loader_mut</span><span>().</span><span style="color:#96b5b4;">image_or_err</span><span>(</span><span style="color:#96b5b4;">egui</span><span>(), &quot;</span><span style="color:#a3be8c;">comfy</span><span>&quot;),
+</span><span>            egui::vec2(</span><span style="color:#d08770;">16.0</span><span>, </span><span style="color:#d08770;">16.0</span><span>),
+</span><span>        ));
+</span><span>    });
 </span><span>}
 </span></code></pre>
  </div>

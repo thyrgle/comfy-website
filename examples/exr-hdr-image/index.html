@@ -1,0 +1,230 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
+  <meta name="description" content="Comfy is an ergonomic 2D game engine built in Rust. It's designed to be opinionated, productive, and easy to use.">
+
+  <title>Comfy Engine</title>
+
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-1DRWETLGBR"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'G-1DRWETLGBR');
+  </script>
+
+  <script>
+    const savedTheme = localStorage.getItem('data-bs-theme');
+    const preferredTheme = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+    const theme = savedTheme || preferredTheme;
+    document.documentElement.setAttribute('data-bs-theme', theme);
+
+    document.addEventListener('DOMContentLoaded', function () {
+      const themeSwitch = document.getElementById('comfySwitch');
+
+      // Set the checkbox state based on the current theme
+      themeSwitch.checked = theme === 'dark';
+
+      themeSwitch.addEventListener('change', function () {
+        if (themeSwitch.checked) {
+          document.documentElement.setAttribute('data-bs-theme', 'dark');
+          localStorage.setItem('data-bs-theme', 'dark');
+        } else {
+          document.documentElement.setAttribute('data-bs-theme', 'light');
+          localStorage.setItem('data-bs-theme', 'light');
+        }
+      });
+    });
+  </script>
+
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fira+Sans:wght@400;700&display=swap" />
+
+  <!-- <link -->
+  <!--   href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" -->
+  <!--   rel="stylesheet" -->
+  <!--   integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" -->
+  <!--   crossorigin="anonymous" -->
+  <!-- /> -->
+
+  <link rel="stylesheet" href="/style.css" />
+</head>
+
+<body>
+  <div class="container mb-4">
+    <header class="d-flex flex-wrap justify-content-center py-3 mb-4 border-bottom">
+      <a href="/" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto link-body-emphasis text-decoration-none">
+        <img src="/comfy.png" alt="logo of the comfy engine" class="bi me-2" width="32" height="32" />
+        <span class="fs-4"><strong>Comfy</strong></span>
+      </a>
+
+      <ul class="nav nav-pills">
+        <li class="nav-item">
+          <a href="/book" class="nav-link">Book</a>
+        </li>
+        <li class="nav-item">
+          <a href="/features" class="nav-link">Features</a>
+        </li>
+        <li class="nav-item"><a href="/examples" class="nav-link">Examples</a></li>
+        <li class="nav-item"><a href="/blog" class="nav-link">Blog</a></li>
+        <li class="nav-item">
+          <a href="https://github.com/darthdeus/comfy" class="">
+            <img class="light-github" width="40" height="40" src="/github-mark.svg" alt="Github repo" />
+            <img class="dark-github" width="40" height="40" src="/github-mark-white.svg" alt="Github repo" />
+          </a>
+        </li>
+        <li class="nav-item mx-2">
+          <a href="https://discord.gg/6NGGGTUz7x" class="">
+            <img class="light-discord" height="40" src="/discord-mark-black.png" alt="Discord" />
+            <img class="dark-discord" height="40" src="/discord-mark-white.png" alt="Discord" />
+          </a>
+        </li>
+
+        <li class="ms-3 my-2">
+          <div class="form-check form-switch">
+            <input class="form-check-input" type="checkbox" role="switch" id="comfySwitch" style="cursor: pointer">
+            <label class="form-check-label" for="comfySwitch">Dark Theme</label>
+          </div>
+        </li>
+      </ul>
+
+    </header>
+
+    <section class="section">
+      <div class="container">
+<h1 class="title">exr-hdr-image</h1>
+<p class="subtitle"><strong>2023-12-08</strong></p>
+<pre data-lang="rust" style="background-color:#2b303b;color:#c0c5ce;" class="language-rust "><code class="language-rust" data-lang="rust"><span style="color:#b48ead;">use </span><span>comfy::*;
+</span><span style="color:#b48ead;">use </span><span>comfy_core::image::GenericImageView;
+</span><span>
+</span><span style="color:#65737e;">// This example requires the test images from https://github.com/sobotka/Testing_Imagery
+</span><span style="color:#65737e;">// to be available in a directory next to the Comfy repo (as a sibling). We don&#39;t embed these in
+</span><span style="color:#65737e;">// Comfy since the files are quite bit.
+</span><span>simple_game!(&quot;</span><span style="color:#a3be8c;">EXR HDR Image</span><span>&quot;, setup, update);
+</span><span>
+</span><span style="color:#b48ead;">const </span><span style="color:#d08770;">TEST_IMAGES</span><span>: &amp;[&amp;</span><span style="color:#b48ead;">str</span><span>] = &amp;[
+</span><span>    </span><span style="color:#65737e;">// Compare to
+</span><span>    </span><span style="color:#65737e;">// https://upload.wikimedia.org/wikipedia/commons/thumb/f/f1/TestScreen_square_more_colors.svg/1024px-TestScreen_square_more_colors.svg.png
+</span><span>    &quot;</span><span style="color:#a3be8c;">assets/color-test-1024px.png</span><span>&quot;,
+</span><span>    </span><span style="color:#65737e;">// All of these are from the Testing_Imagery repo linked at the top.
+</span><span>    &quot;</span><span style="color:#a3be8c;">../Testing_Imagery/CC24_BT-709_uniform_1931.exr</span><span>&quot;,
+</span><span>    &quot;</span><span style="color:#a3be8c;">../Testing_Imagery/chinese_garden_2k.exr</span><span>&quot;,
+</span><span>    &quot;</span><span style="color:#a3be8c;">../Testing_Imagery/alexa_BT_709.exr</span><span>&quot;,
+</span><span>    &quot;</span><span style="color:#a3be8c;">../Testing_Imagery/blue_bar_709.exr</span><span>&quot;,
+</span><span>];
+</span><span>
+</span><span style="color:#b48ead;">fn </span><span style="color:#8fa1b3;">setup</span><span>(</span><span style="color:#bf616a;">c</span><span>: &amp;</span><span style="color:#b48ead;">mut</span><span> EngineContext) {
+</span><span>    </span><span style="color:#b48ead;">for</span><span> path in </span><span style="color:#d08770;">TEST_IMAGES </span><span>{
+</span><span>        </span><span style="color:#b48ead;">let</span><span> img =
+</span><span>            image::io::Reader::open(path).</span><span style="color:#96b5b4;">unwrap</span><span>().</span><span style="color:#96b5b4;">decode</span><span>().</span><span style="color:#96b5b4;">unwrap</span><span>().</span><span style="color:#96b5b4;">flipv</span><span>();
+</span><span>
+</span><span>        </span><span style="color:#b48ead;">let</span><span> gc = &amp;c.renderer.context;
+</span><span>        </span><span style="color:#b48ead;">let</span><span> label = *path;
+</span><span>
+</span><span>        </span><span style="color:#b48ead;">let </span><span>(img, texture) = </span><span style="color:#b48ead;">if</span><span> path.</span><span style="color:#96b5b4;">ends_with</span><span>(&quot;</span><span style="color:#a3be8c;">.exr</span><span>&quot;) {
+</span><span>            </span><span style="color:#b48ead;">let</span><span> f16_data = img
+</span><span>                .</span><span style="color:#96b5b4;">to_rgba32f</span><span>()
+</span><span>                .</span><span style="color:#96b5b4;">iter</span><span>()
+</span><span>                .</span><span style="color:#96b5b4;">copied</span><span>()
+</span><span>                .</span><span style="color:#96b5b4;">map</span><span>(half::f16::from_f32)
+</span><span>                .</span><span style="color:#96b5b4;">collect_vec</span><span>();
+</span><span>
+</span><span>            </span><span style="color:#b48ead;">let</span><span> px_size = </span><span style="color:#d08770;">4 </span><span>* std::mem::size_of::&lt;half::f16&gt;();
+</span><span>
+</span><span>            </span><span style="color:#b48ead;">let</span><span> texture = Texture::from_image_data_with_format(
+</span><span>                &amp;gc.device,
+</span><span>                &amp;gc.queue,
+</span><span>                bytemuck::cast_slice(&amp;f16_data),
+</span><span>                Some(label),
+</span><span>                wgpu::AddressMode::ClampToEdge,
+</span><span>                wgpu::TextureFormat::Rgba16Float,
+</span><span>                img.</span><span style="color:#96b5b4;">dimensions</span><span>(),
+</span><span>                px_size as </span><span style="color:#b48ead;">u32</span><span>,
+</span><span>            )
+</span><span>            .</span><span style="color:#96b5b4;">unwrap</span><span>();
+</span><span>
+</span><span>            (img, texture)
+</span><span>        } </span><span style="color:#b48ead;">else </span><span>{
+</span><span>            </span><span style="color:#b48ead;">let</span><span> data = img.</span><span style="color:#96b5b4;">to_rgba8</span><span>();
+</span><span>            </span><span style="color:#b48ead;">let</span><span> px_size = </span><span style="color:#d08770;">4 </span><span>* std::mem::size_of::&lt;</span><span style="color:#b48ead;">u8</span><span>&gt;();
+</span><span>
+</span><span>            </span><span style="color:#b48ead;">let</span><span> texture = Texture::from_image_data_with_format(
+</span><span>                &amp;gc.device,
+</span><span>                &amp;gc.queue,
+</span><span>                bytemuck::cast_slice(&amp;data),
+</span><span>                Some(label),
+</span><span>                wgpu::AddressMode::ClampToEdge,
+</span><span>                wgpu::TextureFormat::Rgba8Unorm,
+</span><span>                img.</span><span style="color:#96b5b4;">dimensions</span><span>(),
+</span><span>                px_size as </span><span style="color:#b48ead;">u32</span><span>,
+</span><span>            )
+</span><span>            .</span><span style="color:#96b5b4;">unwrap</span><span>();
+</span><span>
+</span><span>            (img, texture)
+</span><span>        };
+</span><span>
+</span><span>        </span><span style="color:#96b5b4;">load_texture_with_image</span><span>(
+</span><span>            &amp;c.renderer.context,
+</span><span>            label,
+</span><span>            img,
+</span><span>            texture,
+</span><span>            &amp;</span><span style="color:#b48ead;">mut</span><span> c.renderer.textures.</span><span style="color:#96b5b4;">lock</span><span>(),
+</span><span>        );
+</span><span>    }
+</span><span>}
+</span><span>
+</span><span style="color:#b48ead;">static </span><span style="color:#d08770;">CURRENT_IMAGE</span><span>: Mutex&lt;</span><span style="color:#b48ead;">usize</span><span>&gt; = Mutex::new(</span><span style="color:#d08770;">0</span><span>);
+</span><span>
+</span><span style="color:#b48ead;">fn </span><span style="color:#8fa1b3;">update</span><span>(</span><span style="color:#bf616a;">_c</span><span>: &amp;</span><span style="color:#b48ead;">mut</span><span> EngineContext) {
+</span><span>    </span><span style="color:#b48ead;">if </span><span style="color:#96b5b4;">is_key_pressed</span><span>(KeyCode::Space) {
+</span><span>        </span><span style="color:#b48ead;">let mut</span><span> config = </span><span style="color:#96b5b4;">game_config_mut</span><span>();
+</span><span>        config.tonemapping_enabled = !config.tonemapping_enabled;
+</span><span>    }
+</span><span>
+</span><span>    </span><span style="color:#b48ead;">if </span><span style="color:#96b5b4;">is_key_pressed</span><span>(KeyCode::W) {
+</span><span>        </span><span style="color:#b48ead;">let mut</span><span> current_image = </span><span style="color:#d08770;">CURRENT_IMAGE</span><span>.</span><span style="color:#96b5b4;">lock</span><span>();
+</span><span>
+</span><span>        *current_image = </span><span style="color:#b48ead;">if </span><span>*current_image == </span><span style="color:#d08770;">0 </span><span>{
+</span><span>            </span><span style="color:#d08770;">TEST_IMAGES</span><span>.</span><span style="color:#96b5b4;">len</span><span>() - </span><span style="color:#d08770;">1
+</span><span>        } </span><span style="color:#b48ead;">else </span><span>{
+</span><span>            *current_image - </span><span style="color:#d08770;">1
+</span><span>        };
+</span><span>    }
+</span><span>
+</span><span>    </span><span style="color:#b48ead;">if </span><span style="color:#96b5b4;">is_key_pressed</span><span>(KeyCode::S) {
+</span><span>        </span><span style="color:#b48ead;">let mut</span><span> current_image = </span><span style="color:#d08770;">CURRENT_IMAGE</span><span>.</span><span style="color:#96b5b4;">lock</span><span>();
+</span><span>        *current_image = (*current_image + </span><span style="color:#d08770;">1</span><span>) % </span><span style="color:#d08770;">TEST_IMAGES</span><span>.</span><span style="color:#96b5b4;">len</span><span>();
+</span><span>    }
+</span><span>
+</span><span>    </span><span style="color:#b48ead;">let</span><span> viewport = </span><span style="color:#96b5b4;">main_camera</span><span>().</span><span style="color:#96b5b4;">world_viewport</span><span>();
+</span><span>
+</span><span>    </span><span style="color:#96b5b4;">clear_background</span><span>(Color::gray(</span><span style="color:#d08770;">0.1</span><span>));
+</span><span>
+</span><span>    </span><span style="color:#b48ead;">let</span><span> size = </span><span style="color:#b48ead;">if </span><span>*</span><span style="color:#d08770;">CURRENT_IMAGE</span><span>.</span><span style="color:#96b5b4;">lock</span><span>() == </span><span style="color:#d08770;">0 </span><span>{
+</span><span>        </span><span style="color:#96b5b4;">vec2</span><span>(viewport.y, viewport.y)
+</span><span>    } </span><span style="color:#b48ead;">else </span><span>{
+</span><span>        viewport
+</span><span>    };
+</span><span>
+</span><span>    </span><span style="color:#96b5b4;">draw_sprite</span><span>(
+</span><span>        </span><span style="color:#96b5b4;">texture_id</span><span>(</span><span style="color:#d08770;">TEST_IMAGES</span><span>[*</span><span style="color:#d08770;">CURRENT_IMAGE</span><span>.</span><span style="color:#96b5b4;">lock</span><span>()]),
+</span><span>        Vec2::</span><span style="color:#d08770;">ZERO</span><span>,
+</span><span>        </span><span style="color:#d08770;">WHITE</span><span>,
+</span><span>        </span><span style="color:#d08770;">1</span><span>,
+</span><span>        size,
+</span><span>    );
+</span><span>}
+</span></code></pre>
+ </div>
+    </section>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous">
+    </script>
+</body>
+</html>

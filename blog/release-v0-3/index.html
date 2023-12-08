@@ -1,0 +1,210 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
+  <meta name="description" content="Comfy is an ergonomic 2D game engine built in Rust. It's designed to be opinionated, productive, and easy to use.">
+
+  <title>Comfy Engine</title>
+
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-1DRWETLGBR"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'G-1DRWETLGBR');
+  </script>
+
+  <script>
+    const savedTheme = localStorage.getItem('data-bs-theme');
+    const preferredTheme = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+    const theme = savedTheme || preferredTheme;
+    document.documentElement.setAttribute('data-bs-theme', theme);
+
+    document.addEventListener('DOMContentLoaded', function () {
+      const themeSwitch = document.getElementById('comfySwitch');
+
+      // Set the checkbox state based on the current theme
+      themeSwitch.checked = theme === 'dark';
+
+      themeSwitch.addEventListener('change', function () {
+        if (themeSwitch.checked) {
+          document.documentElement.setAttribute('data-bs-theme', 'dark');
+          localStorage.setItem('data-bs-theme', 'dark');
+        } else {
+          document.documentElement.setAttribute('data-bs-theme', 'light');
+          localStorage.setItem('data-bs-theme', 'light');
+        }
+      });
+    });
+  </script>
+
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fira+Sans:wght@400;700&display=swap" />
+
+  <!-- <link -->
+  <!--   href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" -->
+  <!--   rel="stylesheet" -->
+  <!--   integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" -->
+  <!--   crossorigin="anonymous" -->
+  <!-- /> -->
+
+  <link rel="stylesheet" href="/style.css" />
+</head>
+
+<body>
+  <div class="container mb-4">
+    <header class="d-flex flex-wrap justify-content-center py-3 mb-4 border-bottom">
+      <a href="/" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto link-body-emphasis text-decoration-none">
+        <img src="/comfy.png" alt="logo of the comfy engine" class="bi me-2" width="32" height="32" />
+        <span class="fs-4"><strong>Comfy</strong></span>
+      </a>
+
+      <ul class="nav nav-pills">
+        <li class="nav-item">
+          <a href="/book" class="nav-link">Book</a>
+        </li>
+        <li class="nav-item">
+          <a href="/features" class="nav-link">Features</a>
+        </li>
+        <li class="nav-item"><a href="/examples" class="nav-link">Examples</a></li>
+        <li class="nav-item"><a href="/blog" class="nav-link">Blog</a></li>
+        <li class="nav-item">
+          <a href="https://github.com/darthdeus/comfy" class="">
+            <img class="light-github" width="40" height="40" src="/github-mark.svg" alt="Github repo" />
+            <img class="dark-github" width="40" height="40" src="/github-mark-white.svg" alt="Github repo" />
+          </a>
+        </li>
+        <li class="nav-item mx-2">
+          <a href="https://discord.gg/6NGGGTUz7x" class="">
+            <img class="light-discord" height="40" src="/discord-mark-black.png" alt="Discord" />
+            <img class="dark-discord" height="40" src="/discord-mark-white.png" alt="Discord" />
+          </a>
+        </li>
+
+        <li class="ms-3 my-2">
+          <div class="form-check form-switch">
+            <input class="form-check-input" type="checkbox" role="switch" id="comfySwitch" style="cursor: pointer">
+            <label class="form-check-label" for="comfySwitch">Dark Theme</label>
+          </div>
+        </li>
+      </ul>
+
+    </header>
+
+    <section class="section">
+      <div class="container">
+<h1 class="title">Release v0.3: No Lifetimes, User Shaders, Text Rendering, 2.5D, LDTK</h1>
+<p class="subtitle"><strong>2023-12-07</strong></p>
+<p>Much like overscoping is a problem in game development, I've just realized it's
+apparently also a problem in game engine development. The v0.3 release was
+supposed to follow v0.2 rather quickly, but as people asked for features I just
+thought &quot;what if we just add this one more thing&quot; ... and now here we are :)</p>
+<p><strong>There's a lot new in this release, but I'd also like to include a big
+disclaimer that many of these features are not fully stabilized. They do work,
+but there will be limitations and potential issues. Please be mindful of using
+new experimental features (they're marked as such), and if you run into any
+issues please create an issue on GitHub, or ping @darth on Discord.</strong></p>
+<p>I'd also like to note that despite these features being marked as experimental,
+we're already using everything in our own games. Existing code should not break,
+and if you're on v0.2, it shouldn't take more than a few minutes to upgrade to v0.3,
+without any expected brekage.</p>
+<p><strong>Detailed information about changes are <a href="https://github.com/darthdeus/comfy/blob/master/CHANGELOG.md">in the GitHub repo's CHANGELOG.md
+file</a>.</strong></p>
+<p>Here's a brief list of new and changed features:</p>
+<h2 id="no-more-lifetimes-and-gamecontext">No more lifetimes and <code>GameContext</code>.</h2>
+<p>From the first day this has been a pain point for all users who encountered it,
+and the benefits turn out to be small. We were wrong in the initial design.
+Starting with <code>v0.3</code> Comfy now has a much simpler <code>comfy_game!(...)</code> macro that
+doesn't need any lifetimes or <code>GameContext</code>. (See changelog for more details).</p>
+<h2 id="user-defined-fragment-shaders">User defined fragment shaders</h2>
+<p>User defined fragment shaders with uniforms and shader hot reloading. Right now
+we only support <code>f32</code> uniforms and relatively simple shaders, but using them is
+quite simple. <a href="https://github.com/darthdeus/comfy/blob/master/comfy/examples/fragment-shader.rs">Take a lookt at the fragment shader
+example</a>
+to see more. There's likely going to be breaking changes around this feature in
+the future.</p>
+<h2 id="text-rendering">Text rendering.</h2>
+<p>Up until now Comfy used <a href="https://egui.rs/">egui</a> for text rendering. This
+caused many subtle issues and inflexibilities. We've added a TTF rasterizer
+using <a href="https://docs.rs/fontdue/latest/fontdue/">fontdue</a> for rasterization and
+<a href="https://docs.rs/etagere">etagere</a> for texture atlas packing. This feature is
+currently considered experimental, mainly because there's a lot of unknowns
+around what the API should look like, how some of the parts should be
+implemented, and a few inflexibilities. For example right now Comfy reserves a
+single 4k texture for all the rasterized glyhps. This is of course less than
+ideal, but we didn't hit the limit in our testing, and a future release can
+improve upon this without breaking any user code.</p>
+<h2 id="2-5d-3d-perspective-camera">2.5D/3D &amp; perspective camera.</h2>
+<p>While &quot;3D&quot; may sound like a big deal for an initially 2D engine, <strong>we very much
+want to avoid over-hyping this feature.</strong> This essentially just means <a href="https://docs.rs/glam/latest/glam/f32/struct.Mat4.html#method.perspective_rh">using a
+perspective camera with
+<code>glam</code></a>
+and a few tweaks to allow users to configure this. If you'd like to see how
+this works, take a look at <a href="https://github.com/darthdeus/comfy/blob/master/comfy/examples/perspective-camera.rs">the perspective camera
+example</a>.</p>
+<p>Comfy does support drawing
+arbitrary meshes with <code>draw_mesh_ex</code>, and now with custom fragment shaders this
+can probably be taken a bit further than one could expect. But the ergonomics
+around 3D are very much not ready yet. For example Comfy does not support
+instanced rendering, and meshes do get uploaded to the GPU on every frame. This
+is fine for 2D and sprites, but for non-trivial geometry you'd likely run into
+issues.</p>
+<p>We'd like to encourage users to experiment and share what they made, but please
+don't use Comfy to build your next AAA 3D game. At least not yet :)</p>
+<h2 id="ldtk-support">LDTK support</h2>
+<p>Comfy now has a very simple builtin support for the <a href="https://ldtk.io/">LDTK level
+editor</a>. This isn't very comprehensive yet, and it probably
+does much less than you would expect it to do, but there are a few nice things!</p>
+<p>Firstly, LDTK officially provides a <a href="https://ldtk.io/files/quicktype/LdtkJson.rs">generated <code>serde</code>
+parser</a> for its file format. This
+is great in some ways, but <a href="https://serde.rs/"><code>serde</code></a>'s procedural macros are
+<em>incredibly</em> slow to compile, and could easily add seconds to your incremental
+builds if you end up triggering a rebuild of the quicktype file.</p>
+<p>This is especially noticable if you tried to do something like
+<code>serde_json::from_str::&lt;LdtkJson&gt;(...)</code> in your crate. In my testing this
+alone easily takes a &lt;1s build to 3-5 seconds.</p>
+<p>A solution is surprisingly simple, we just need to define a non-generic
+function that wraps serde's generic deserializer and move it into its own
+crate, meaning all the ugliness that happens with serde's types happen in the
+crate, and it won't be triggered on incremental builds. Comfy can now define
+the following function which really just calls serde, and this takes the build
+time back to &lt;1s quite comfortably. I haven't really noticed a significant
+measurable difference with using LDTK this way compared to not using it.</p>
+<pre data-lang="rust" style="background-color:#2b303b;color:#c0c5ce;" class="language-rust "><code class="language-rust" data-lang="rust"><span style="color:#b48ead;">pub fn </span><span style="color:#8fa1b3;">parse_ldtk_map</span><span>(
+</span><span>    </span><span style="color:#bf616a;">map</span><span>: &amp;</span><span style="color:#b48ead;">str</span><span>,
+</span><span>) -&gt; Result&lt;quicktype::LdtkJson, serde_json::Error&gt; {
+</span><span>    serde_json::from_str(map)
+</span><span>}
+</span></code></pre>
+<p>It would be interesting to see how this would compare with
+<a href="https://docs.rs/nanoserde/latest/nanoserde/"><code>nanoserde</code></a>, which is
+<em>significantly faster to compile than serde</em>, but it would require some changes
+to the generated LDTK file and we just haven't had the time to do those yet.
+That being said, Comfy would like to move away from serde in the near future if
+at all possible.</p>
+<p>On top of this, we also provide a few extension traits for LDTK's types that
+make working with it a little more convenient. Please keep in mind that LDTK
+support is still very early, and you are expected to do digging into LDTK's
+file format if you are to use this. That being said, LDTK is very well documented
+and while it does have a learning curve it's realtively easy and simple.</p>
+<h2 id="other-changes">Other changes</h2>
+<p>We also have a few more small changes that are listed in the changelog. Notably
+there is an experimental support for custom render targets, but for this
+feature to be truly useful we'll need a few more things implemented in Comfy's
+renderer, most notably around ordering operations.</p>
+<p>There are quite a few issues that were planned for <code>v0.3</code> that didn't make it
+into the release, and if someone has something they need fixed sooner rather
+than later feel free to ping @darth on Discord. There's a lot of stuff
+happening around Comfy at the same time, and I do forget things quite often :)</p>
+ </div>
+    </section>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous">
+    </script>
+</body>
+</html>

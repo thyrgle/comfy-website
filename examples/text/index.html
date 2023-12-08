@@ -98,24 +98,75 @@
     <section class="section">
       <div class="container">
 <h1 class="title">text</h1>
-<p class="subtitle"><strong>2023-10-15</strong></p>
+<p class="subtitle"><strong>2023-12-08</strong></p>
 <pre data-lang="rust" style="background-color:#2b303b;color:#c0c5ce;" class="language-rust "><code class="language-rust" data-lang="rust"><span style="color:#b48ead;">use </span><span>comfy::*;
 </span><span>
-</span><span>simple_game!(&quot;</span><span style="color:#a3be8c;">Text Example</span><span>&quot;, update);
+</span><span>simple_game!(&quot;</span><span style="color:#a3be8c;">Text Example</span><span>&quot;, GameState, setup, update);
 </span><span>
-</span><span style="color:#b48ead;">fn </span><span style="color:#8fa1b3;">update</span><span>(</span><span style="color:#bf616a;">_c</span><span>: &amp;</span><span style="color:#b48ead;">mut</span><span> EngineContext) {
-</span><span>    </span><span style="color:#b48ead;">let</span><span> text = &quot;</span><span style="color:#a3be8c;">comfy has comfy text rendering with egui</span><span>&quot;;
+</span><span style="color:#b48ead;">pub struct </span><span>GameState {
+</span><span>    </span><span style="color:#b48ead;">pub </span><span style="color:#bf616a;">fonts</span><span>: Vec&lt;FontHandle&gt;,
+</span><span>    </span><span style="color:#b48ead;">pub </span><span style="color:#bf616a;">font_size</span><span>: </span><span style="color:#b48ead;">f32</span><span>,
+</span><span>}
 </span><span>
-</span><span>    </span><span style="color:#96b5b4;">draw_text</span><span>(text, </span><span style="color:#96b5b4;">vec2</span><span>(</span><span style="color:#d08770;">0.0</span><span>, </span><span style="color:#d08770;">1.0</span><span>), </span><span style="color:#d08770;">WHITE</span><span>, TextAlign::Center);
+</span><span style="color:#b48ead;">impl </span><span>GameState {
+</span><span>    </span><span style="color:#b48ead;">pub fn </span><span style="color:#8fa1b3;">new</span><span>(</span><span style="color:#bf616a;">_c</span><span>: &amp;</span><span style="color:#b48ead;">mut</span><span> EngineState) -&gt; </span><span style="color:#b48ead;">Self </span><span>{
+</span><span>        </span><span style="color:#65737e;">// let font_data =
+</span><span>        </span><span style="color:#65737e;">//     include_bytes!(&quot;../assets/ArianaVioleta.ttf&quot;) as &amp;[u8];
+</span><span>        </span><span style="color:#65737e;">// let font_data =
+</span><span>        </span><span style="color:#65737e;">//     include_bytes!(&quot;../../assets/ThaleahFat_TTF.ttf&quot;) as &amp;[u8];
+</span><span>
+</span><span>        </span><span style="color:#b48ead;">Self </span><span>{
+</span><span>            fonts: vec![
+</span><span>                </span><span style="color:#96b5b4;">load_font_from_bytes</span><span>(include_bytes!(
+</span><span>                    &quot;</span><span style="color:#a3be8c;">../../assets/fonts/Orbitron-Black.ttf</span><span>&quot;
+</span><span>                )),
+</span><span>                </span><span style="color:#96b5b4;">load_font_from_bytes</span><span>(include_bytes!(
+</span><span>                    &quot;</span><span style="color:#a3be8c;">../../assets/fonts/Orbitron-Regular.ttf</span><span>&quot;
+</span><span>                )),
+</span><span>            ],
+</span><span>            font_size: </span><span style="color:#d08770;">32.0</span><span>,
+</span><span>        }
+</span><span>    }
+</span><span>}
+</span><span>
+</span><span style="color:#b48ead;">fn </span><span style="color:#8fa1b3;">setup</span><span>(</span><span style="color:#bf616a;">_state</span><span>: &amp;</span><span style="color:#b48ead;">mut</span><span> GameState, </span><span style="color:#bf616a;">_c</span><span>: &amp;</span><span style="color:#b48ead;">mut</span><span> EngineContext) {
+</span><span>    </span><span style="color:#96b5b4;">game_config_mut</span><span>().bloom_enabled = </span><span style="color:#d08770;">true</span><span>;
+</span><span>}
+</span><span>
+</span><span style="color:#b48ead;">fn </span><span style="color:#8fa1b3;">update</span><span>(</span><span style="color:#bf616a;">state</span><span>: &amp;</span><span style="color:#b48ead;">mut</span><span> GameState, </span><span style="color:#bf616a;">_c</span><span>: &amp;</span><span style="color:#b48ead;">mut</span><span> EngineContext) {
+</span><span>    </span><span style="color:#96b5b4;">clear_background</span><span>(</span><span style="color:#d08770;">DARKBLUE</span><span>);
+</span><span>
+</span><span>    egui::Window::new(&quot;</span><span style="color:#a3be8c;">Font Controls</span><span>&quot;)
+</span><span>        .</span><span style="color:#96b5b4;">anchor</span><span>(egui::Align2::</span><span style="color:#d08770;">CENTER_CENTER</span><span>, egui::vec2(</span><span style="color:#d08770;">0.0</span><span>, -</span><span style="color:#d08770;">160.0</span><span>))
+</span><span>        .</span><span style="color:#96b5b4;">show</span><span>(</span><span style="color:#96b5b4;">egui</span><span>(), |</span><span style="color:#bf616a;">ui</span><span>| {
+</span><span>            ui.</span><span style="color:#96b5b4;">add</span><span>(egui::Slider::new(&amp;</span><span style="color:#b48ead;">mut</span><span> state.font_size, </span><span style="color:#d08770;">12.0</span><span>..=</span><span style="color:#d08770;">80.0</span><span>));
+</span><span>        });
+</span><span>
+</span><span>    </span><span style="color:#96b5b4;">draw_text_pro_experimental</span><span>(
+</span><span>        </span><span style="color:#96b5b4;">simple_styled_text</span><span>(&quot;</span><span style="color:#a3be8c;">comfy has *c*o*m*f*y *t*e*x*t rendering</span><span>&quot;),
+</span><span>        </span><span style="color:#65737e;">// mouse_world(),
+</span><span>        </span><span style="color:#96b5b4;">vec2</span><span>(</span><span style="color:#d08770;">0.0</span><span>, </span><span style="color:#d08770;">1.0</span><span>),
+</span><span>        </span><span style="color:#d08770;">WHITE</span><span>,
+</span><span>        TextAlign::Center,
+</span><span>        state.font_size,
+</span><span>        </span><span style="color:#b48ead;">if </span><span style="color:#96b5b4;">get_time</span><span>() as </span><span style="color:#b48ead;">i32 </span><span>% </span><span style="color:#d08770;">2 </span><span>== </span><span style="color:#d08770;">0 </span><span>{
+</span><span>            state.fonts[</span><span style="color:#d08770;">0</span><span>]
+</span><span>        } </span><span style="color:#b48ead;">else </span><span>{
+</span><span>            state.fonts[</span><span style="color:#d08770;">1</span><span>]
+</span><span>        },
+</span><span>    );
 </span><span>
 </span><span>    </span><span style="color:#96b5b4;">draw_text_ex</span><span>(
-</span><span>        &quot;</span><span style="color:#a3be8c;">with configurable fonts</span><span>&quot;,
+</span><span>        &quot;</span><span style="color:#a3be8c;">with both builtin TTF rasterizer and with egui</span><span>&quot;,
 </span><span>        </span><span style="color:#96b5b4;">vec2</span><span>(</span><span style="color:#d08770;">0.0</span><span>, -</span><span style="color:#d08770;">1.0</span><span>),
 </span><span>        TextAlign::Center,
 </span><span>        TextParams {
-</span><span>            color: </span><span style="color:#d08770;">RED</span><span>,
+</span><span>            color: </span><span style="color:#d08770;">YELLOW</span><span>,
 </span><span>            </span><span style="color:#65737e;">// Use egui fonts
-</span><span>            font: egui::FontId::new(</span><span style="color:#d08770;">32.0</span><span>, egui::FontFamily::Proportional),
+</span><span>            font: egui::FontId::new(
+</span><span>                state.font_size,
+</span><span>                egui::FontFamily::Proportional,
+</span><span>            ),
 </span><span>            ..Default::default()
 </span><span>        },
 </span><span>    );

@@ -98,7 +98,7 @@
     <section class="section">
       <div class="container">
 <h1 class="title">single_particle</h1>
-<p class="subtitle"><strong>2023-10-15</strong></p>
+<p class="subtitle"><strong>2023-12-08</strong></p>
 <pre data-lang="rust" style="background-color:#2b303b;color:#c0c5ce;" class="language-rust "><code class="language-rust" data-lang="rust"><span style="color:#b48ead;">use </span><span>comfy::*;
 </span><span>
 </span><span>simple_game!(&quot;</span><span style="color:#a3be8c;">Single Particle Example</span><span>&quot;, update);
@@ -114,6 +114,8 @@
 </span><span>        </span><span style="color:#96b5b4;">spawn_particle</span><span>(Particle {
 </span><span>            position: </span><span style="color:#96b5b4;">random_circle</span><span>(</span><span style="color:#d08770;">5.0</span><span>),
 </span><span>            size: </span><span style="color:#96b5b4;">splat</span><span>(</span><span style="color:#d08770;">1.0</span><span>),
+</span><span>            velocity: </span><span style="color:#d08770;">0.0</span><span>,
+</span><span>            velocity_end: </span><span style="color:#d08770;">20.0</span><span>,
 </span><span>            ..Default::default()
 </span><span>        });
 </span><span>    }
