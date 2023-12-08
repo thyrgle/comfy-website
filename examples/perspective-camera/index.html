@@ -220,7 +220,9 @@
 </span><span>    </span><span style="color:#b48ead;">for</span><span> x in -count..count {
 </span><span>        </span><span style="color:#b48ead;">for</span><span> y in -count..count {
 </span><span>            </span><span style="color:#96b5b4;">commands</span><span>().</span><span style="color:#96b5b4;">spawn</span><span>((
-</span><span>                Transform::position(start_pos + </span><span style="color:#96b5b4;">vec2</span><span>(x as </span><span style="color:#b48ead;">f32</span><span>, y as </span><span style="color:#b48ead;">f32</span><span>) + </span><span style="color:#96b5b4;">splat</span><span>(</span><span style="color:#d08770;">0.5</span><span>)),
+</span><span>                Transform::position(
+</span><span>                    start_pos + </span><span style="color:#96b5b4;">vec2</span><span>(x as </span><span style="color:#b48ead;">f32</span><span>, y as </span><span style="color:#b48ead;">f32</span><span>) + </span><span style="color:#96b5b4;">splat</span><span>(</span><span style="color:#d08770;">0.5</span><span>),
+</span><span>                ),
 </span><span>                Sprite::new(&quot;</span><span style="color:#a3be8c;">player</span><span>&quot;, </span><span style="color:#96b5b4;">splat</span><span>(</span><span style="color:#d08770;">1.0</span><span>), </span><span style="color:#d08770;">5</span><span>, </span><span style="color:#d08770;">BLUE</span><span>)
 </span><span>                    .</span><span style="color:#96b5b4;">with_z_index</span><span>(</span><span style="color:#d08770;">Z_MOBS</span><span>)
 </span><span>                    .</span><span style="color:#96b5b4;">with_rect</span><span>(</span><span style="color:#d08770;">0</span><span>, </span><span style="color:#d08770;">0</span><span>, </span><span style="color:#d08770;">16</span><span>, </span><span style="color:#d08770;">16</span><span>),

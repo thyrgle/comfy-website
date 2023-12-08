@@ -100,7 +100,9 @@
 <h1 class="title">ldtk</h1>
 <p class="subtitle"><strong>2023-12-08</strong></p>
 <pre data-lang="rust" style="background-color:#2b303b;color:#c0c5ce;" class="language-rust "><code class="language-rust" data-lang="rust"><span style="color:#b48ead;">use </span><span>comfy::*;
+</span><span>
 </span><span>simple_game!(&quot;</span><span style="color:#a3be8c;">LDTK Example</span><span>&quot;, GameState, setup, update);
+</span><span>
 </span><span style="color:#b48ead;">const </span><span style="color:#d08770;">LDTK_PATH</span><span>: &amp;</span><span style="color:#b48ead;">str </span><span>= &quot;</span><span style="color:#a3be8c;">assets/comfy_ldtk.ldtk</span><span>&quot;;
 </span><span>
 </span><span style="color:#b48ead;">pub struct </span><span>GameState {
@@ -198,105 +200,6 @@
 </span><span>        }
 </span><span>    }
 </span><span>}
-</span><span>
-</span><span>
-</span><span style="color:#65737e;">// pub fn draw_ldtk_map(ldtk: &amp;LdtkWorldMap, spatial: &amp;mut SpatialHash) {
-</span><span style="color:#65737e;">//     let map = &amp;ldtk.json;
-</span><span style="color:#65737e;">//     let level = &amp;map.levels[0];
-</span><span>
-</span><span style="color:#65737e;">//     for (i, layer) in
-</span><span style="color:#65737e;">//         level.layer_instances.as_ref().unwrap().iter().rev().enumerate()
-</span><span style="color:#65737e;">//     {
-</span><span style="color:#65737e;">//         let grid_size = layer.grid_size as f32;
-</span><span>
-</span><span style="color:#65737e;">//         if layer.layer_instance_type == &quot;IntGrid&quot; {
-</span><span style="color:#65737e;">//             let grid = grid_from_csv(layer);
-</span><span>
-</span><span style="color:#65737e;">//             for y in 0..grid.height {
-</span><span style="color:#65737e;">//                 for x in 0..grid.width {
-</span><span style="color:#65737e;">//                     if grid[(x, y)] == 1 {
-</span><span style="color:#65737e;">//                         let pos = layer.grid_to_world(x, y);
-</span><span style="color:#65737e;">//                         spatial.add_shape(
-</span><span style="color:#65737e;">//                             AabbShape::shape(pos, splat(1.0)),
-</span><span style="color:#65737e;">//                             UserData::default(),
-</span><span style="color:#65737e;">//                         );
-</span><span style="color:#65737e;">//                     }
-</span><span style="color:#65737e;">//                 }
-</span><span style="color:#65737e;">//             }
-</span><span style="color:#65737e;">//         }
-</span><span>
-</span><span style="color:#65737e;">//         let tileset = layer
-</span><span style="color:#65737e;">//             .tileset_def_uid
-</span><span style="color:#65737e;">//             .and_then(|uid| map.defs.tilesets.iter().find(|t| t.uid == uid));
-</span><span>
-</span><span style="color:#65737e;">//         if let Some(_tileset) = tileset {
-</span><span style="color:#65737e;">//             // let path = map.resolve_rel_level_path(tileset.rel_path.as_ref().unwrap());
-</span><span style="color:#65737e;">//             // let texture = c.asset_loader.texture(&amp;path);
-</span><span style="color:#65737e;">//             let texture = texture_id(&quot;camp&quot;);
-</span><span>
-</span><span style="color:#65737e;">//             for tile in layer.grid_tiles.iter() {
-</span><span style="color:#65737e;">//                 // let pos = vec2(
-</span><span style="color:#65737e;">//                 //     tile.px[0] as f32,
-</span><span style="color:#65737e;">//                 //     //tile.px[1] as f32,
-</span><span style="color:#65737e;">//                 //     (layer.c_hei as f32 - 1.0) * grid_size - tile.px[1] as f32,
-</span><span style="color:#65737e;">//                 // );
-</span><span>
-</span><span style="color:#65737e;">//                 let pos = tile.to_world(layer);
-</span><span>
-</span><span style="color:#65737e;">//                 // draw_text_ex(
-</span><span style="color:#65737e;">//                 //     &amp;format!(&quot;{:.0?}&quot;, pos),
-</span><span style="color:#65737e;">//                 //     pos.as_world(),
-</span><span style="color:#65737e;">//                 //     TextAlign::Center,
-</span><span style="color:#65737e;">//                 //     TextParams {
-</span><span style="color:#65737e;">//                 //         font: egui::FontId::new(
-</span><span style="color:#65737e;">//                 //             8.0 / egui_scale_factor(),
-</span><span style="color:#65737e;">//                 //             egui::FontFamily::Proportional,
-</span><span style="color:#65737e;">//                 //         ),
-</span><span style="color:#65737e;">//                 //         color: RED,
-</span><span style="color:#65737e;">//                 //         ..Default::default()
-</span><span style="color:#65737e;">//                 //     },
-</span><span style="color:#65737e;">//                 // );
-</span><span>
-</span><span style="color:#65737e;">//                 draw_sprite_ex(
-</span><span style="color:#65737e;">//                     texture,
-</span><span style="color:#65737e;">//                     pos,
-</span><span style="color:#65737e;">//                     // pos / 16.0,
-</span><span style="color:#65737e;">//                     // WHITE.alpha(0.51),
-</span><span style="color:#65737e;">//                     WHITE,
-</span><span style="color:#65737e;">//                     10 + i as i32,
-</span><span style="color:#65737e;">//                     DrawTextureParams {
-</span><span style="color:#65737e;">//                         dest_size: Some(
-</span><span style="color:#65737e;">//                             splat(grid_size / 16.0).as_world_size(),
-</span><span style="color:#65737e;">//                         ),
-</span><span style="color:#65737e;">//                         source_rect: Some(IRect::new(
-</span><span style="color:#65737e;">//                             ivec2(tile.src[0] as i32, tile.src[1] as i32),
-</span><span style="color:#65737e;">//                             ivec2(grid_size as i32, grid_size as i32),
-</span><span style="color:#65737e;">//                         )),
-</span><span style="color:#65737e;">//                         flip_x: tile.f == 1 || tile.f == 3,
-</span><span style="color:#65737e;">//                         flip_y: tile.f == 2 || tile.f == 3,
-</span><span style="color:#65737e;">//                         ..Default::default()
-</span><span style="color:#65737e;">//                     },
-</span><span style="color:#65737e;">//                 );
-</span><span style="color:#65737e;">//             }
-</span><span style="color:#65737e;">//         }
-</span><span>
-</span><span style="color:#65737e;">//         for entity in layer.entity_instances.iter() {
-</span><span style="color:#65737e;">//             if entity.identifier == &quot;Zone&quot; {
-</span><span style="color:#65737e;">//                 let center = entity.world_pos(layer.c_hei, layer.grid_size);
-</span><span style="color:#65737e;">//                 let size = entity.world_size(layer.grid_size);
-</span><span>
-</span><span style="color:#65737e;">//                 draw_rect(center, size, RED.alpha(0.5), 100);
-</span><span style="color:#65737e;">//             } else {
-</span><span style="color:#65737e;">//                 error!(&quot;TODO: entity {:?}&quot;, entity);
-</span><span style="color:#65737e;">//             }
-</span><span style="color:#65737e;">//             // state.objects.create_or_update(
-</span><span style="color:#65737e;">//             //     entity,
-</span><span style="color:#65737e;">//             //     layer.c_hei as f32,
-</span><span style="color:#65737e;">//             //     grid_size,
-</span><span style="color:#65737e;">//             // );
-</span><span style="color:#65737e;">//         }
-</span><span style="color:#65737e;">//     }
-</span><span style="color:#65737e;">// }
 </span></code></pre>
  </div>
     </section>
