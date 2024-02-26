@@ -188,12 +188,13 @@ linker = "rust-lld.exe"
 rustflags = []
 ```
 
-# Optional: Uncommenting the following improves compile times, but reduces the amount of debug info to 'line number tables only'
-# In most cases the gains are negligible, but if you are on macos and have slow compile times you should see significant gains.
+Optional: Uncommenting the following improves compile times, but reduces the amount of debug info to 'line number tables only'
+In most cases the gains are negligible, but if you are on macos and have slow compile times you should see significant gains.
+
+```toml
 #[profile.dev]
 #debug = 1
 ```
-
 
 ## simple game with `setup`
 
