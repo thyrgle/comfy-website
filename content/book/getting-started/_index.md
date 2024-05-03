@@ -173,7 +173,7 @@ rustflags = ["-C", "link-arg=-fuse-ld=/usr/local/bin/zld", "-Zshare-generics=y"]
 rustflags = ["-Zshare-generics=y"]
 ```
 
-On Windows you'll have to intsall a few dependencies
+On Windows you'll have to install a few dependencies
 
 ```
 cargo install -f cargo-binutils
